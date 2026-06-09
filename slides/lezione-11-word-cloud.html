@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 11 - Word Cloud e visualizzazione delle frequenze</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/monokai.css">
+  <style>
+.reveal h1 { font-size: 2.1em; }
+.reveal h2 { font-size: 1.65em; }
+.reveal h3 { font-size: 1.15em; color: #42affa; }
+.reveal pre { width: 100%; box-shadow: none; }
+.reveal pre code { font-size: 0.72em; line-height: 1.35; max-height: 430px; }
+.reveal ul, .reveal ol { display: block; }
+.reveal li { margin-bottom: 8px; }
+.tag { display:inline-block; padding:3px 14px; border-radius:20px; font-weight:bold; font-size:.62em; text-transform:uppercase; letter-spacing:2px; margin-bottom:18px; }
+.tag-esercizio { background:#f5a623; color:#000; }
+.tag-soluzione { background:#42affa; color:#000; }
+.tag-progetto { background:#2ecc71; color:#000; }
+.box { border-radius:6px; padding:14px 16px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.12); }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start; }
+.small { font-size:.75em; color:#aaa; }
+.pipeline { font-size:1em; color:#a8ff78; white-space:pre; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section>
+  <h1>Lezione 11<br>Word Cloud e visualizzazione delle frequenze</h1>
+  <p style="color:#888; margin-top:8px">Python per le Digital Humanities</p>
+  <br>
+  <p style="font-size:0.75em; color:#aaa">Tiziana Mancinelli</p>
+  <p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata</p>
+</section>
+<section>
+<h2>🎯 Obiettivi</h2>
+<ul style="font-size:.9em"><li>comprendere la word cloud</li><li>preparare un testo</li><li>rimuovere stopwords</li><li>generare una word cloud</li><li>salvare un’immagine e un HTML</li></ul>
+</section>
+<section>
+<h2>🧭 Struttura della lezione</h2>
+<ol><li>Concetti principali</li><li>Esempi guidati</li><li>Esercizi</li><li>Mini progetto</li><li>Discussione</li></ol>
+</section>
+<section>
+<h2>☁️ Che cos’è una Word Cloud?</h2>
+<p>Una word cloud visualizza le parole più frequenti: più una parola è frequente, più appare grande.</p>
+</section>
+<section>
+<h2>Uso nelle DH</h2>
+<p>È utile per una prima esplorazione, ma non sostituisce l’interpretazione critica.</p>
+</section>
+<section>
+<h2>Installazione</h2>
+<pre><code class="language-bash" data-trim>
+pip install wordcloud matplotlib
+</code></pre>
+</section>
+<section>
+<h2>Testo di esempio</h2>
+<pre><code class="language-python" data-trim>
+testo = &quot;&quot;&quot;
+Victor studied science. The creature wanted love.
+Science changed Victor and the creature.
+&quot;&quot;&quot;
+</code></pre>
+</section>
+<section>
+<h2>Generare la Word Cloud</h2>
+<pre><code class="language-python" data-trim>
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+
+wordcloud = WordCloud(width=800, height=400).generate(testo)
+plt.imshow(wordcloud)
+plt.axis(&quot;off&quot;)
+plt.show()
+</code></pre>
+</section>
+<section>
+<h2>Sfondo e dimensioni</h2>
+<pre><code class="language-python" data-trim>
+wordcloud = WordCloud(
+    width=1000,
+    height=500,
+    background_color=&quot;white&quot;
+).generate(testo)
+</code></pre>
+</section>
+<section>
+<h2>Stopwords</h2>
+<p>Alcune parole sono frequenti ma poco informative.</p>
+</section>
+<section>
+<h2>Stopwords personalizzate</h2>
+<pre><code class="language-python" data-trim>
+stopwords = {&quot;the&quot;, &quot;and&quot;, &quot;of&quot;, &quot;a&quot;}
+wordcloud = WordCloud(stopwords=stopwords).generate(testo)
+</code></pre>
+</section>
+<section>
+<h2>Salvare immagine</h2>
+<pre><code class="language-python" data-trim>
+wordcloud.to_file(&quot;wordcloud.png&quot;)
+</code></pre>
+</section>
+<section>
+<h2>Word Cloud da file</h2>
+<pre><code class="language-python" data-trim>
+with open(&quot;frankenstein.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as file:
+    testo = file.read()
+</code></pre>
+</section>
+<section>
+<h2>Controllare le frequenze</h2>
+<pre><code class="language-python" data-trim>
+from collections import Counter
+tokens = testo.lower().split()
+conteggio = Counter(tokens)
+print(conteggio.most_common(10))
+</code></pre>
+</section>
+<section>
+<h2>HTML semplice</h2>
+<pre><code class="language-python" data-trim>
+html = &quot;&quot;&quot;
+&lt;h1&gt;Word Cloud&lt;/h1&gt;
+&lt;img src=&quot;wordcloud.png&quot;&gt;
+&quot;&quot;&quot;
+with open(&quot;wordcloud.html&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    f.write(html)
+</code></pre>
+</section>
+<section>
+<h2>Domande interpretative</h2>
+<ul><li>Quali parole emergono?</li><li>Sono temi o solo forme frequenti?</li><li>Cosa è stato escluso?</li></ul>
+</section>
+<section>
+<h2>Limiti</h2>
+<ul><li>non mostra contesto</li><li>non distingue significati</li><li>dipende dalla pulizia del testo</li></ul>
+</section>
+<section>
+<h2>Pipeline Word Cloud</h2>
+<pre class="pipeline">Testo
+ ↓
+Pulizia
+ ↓
+Frequenze
+ ↓
+Word Cloud
+ ↓
+Interpretazione</pre>
+</section>
+<section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio</div><h2>📝 Esercizio 1</h2><p>Genera una Word Cloud da un testo breve.</p></section>
+<section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>📝 Soluzione 1</h2><pre><code class="language-python" data-trim>
+wordcloud = WordCloud().generate(testo)
+</code></pre></section>
+<section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio</div><h2>📝 Esercizio 2</h2><p>Aggiungi stopwords.</p></section>
+<section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>📝 Soluzione 2</h2><pre><code class="language-python" data-trim>
+wordcloud = WordCloud(stopwords={&quot;the&quot;, &quot;and&quot;}).generate(testo)
+</code></pre></section>
+<section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio</div><h2>📝 Esercizio 3</h2><p>Salva la Word Cloud.</p></section>
+<section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>📝 Soluzione 3</h2><pre><code class="language-python" data-trim>
+wordcloud.to_file(&quot;wordcloud.png&quot;)
+</code></pre></section>
+<section data-background-color="#10230f"><div class="tag tag-progetto">Mini progetto</div><h2>💻 Mini progetto della lezione</h2><p>Applica gli strumenti della lezione a un piccolo caso DH e salva almeno un output riutilizzabile.</p><pre class="pipeline">Input
+ ↓
+Python
+ ↓
+Output
+ ↓
+Interpretazione</pre></section>
+<section>
+<h2>✅ Checklist mini progetto</h2>
+<ul><li>Il codice si esegue?</li><li>L’output è salvato?</li><li>Il risultato è interpretabile?</li><li>Hai annotato eventuali errori?</li></ul>
+</section>
+<section>
+<h2>🎯 Recap</h2>
+<ul><li>comprendere la word cloud</li><li>preparare un testo</li><li>rimuovere stopwords</li><li>generare una word cloud</li><li>salvare un’immagine e un HTML</li></ul>
+</section>
+<section>
+<h2>➡️ Collegamento al progetto finale</h2>
+<p>Ogni lezione produce un tassello del progetto finale: dati, analisi, visualizzazione o pubblicazione.</p>
+</section>
+<section>
+<h2>❓ Domande</h2>
+<p>Dubbi, problemi di codice, interpretazione dei risultati.</p>
+</section>
+<section>
+<h2>Approfondimento 1</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 2</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 3</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 4</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 5</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 6</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/highlight.js"></script>
+<script>Reveal.initialize({hash:true, slideNumber:'c/t', transition:'slide', transitionSpeed:'fast', plugins:[RevealHighlight]});</script>
+</body>
+</html>

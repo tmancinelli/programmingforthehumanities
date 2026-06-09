@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 1 - Introduzione a Python</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/monokai.css">
+  <style>
+    .reveal h1 { font-size: 2.2em; }
+    .reveal h2 { font-size: 1.8em; }
+    .reveal h3 { font-size: 1.3em; color: #42affa; }
+    .reveal pre { width: 100%; box-shadow: none; }
+    .reveal pre code { font-size: 0.82em; line-height: 1.5; max-height: 420px; }
+    .reveal ul, .reveal ol { display: block; }
+    .reveal li { margin-bottom: 8px; }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.65em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+    .tag-esercizio { background: #f5a623; color: #000; }
+    .tag-soluzione  { background: #42affa; color: #000; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .box { border-radius: 6px; padding: 14px 16px; }
+    .box-err  { background: #2c0a0a; border-left: 3px solid #e74c3c; }
+    .box-ok   { background: #0a2c0a; border-left: 3px solid #2ecc71; }
+    .box-info { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); }
+    .box-err pre, .box-ok pre { margin: 0; }
+    .label-err { color: #e74c3c; font-size: 0.75em; font-weight: bold; margin: 0 0 6px 0; }
+    .label-ok  { color: #2ecc71; font-size: 0.75em; font-weight: bold; margin: 0 0 6px 0; }
+
+    /* ── Pyodide interactive code runner ── */
+    .code-runner { position: relative; margin: 0; }
+
+    .code-textarea {
+      width: 100%;
+      background: #272822;
+      color: #f8f8f2;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.82em;
+      line-height: 1.5;
+      border: 1px solid #444;
+      border-radius: 4px 4px 0 0;
+      padding: 12px;
+      box-sizing: border-box;
+      resize: none;
+      outline: none;
+      tab-size: 4;
+      display: block;
+    }
+    .code-textarea { max-height: 33vh; overflow-y: auto; }
+    .code-textarea:focus { border-color: #42affa; }
+    .code-textarea.small { font-size: 0.6em; }
+
+    .code-controls {
+      display: flex;
+      justify-content: flex-end;
+      background: #1e1e1e;
+      border: 1px solid #444;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      padding: 4px 8px;
+    }
+
+    .run-btn {
+      background: #f5a623;
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      padding: 3px 14px;
+      cursor: pointer;
+      font-size: 0.72em;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .run-btn:hover { background: #ffb84d; }
+    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── Modale output ── */
+    #output-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--r-main-font);
+    }
+    #output-modal.open { display: flex; }
+
+    #output-modal-box {
+      background: var(--r-background-color);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      min-width: 420px;
+      max-width: 640px;
+      width: 50vw;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    }
+
+    #output-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    /* font-size on #output-modal is set dynamically by JS (revealBase * revealScale) */
+    #output-modal-header span {
+      font-family: var(--r-main-font);
+      font-size: 0.6em;
+      color: var(--r-main-color);
+      opacity: 0.5;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    #output-modal-close {
+      background: none;
+      border: none;
+      color: var(--r-main-color);
+      opacity: 0.4;
+      cursor: pointer;
+      font-size: 0.7em;
+      font-family: var(--r-main-font);
+      line-height: 1;
+      padding: 0 2px;
+    }
+    #output-modal-close:hover { opacity: 1; }
+
+    #output-modal-content {
+      padding: 0.4em 0.6em;
+      font-family: monospace;
+      font-size: 0.7em;
+      color: #a8ff78;
+      white-space: pre-wrap;
+      margin: 0;
+      max-height: 40vh;
+      overflow-y: auto;
+    }
+    #output-modal-content.is-error { color: #ff8080; }
+
+    #pyodide-status {
+      position: fixed;
+      bottom: 10px;
+      left: 12px;
+      font-size: 0.6em;
+      color: #f5a623;
+      z-index: 1000;
+      font-family: monospace;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides"><section>
+<h1>Lezione 1<br>Introduzione a Python</h1>
+  <p style="color:#888; margin-top:8px">Python per le Digital Humanities</p>
+  <br>
+  <p style="font-size:0.75em; color:#aaa">Tiziana Mancinelli</p>
+  <p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata</p>
+</section>
+<section>
+<h2>🎯 Obiettivi</h2>
+<ul style="font-size:0.9em"><li>Capire che cos’è Python</li>
+<li>Conoscere Google Colab e Visual Studio Code</li>
+<li>Installare e verificare Python</li>
+<li>Scrivere il primo programma con <code>print()</code></li>
+<li>Riconoscere errori iniziali comuni</li></ul>
+</section>
+<section>
+<h2>Che cosa sono le Digital Humanities?</h2><p>Le Digital Humanities usano strumenti digitali per studiare testi, archivi, immagini, dati culturali e collezioni.</p>
+</section>
+<section>
+<h2>Perché Python?</h2><ul><li>Sintassi leggibile</li><li>Molte librerie</li><li>Ottimo per testi e dati</li><li>Usato in ricerca e didattica</li></ul>
+</section>
+<section>
+<h2>Python nelle DH</h2><ul><li>Analisi testuale</li><li>XML/TEI</li><li>Visualizzazioni</li><li>Web scraping</li><li>NLP e Intelligenza Artificiale</li></ul>
+</section>
+<section>
+<h2>Che cos’è un programma?</h2><p>Un programma è una sequenza di istruzioni che il computer esegue.</p><pre><code data-trim>
+Input → Istruzioni → Output
+  </code></pre>
+</section>
+<section>
+<h2>Due ambienti di lavoro</h2><div class="two-col"><div class="box box-info"><h3>Google Colab</h3><p>Lavora online nel browser.</p></div><div class="box box-info"><h3>VS Code</h3><p>Lavora sul computer locale.</p></div></div>
+</section>
+<section>
+<h2>Google Colab</h2><ul><li>Non richiede installazione locale</li><li>Si usa dal browser</li><li>Organizzato in celle</li><li>Utile per esercizi condivisi</li></ul>
+</section>
+<section>
+<h2>Visual Studio Code</h2><ul><li>Editor per scrivere script</li><li>Utile per file e progetti</li><li>Richiede Python installato</li><li>Permette di lavorare in locale</li></ul>
+</section>
+<section>
+<h2>Installare Python</h2><ol><li>Scaricare Python da python.org</li><li>Installare la versione recente</li><li>Su Windows: selezionare “Add Python to PATH”</li><li>Verificare dal terminale</li></ol>
+</section>
+<section>
+<h2>Verificare Python</h2><pre><code class="language-python" data-trim>
+python --version
+  </code></pre>
+</section>
+<section>
+<h2>Terminale</h2><p>Il terminale serve per eseguire comandi, installare librerie e lanciare script.</p><pre><code class="language-python" data-trim>
+python nome_file.py
+  </code></pre>
+</section>
+<section>
+<h2>Primo file Python</h2><p>Un file Python ha estensione <code>.py</code>.</p><pre><code data-trim>
+lezione1.py
+  </code></pre>
+</section>
+<section>
+<h2>Il comando print()</h2><p><code>print()</code> mostra un risultato sullo schermo.</p><pre><code class="language-python" data-trim>
+print(&quot;Ciao mondo&quot;)
+  </code></pre>
+</section>
+<section>
+<h2>Testo tra virgolette</h2><p>Le stringhe di testo devono essere racchiuse tra virgolette.</p><pre><code class="language-python" data-trim>
+print(&quot;Digital Humanities&quot;)
+  </code></pre>
+</section>
+<section>
+<h2>Stampare una citazione</h2><pre><code class="language-python" data-trim>
+print(&quot;Nel mezzo del cammin di nostra vita&quot;)
+  </code></pre>
+</section>
+<section>
+<h2>Più istruzioni</h2><pre><code class="language-python" data-trim>
+print(&quot;Titolo: Frankenstein&quot;)
+print(&quot;Autrice: Mary Shelley&quot;)
+print(&quot;Anno: 1818&quot;)
+  </code></pre>
+</section>
+<section>
+<h2>Commenti</h2><p>I commenti spiegano il codice e non vengono eseguiti.</p><pre><code class="language-python" data-trim>
+# Questo è un commento
+print(&quot;Frankenstein&quot;)
+  </code></pre>
+</section>
+<section>
+<h2>Errore comune</h2><div class="box box-err"><p class="label-err">Virgolette mancanti</p><pre><code class="language-python" data-trim>
+print(Frankenstein)
+  </code></pre></div>
+</section>
+<section>
+<h2>Versione corretta</h2><div class="box box-ok"><p class="label-ok">Stringa corretta</p><pre><code class="language-python" data-trim>
+print(&quot;Frankenstein&quot;)
+  </code></pre></div>
+</section>
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Esercizio</div>
+<h2>📝 Esercizio 1</h2>
+<p>Scrivere un programma che stampi il proprio nome.</p>
+</section>
+<section data-background-color="#0d1020">
+<div class="tag tag-soluzione">Soluzione</div>
+<h2>📝 Soluzione 1</h2>
+<pre><code class="language-python" data-trim>
+print(&quot;Tiziana&quot;)
+  </code></pre>
+</section>
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Esercizio</div>
+<h2>📝 Esercizio 2</h2>
+<p>Stampare titolo, autore e anno di un’opera letteraria.</p>
+</section>
+<section data-background-color="#0d1020">
+<div class="tag tag-soluzione">Soluzione</div>
+<h2>📝 Soluzione 2</h2>
+<pre><code class="language-python" data-trim>
+print(&quot;Titolo: Frankenstein&quot;)
+print(&quot;Autrice: Mary Shelley&quot;)
+print(&quot;Anno: 1818&quot;)
+  </code></pre>
+</section>
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Esercizio</div>
+<h2>📝 Esercizio 3</h2>
+<p>Stampare tre righe con una breve scheda di un testo.</p>
+</section>
+<section data-background-color="#0d1020">
+<div class="tag tag-soluzione">Soluzione</div>
+<h2>📝 Soluzione 3</h2>
+<pre><code class="language-python" data-trim>
+print(&quot;Opera: Dracula&quot;)
+print(&quot;Autore: Bram Stoker&quot;)
+print(&quot;Genere: romanzo gotico&quot;)
+  </code></pre>
+</section>
+<section>
+<h2>Mini progetto</h2><p>Costruire una piccola scheda testuale stampata da Python.</p><pre><code class="language-python" data-trim>
+print(&quot;=== SCHEDA OPERA ===&quot;)
+print(&quot;Titolo: Frankenstein&quot;)
+print(&quot;Autrice: Mary Shelley&quot;)
+print(&quot;Anno: 1818&quot;)
+print(&quot;Tema: scienza e creazione&quot;)
+  </code></pre>
+</section>
+<section>
+<h2>Domanda DH</h2><p>Che cosa cambia se una scheda bibliografica viene scritta a mano o generata automaticamente?</p>
+</section>
+<section>
+<h2>Pipeline della lezione</h2><pre><code data-trim>
+Idea → Codice → Esecuzione → Output
+  </code></pre>
+</section>
+<section>
+<h2>🎯 Recap</h2>
+<ul style="font-size:0.9em"><li>Python esegue istruzioni</li>
+<li>Colab lavora online</li>
+<li>VS Code lavora in locale</li>
+<li><code>print()</code> produce output</li>
+<li>Gli errori fanno parte dell’apprendimento</li></ul>
+</section>
+<section>
+<h2>❓ Domande</h2>
+</section>
+</div>
+</div>
+
+<div id="pyodide-status">● Caricamento Python...</div>
+
+<!-- ── Modale output ── -->
+<div id="output-modal">
+  <div id="output-modal-box">
+    <div id="output-modal-header">
+      <span>Output</span>
+      <button id="output-modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <pre id="output-modal-content"></pre>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/highlight.js"></script>
+<script>
+  // ── Pyodide ──
+  let pyodide = null;
+
+  (async function initPyodide() {
+    const status = document.getElementById('pyodide-status');
+    try {
+      pyodide = await loadPyodide({
+        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/'
+      });
+      status.textContent = '● Python pronto';
+      status.style.color = '#2ecc71';
+    } catch (e) {
+      status.textContent = '● Python non disponibile';
+      status.style.color = '#e74c3c';
+    }
+  })();
+
+  function syncModalFontSize() {
+    const revealEl = document.querySelector('.reveal');
+    const base = parseFloat(getComputedStyle(revealEl).fontSize);
+    const scale = Reveal.getScale ? Reveal.getScale() : 1;
+    document.getElementById('output-modal').style.fontSize = (base * scale) + 'px';
+  }
+
+  function openModal(text, isError) {
+    const content = document.getElementById('output-modal-content');
+    content.textContent = text;
+    content.className = isError ? 'is-error' : '';
+    syncModalFontSize();
+    document.getElementById('output-modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('output-modal').classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  async function runCode(btn) {
+    const runner = btn.closest('.code-runner');
+    const textarea = runner.querySelector('.code-textarea');
+
+    if (!pyodide) {
+      openModal('Attendi il caricamento di Python...', true);
+      return;
+    }
+
+    const prev = btn.textContent;
+    btn.textContent = '⏳';
+    btn.disabled = true;
+
+    try {
+      const preloadEl = runner.closest('section').querySelector('.code-preload');
+      const preload = preloadEl ? preloadEl.textContent.trim() + '\n\n' : '';
+      pyodide.globals.set('_user_code', preload + textarea.value);
+      pyodide.runPython(`
+import sys, traceback
+from io import StringIO
+_stdout = StringIO()
+_stderr = StringIO()
+sys.stdout = _stdout
+sys.stderr = _stderr
+try:
+    exec(_user_code, {})
+except Exception:
+    traceback.print_exc()
+finally:
+    sys.stdout = sys.__stdout__
+    sys.stderr = sys.__stderr__
+_out = _stdout.getvalue()
+_err = _stderr.getvalue()
+`);
+      const out = pyodide.globals.get('_out');
+      const err = pyodide.globals.get('_err');
+
+      if (err) {
+        openModal(err, true);
+      } else {
+        openModal(out || '(nessun output)', false);
+      }
+    } catch (e) {
+      try { pyodide.runPython('sys.stdout = sys.__stdout__\nsys.stderr = sys.__stderr__'); } catch (_) {}
+      openModal(e.message, true);
+    }
+
+    btn.textContent = prev;
+    btn.disabled = false;
+  }
+
+  // ── Reveal ──
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    plugins: [RevealHighlight],
+  });
+
+  Reveal.on('resize', syncModalFontSize);
+
+  // ── Trasforma i blocchi codice in editor interattivi ──
+  Reveal.on('ready', () => {
+    document.querySelectorAll('pre').forEach(pre => {
+      const code = pre.querySelector('code.language-python');
+      if (!code) return;
+
+      const rawCode = code.textContent.trim();
+      const lines = rawCode.split('\n').length;
+
+      const runner = document.createElement('div');
+      runner.className = 'code-runner';
+      pre.parentNode.insertBefore(runner, pre);
+      pre.remove();
+
+      const textarea = document.createElement('textarea');
+      textarea.className = 'code-textarea' + (pre.dataset.size === 'small' ? ' small' : '');
+      textarea.value = rawCode;
+      textarea.spellcheck = false;
+      textarea.rows = Math.min(lines + 1, 14);
+      textarea.addEventListener('keydown', e => {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          const s = textarea.selectionStart;
+          textarea.value = textarea.value.substring(0, s) + '    ' + textarea.value.substring(textarea.selectionEnd);
+          textarea.selectionStart = textarea.selectionEnd = s + 4;
+        }
+      });
+
+      const controls = document.createElement('div');
+      controls.className = 'code-controls';
+
+      const runBtn = document.createElement('button');
+      runBtn.className = 'run-btn';
+      runBtn.textContent = '▶ Esegui';
+      runBtn.onclick = () => runCode(runBtn);
+      controls.appendChild(runBtn);
+
+      runner.appendChild(textarea);
+      runner.appendChild(controls);
+    });
+  });
+</script>
+</body>
+</html>

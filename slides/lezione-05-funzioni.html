@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funzioni in Python</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/monokai.css">
+  <style>
+    .reveal h1 { font-size: 2.2em; }
+    .reveal h2 { font-size: 1.8em; }
+    .reveal h3 { font-size: 1.3em; color: #42affa; }
+    .reveal pre { width: 100%; box-shadow: none; }
+    .reveal pre code { font-size: 0.82em; line-height: 1.5; max-height: 420px; }
+    .reveal ul, .reveal ol { display: block; }
+    .reveal li { margin-bottom: 8px; }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.65em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+    .tag-esercizio { background: #f5a623; color: #000; }
+    .tag-soluzione  { background: #42affa; color: #000; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .box { border-radius: 6px; padding: 14px 16px; }
+    .box-err  { background: #2c0a0a; border-left: 3px solid #e74c3c; }
+    .box-ok   { background: #0a2c0a; border-left: 3px solid #2ecc71; }
+    .box-info { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); }
+    .box-err pre, .box-ok pre { margin: 0; }
+    .label-err { color: #e74c3c; font-size: 0.75em; font-weight: bold; margin: 0 0 6px 0; }
+    .label-ok  { color: #2ecc71; font-size: 0.75em; font-weight: bold; margin: 0 0 6px 0; }
+
+    /* ── Pyodide interactive code runner ── */
+    .code-runner { position: relative; margin: 0; }
+
+    .code-textarea {
+      width: 100%;
+      background: #272822;
+      color: #f8f8f2;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.82em;
+      line-height: 1.5;
+      border: 1px solid #444;
+      border-radius: 4px 4px 0 0;
+      padding: 12px;
+      box-sizing: border-box;
+      resize: none;
+      outline: none;
+      tab-size: 4;
+      display: block;
+    }
+    .code-textarea { max-height: 33vh; overflow-y: auto; }
+    .code-textarea:focus { border-color: #42affa; }
+    .code-textarea.small { font-size: 0.6em; }
+
+    .code-controls {
+      display: flex;
+      justify-content: flex-end;
+      background: #1e1e1e;
+      border: 1px solid #444;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      padding: 4px 8px;
+    }
+
+    .run-btn {
+      background: #f5a623;
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      padding: 3px 14px;
+      cursor: pointer;
+      font-size: 0.72em;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .run-btn:hover { background: #ffb84d; }
+    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── Modale output ── */
+    #output-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--r-main-font);
+    }
+    #output-modal.open { display: flex; }
+
+    #output-modal-box {
+      background: var(--r-background-color);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      min-width: 420px;
+      max-width: 640px;
+      width: 50vw;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    }
+
+    #output-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    /* font-size on #output-modal is set dynamically by JS (revealBase * revealScale) */
+    #output-modal-header span {
+      font-family: var(--r-main-font);
+      font-size: 0.6em;
+      color: var(--r-main-color);
+      opacity: 0.5;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    #output-modal-close {
+      background: none;
+      border: none;
+      color: var(--r-main-color);
+      opacity: 0.4;
+      cursor: pointer;
+      font-size: 0.7em;
+      font-family: var(--r-main-font);
+      line-height: 1;
+      padding: 0 2px;
+    }
+    #output-modal-close:hover { opacity: 1; }
+
+    #output-modal-content {
+      padding: 0.4em 0.6em;
+      font-family: monospace;
+      font-size: 0.7em;
+      color: #a8ff78;
+      white-space: pre-wrap;
+      margin: 0;
+      max-height: 40vh;
+      overflow-y: auto;
+    }
+    #output-modal-content.is-error { color: #ff8080; }
+
+    #pyodide-status {
+      position: fixed;
+      bottom: 10px;
+      left: 12px;
+      font-size: 0.6em;
+      color: #f5a623;
+      z-index: 1000;
+      font-family: monospace;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ── TITOLO ── -->
+<section>
+  <h1>Funzioni in Python</h1>
+  <p style="color:#888; margin-top:8px">Corso base</p>
+  <br>
+  <p style="font-size:0.75em; color:#aaa">Andrea Marchesini</p>
+  <p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata</p>
+</section>
+
+<!-- ── OBIETTIVI ── -->
+<section>
+  <h2>🎯 Obiettivi</h2>
+  <ul style="font-size:0.9em">
+    <li>Cos'è una funzione</li>
+    <li>Come usarla</li>
+    <li>Parametri</li>
+    <li>Return</li>
+  </ul>
+</section>
+
+<!-- ── PROBLEMA: codice ripetuto ── -->
+<section>
+  <h2>❗ Problema</h2>
+  <p style="color:#aaa">Codice ripetuto</p>
+  <pre><code class="language-python" data-trim>
+print("Ciao Marco")
+print("Ciao Luca")
+print("Ciao Anna")
+  </code></pre>
+</section>
+
+<!-- ── SEPARAZIONE LOGICA ── -->
+<section>
+  <h2>❗ Problema</h2>
+  <p style="color:#aaa">Separazione logica</p>
+  <pre><code class="language-python" data-trim>
+print("Inserisci email")
+email = leggi_email()
+print("Inserisci password")
+password = leggi_password()
+
+if password == "1234":
+    invia_email_di_benvenuto(email)
+  </code></pre>
+</section>
+
+<!-- ── SOLUZIONE ── -->
+<section>
+  <h2>💡 Soluzione: Funzioni</h2>
+  <pre><code class="language-python" data-trim>
+def saluta(nome):
+    print("Ciao", nome)
+
+saluta("Marco")
+saluta("Luca")
+  </code></pre>
+</section>
+
+<!-- ── COS'È UNA FUNZIONE ── -->
+<section>
+  <h2>📌 Cos'è una funzione?</h2>
+  <p>Un blocco di codice riutilizzabile</p>
+</section>
+
+<!-- ── SINTASSI BASE ── -->
+<section>
+  <h2>⚙️ Sintassi base</h2>
+  <p style="color:#aaa"><code>def</code>, nome, parentesi, <code>:</code>, indentazione</p>
+  <pre><code class="language-python" data-trim>
+def nome():
+    # codice
+    pass
+  </code></pre>
+</section>
+
+<!-- ── ESERCIZIO 1 ── -->
+<section data-background-color="#0d1f0d">
+  <div class="tag tag-esercizio">Esercizio</div>
+  <h2>📝 Esercizio</h2>
+  <p>Scrivere una funzione che stampi:</p>
+  <p><code>"Benvenuto!"</code></p>
+</section>
+
+<!-- ── SOLUZIONE 1 ── -->
+<section data-background-color="#0d1020">
+  <div class="tag tag-soluzione">Soluzione</div>
+  <h2>📝 Soluzione</h2>
+  <pre><code class="language-python" data-trim>
+def benvenuto():
+    print("Benvenuto!")
+
+benvenuto()
+  </code></pre>
+</section>
+
+<!-- ── PARAMETRI ── -->
+<section>
+  <h2>📥 Parametri</h2>
+  <p style="color:#aaa">Le funzioni possono ricevere dati</p>
+  <pre><code class="language-python" data-trim>
+def saluta(nome):
+    print("Ciao", nome)
+  </code></pre>
+</section>
+
+<!-- ── ESEMPIO PARAMETRI ── -->
+<section>
+  <h2>📌 Esempio</h2>
+  <pre><code class="language-python" data-trim>
+def somma(a, b):
+    print(a + b)
+
+somma(3, 4)
+  </code></pre>
+</section>
+
+<!-- ── ESERCIZIO 2 ── -->
+<section data-background-color="#0d1f0d">
+  <div class="tag tag-esercizio">Esercizio</div>
+  <h2>📝 Esercizio</h2>
+  <ol style="font-size:0.9em">
+    <li>Scrivere <code>quadrato(n)</code> che stampi il quadrato di <code>n</code></li>
+    <li>Scrivere <code>presenta(nome, eta)</code> che stampi:<br>
+      <span style="color:#888; font-size:0.9em">"Marco ha 20 anni"</span>
+    </li>
+  </ol>
+</section>
+
+<!-- ── SOLUZIONE 2a ── -->
+<section data-background-color="#0d1020">
+  <div class="tag tag-soluzione">Soluzione</div>
+  <h2>📝 Soluzione (1/2)</h2>
+  <pre><code class="language-python" data-trim>
+def quadrato(n):
+    print(n * n)
+
+quadrato(5)
+  </code></pre>
+</section>
+
+<!-- ── SOLUZIONE 2b ── -->
+<section data-background-color="#0d1020">
+  <div class="tag tag-soluzione">Soluzione</div>
+  <h2>📝 Soluzione (2/2)</h2>
+  <pre><code class="language-python" data-trim>
+def presenta(nome, eta):
+    print(nome, "ha", eta, "anni")
+
+presenta("Marco", 20)
+  </code></pre>
+</section>
+
+<!-- ── RETURN ── -->
+<section>
+  <h2>🔁 Return</h2>
+  <p style="color:#aaa">Restituire un valore</p>
+  <pre><code class="language-python" data-trim>
+def somma(a, b):
+    return a + b
+
+risultato = somma(2, 3)
+print(risultato)
+  </code></pre>
+</section>
+
+<!-- ── PRINT VS RETURN ── -->
+<section>
+  <h2>⚖️ Differenza importante</h2>
+  <p style="color:#aaa; margin-bottom:20px"><code>print()</code> vs <code>return</code></p>
+  <div class="two-col">
+    <div class="box box-err">
+      <p class="label-err">print() — mostra, non restituisce</p>
+      <pre><code class="language-python" data-trim>
+def doppio(n):
+    print(n * 2)
+
+x = doppio(5)
+print(x)      # None
+      </code></pre>
+    </div>
+    <div class="box box-ok">
+      <p class="label-ok">return — restituisce il valore</p>
+      <pre><code class="language-python" data-trim>
+def doppio(n):
+    return n * 2
+
+x = doppio(5)
+print(x)      # 10
+      </code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ── ESERCIZIO 3 ── -->
+<section data-background-color="#0d1f0d">
+  <div class="tag tag-esercizio">Esercizio</div>
+  <h2>📝 Esercizio</h2>
+  <ol style="font-size:0.9em">
+    <li>Scrivere <code>segno(n)</code> che prenda un numero e restituisca<br>
+      <code>"positivo"</code>, <code>"negativo"</code> o <code>"zero"</code>
+    </li>
+    <li>Scrivere <code>massimo(a, b)</code> che restituisca il più grande tra <code>a</code> e <code>b</code></li>
+  </ol>
+</section>
+
+<!-- ── SOLUZIONE 3a ── -->
+<section data-background-color="#0d1020">
+  <div class="tag tag-soluzione">Soluzione</div>
+  <h2>📝 Soluzione (1/2)</h2>
+  <pre><code class="language-python" data-trim>
+def segno(n):
+    if n > 0:
+        return "positivo"
+    elif n < 0:
+        return "negativo"
+    else:
+        return "zero"
+
+print(segno(5))
+print(segno(-3))
+print(segno(0))
+  </code></pre>
+</section>
+
+<!-- ── SOLUZIONE 3b ── -->
+<section data-background-color="#0d1020">
+  <div class="tag tag-soluzione">Soluzione</div>
+  <h2>📝 Soluzione (2/2)</h2>
+  <pre><code class="language-python" data-trim>
+def massimo(a, b):
+    if a > b:
+        return a
+    return b
+
+print(massimo(3, 7))
+  </code></pre>
+</section>
+
+<!-- ── VARIABILI ── -->
+<section>
+  <h2>🌍 Variabili</h2>
+  <p>Locale vs globale</p>
+</section>
+
+<!-- ── ESEMPIO SCOPE ── -->
+<section>
+  <h2>📌 Esempio</h2>
+  <pre><code class="language-python" data-trim>
+x = 5
+
+def f():
+    x = 10
+    print(x)
+
+f()
+print(x)
+  </code></pre>
+</section>
+
+<!-- ── GLOBAL ── -->
+<section>
+  <h2>🌍 La parola chiave <code>global</code></h2>
+
+  <pre><code class="language-python" data-trim>
+x = 5
+
+def f():
+    global x
+    x = 10
+    print(x)
+
+f()
+print(x)
+  </code></pre>
+</section>
+
+<!-- ── OUTPUT? ── -->
+<section data-background-color="#0d1f0d">
+  <div class="tag tag-esercizio">Esercizio</div>
+  <h2>🤔 Output?</h2>
+  <p style="color:#aaa">Osserva questo codice:</p>
+  <pre><code class="language-python" data-trim>
+contatore = 0
+
+def aggiungi():
+    contatore = contatore + 1
+
+aggiungi()
+print(contatore)
+  </code></pre>
+</section>
+
+<!-- ── SOLUZIONE OUTPUT ── -->
+<section data-background-color="#0d1020">
+  <div class="tag tag-soluzione">Soluzione</div>
+  <h2>🤔 Soluzione</h2>
+  <pre><code class="language-python" data-trim>
+contatore = 0
+
+def aggiungi():
+    global contatore
+    contatore = contatore + 1
+
+aggiungi()
+print(contatore)
+  </code></pre>
+</section>
+
+<!-- ── FUNZIONI + CICLI ── -->
+<!-- ── FUNZIONI + CICLI (opzionale, freccia giù) ── -->
+<section>
+  <section>
+    <h2>🔁 Funzioni + cicli</h2>
+    <p style="color:#aaa; font-size:0.8em">Sezione opzionale ↓</p>
+    <pre><code class="language-python" data-trim>
+def stampa(n):
+    for i in range(n):
+        print(i)
+
+stampa(5)
+    </code></pre>
+  </section>
+
+  <section data-background-color="#0d1f0d">
+    <div class="tag tag-esercizio">Esercizio</div>
+    <h2>📝 Esercizio</h2>
+    <ol style="font-size:0.9em">
+      <li>Scrivere <code>da_uno_a_n(n)</code> che stampi i numeri da 1 a <code>n</code></li>
+      <li>Scrivere <code>pari_fino_a_n(n)</code> che stampi i numeri pari da 0 a <code>n</code></li>
+    </ol>
+  </section>
+
+  <section data-background-color="#0d1020">
+    <div class="tag tag-soluzione">Soluzione</div>
+    <h2>📝 Soluzione (1/3)</h2>
+    <pre><code class="language-python" data-trim>
+def da_uno_a_n(n):
+    for i in range(1, n + 1):
+        print(i)
+
+da_uno_a_n(5)
+    </code></pre>
+  </section>
+
+  <section data-background-color="#0d1020">
+    <div class="tag tag-soluzione">Soluzione</div>
+    <h2>📝 Soluzione (2/3)</h2>
+    <pre><code class="language-python" data-trim>
+def pari_fino_a_n(n):
+    for i in range(1, n + 1):
+        if i % 2 == 0:
+            print(i)
+
+pari_fino_a_n(10)
+    </code></pre>
+  </section>
+
+  <section data-background-color="#0d1020">
+    <div class="tag tag-soluzione">Soluzione</div>
+    <h2>📝 Soluzione (3/3)</h2>
+    <pre><code class="language-python" data-trim>
+def pari_fino_a_n(n):
+    for i in range(0, n + 1, 2):
+        print(i)
+
+pari_fino_a_n(10)
+    </code></pre>
+  </section>
+</section>
+
+<!-- ── MINI PROGETTO ── -->
+<section data-background-color="#0d1f0d">
+  <div class="tag tag-esercizio">Esercizio finale</div>
+  <h2>💻 Analizzatore di testo</h2>
+
+  <div class="code-preload" style="display:none">
+def tokenizza(testo):
+    return testo.split()
+
+def conta_parole(parole):
+    return len(parole)
+
+def parola_piu_lunga(parole):
+    lunga = parole[0]
+    for p in parole[1:]:
+        if len(p) > len(lunga):
+            lunga = p
+    return lunga
+
+def lunghezza_media(parole):
+    totale = 0
+    for p in parole:
+        totale = totale + len(p)
+    return totale / len(parole)
+  </div>
+
+  <pre data-size="small"><code class="language-python" data-trim>
+from js import prompt
+
+testo = prompt("Inserisci una frase:")
+parole = tokenizza(testo)
+
+print("Numero parole:", conta_parole(parole))
+print("Parola più lunga:", parola_piu_lunga(parole))
+print("Lunghezza media:", lunghezza_media(parole))
+  </code></pre>
+</section>
+
+<!-- ── HINTS ── -->
+<section>
+  <h2>💡 Hints</h2>
+  <ul style="font-size:0.9em">
+    <li>Una stringa si può dividere in parole con <code>split()</code>
+      <pre style="margin-top:6px"><code class="language-python" data-trim>
+"ciao mondo".split()   # ["ciao", "mondo"]
+      </code></pre>
+    </li>
+    <li style="margin-top:16px">Per contare gli elementi di una lista si usa <code>len()</code>
+      <pre style="margin-top:6px"><code class="language-python" data-trim>
+len(["ciao", "mondo"])  # 2
+      </code></pre>
+    </li>
+  </ul>
+</section>
+
+<!-- ── SOLUZIONE FINALE 1 ── -->
+<section data-background-color="#0d1020">
+  <div class="tag tag-soluzione">Soluzione</div>
+  <h2>📝 tokenizza</h2>
+  <pre><code class="language-python" data-trim>
+def tokenizza(testo):
+    return testo.split()
+
+print(tokenizza("ciao mondo come stai"))
+  </code></pre>
+</section>
+
+<!-- ── SOLUZIONE FINALE 2 ── -->
+<section data-background-color="#0d1020">
+  <div class="tag tag-soluzione">Soluzione</div>
+  <h2>📝 conta_parole</h2>
+  <pre><code class="language-python" data-trim>
+def tokenizza(testo):
+    return testo.split()
+
+def conta_parole(parole):
+    return len(parole)
+
+parole = tokenizza("ciao mondo come stai")
+print(conta_parole(parole))
+  </code></pre>
+</section>
+
+<!-- ── SOLUZIONE FINALE 3 ── -->
+<section data-background-color="#0d1020">
+  <div class="tag tag-soluzione">Soluzione</div>
+  <h2>📝 parola_piu_lunga</h2>
+  <pre><code class="language-python" data-trim>
+def tokenizza(testo):
+    return testo.split()
+
+def parola_piu_lunga(parole):
+    lunga = parole[0]
+    for p in parole:
+        if len(p) > len(lunga):
+            lunga = p
+    return lunga
+
+parole = tokenizza("ciao mondo come stai")
+print(parola_piu_lunga(parole))
+  </code></pre>
+</section>
+
+<!-- ── SOLUZIONE FINALE 4 ── -->
+<section data-background-color="#0d1020">
+  <div class="tag tag-soluzione">Soluzione</div>
+  <h2>📝 lunghezza_media</h2>
+  <pre><code class="language-python" data-trim>
+def tokenizza(testo):
+    return testo.split()
+
+def lunghezza_media(parole):
+    totale = 0
+    for p in parole:
+        totale = totale + len(p)
+    return totale / len(parole)
+
+parole = tokenizza("ciao mondo come stai")
+print(lunghezza_media(parole))
+  </code></pre>
+</section>
+
+<!-- ── RECAP ── -->
+<section>
+  <h2>🎯 Obiettivi</h2>
+  <ul style="font-size:0.9em">
+    <li>Cos'è una funzione</li>
+    <li>Come usarla</li>
+    <li>Parametri</li>
+    <li>Return</li>
+  </ul>
+</section>
+
+<!-- ── DOMANDE ── -->
+<section>
+  <h2>❓ Domande</h2>
+</section>
+
+</div>
+</div>
+
+<div id="pyodide-status">● Caricamento Python...</div>
+
+<!-- ── Modale output ── -->
+<div id="output-modal">
+  <div id="output-modal-box">
+    <div id="output-modal-header">
+      <span>Output</span>
+      <button id="output-modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <pre id="output-modal-content"></pre>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/highlight.js"></script>
+<script>
+  // ── Pyodide ──
+  let pyodide = null;
+
+  (async function initPyodide() {
+    const status = document.getElementById('pyodide-status');
+    try {
+      pyodide = await loadPyodide({
+        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/'
+      });
+      status.textContent = '● Python pronto';
+      status.style.color = '#2ecc71';
+    } catch (e) {
+      status.textContent = '● Python non disponibile';
+      status.style.color = '#e74c3c';
+    }
+  })();
+
+  function syncModalFontSize() {
+    const revealEl = document.querySelector('.reveal');
+    const base = parseFloat(getComputedStyle(revealEl).fontSize);
+    const scale = Reveal.getScale ? Reveal.getScale() : 1;
+    document.getElementById('output-modal').style.fontSize = (base * scale) + 'px';
+  }
+
+  function openModal(text, isError) {
+    const content = document.getElementById('output-modal-content');
+    content.textContent = text;
+    content.className = isError ? 'is-error' : '';
+    syncModalFontSize();
+    document.getElementById('output-modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('output-modal').classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  async function runCode(btn) {
+    const runner = btn.closest('.code-runner');
+    const textarea = runner.querySelector('.code-textarea');
+
+    if (!pyodide) {
+      openModal('Attendi il caricamento di Python...', true);
+      return;
+    }
+
+    const prev = btn.textContent;
+    btn.textContent = '⏳';
+    btn.disabled = true;
+
+    try {
+      const preloadEl = runner.closest('section').querySelector('.code-preload');
+      const preload = preloadEl ? preloadEl.textContent.trim() + '\n\n' : '';
+      pyodide.globals.set('_user_code', preload + textarea.value);
+      pyodide.runPython(`
+import sys, traceback
+from io import StringIO
+_stdout = StringIO()
+_stderr = StringIO()
+sys.stdout = _stdout
+sys.stderr = _stderr
+try:
+    exec(_user_code, {})
+except Exception:
+    traceback.print_exc()
+finally:
+    sys.stdout = sys.__stdout__
+    sys.stderr = sys.__stderr__
+_out = _stdout.getvalue()
+_err = _stderr.getvalue()
+`);
+      const out = pyodide.globals.get('_out');
+      const err = pyodide.globals.get('_err');
+
+      if (err) {
+        openModal(err, true);
+      } else {
+        openModal(out || '(nessun output)', false);
+      }
+    } catch (e) {
+      try { pyodide.runPython('sys.stdout = sys.__stdout__\nsys.stderr = sys.__stderr__'); } catch (_) {}
+      openModal(e.message, true);
+    }
+
+    btn.textContent = prev;
+    btn.disabled = false;
+  }
+
+  // ── Reveal ──
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    plugins: [RevealHighlight],
+  });
+
+  Reveal.on('resize', syncModalFontSize);
+
+  // ── Trasforma i blocchi codice in editor interattivi ──
+  Reveal.on('ready', () => {
+    document.querySelectorAll('pre').forEach(pre => {
+      const code = pre.querySelector('code.language-python');
+      if (!code) return;
+
+      const rawCode = code.textContent.trim();
+      const lines = rawCode.split('\n').length;
+
+      const runner = document.createElement('div');
+      runner.className = 'code-runner';
+      pre.parentNode.insertBefore(runner, pre);
+      pre.remove();
+
+      const textarea = document.createElement('textarea');
+      textarea.className = 'code-textarea' + (pre.dataset.size === 'small' ? ' small' : '');
+      textarea.value = rawCode;
+      textarea.spellcheck = false;
+      textarea.rows = Math.min(lines + 1, 14);
+      textarea.addEventListener('keydown', e => {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          const s = textarea.selectionStart;
+          textarea.value = textarea.value.substring(0, s) + '    ' + textarea.value.substring(textarea.selectionEnd);
+          textarea.selectionStart = textarea.selectionEnd = s + 4;
+        }
+      });
+
+      const controls = document.createElement('div');
+      controls.className = 'code-controls';
+
+      const runBtn = document.createElement('button');
+      runBtn.className = 'run-btn';
+      runBtn.textContent = '▶ Esegui';
+      runBtn.onclick = () => runCode(runBtn);
+      controls.appendChild(runBtn);
+
+      runner.appendChild(textarea);
+      runner.appendChild(controls);
+    });
+  });
+</script>
+</body>
+</html>

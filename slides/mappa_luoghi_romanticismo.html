@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_2f582f3ae607b4da067fb23955745a1c {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_2f582f3ae607b4da067fb23955745a1c" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_2f582f3ae607b4da067fb23955745a1c = L.map(
+                "map_2f582f3ae607b4da067fb23955745a1c",
+                {
+                    center: [51.1657, 10.4515],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 1,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_4987d6358a991d2d76b10a43d0aae51c = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_4987d6358a991d2d76b10a43d0aae51c.addTo(map_2f582f3ae607b4da067fb23955745a1c);
+        
+    
+            var marker_d84a138e59f5972d9230edcee52c5fda = L.marker(
+                [51.1638175, 10.4478313],
+                {
+}
+            ).addTo(map_2f582f3ae607b4da067fb23955745a1c);
+        
+    
+        var popup_c23e0a6070e4dfedbab1754166fd0398 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e1b7eecaf58aa2ed0134381fc11af734 = $(`<div id="html_e1b7eecaf58aa2ed0134381fc11af734" style="width: 100.0%; height: 100.0%;">Deutschland<br>Occorrenze: 1</div>`)[0];
+                popup_c23e0a6070e4dfedbab1754166fd0398.setContent(html_e1b7eecaf58aa2ed0134381fc11af734);
+            
+        
+
+        marker_d84a138e59f5972d9230edcee52c5fda.bindPopup(popup_c23e0a6070e4dfedbab1754166fd0398)
+        ;
+
+        
+    
+    
+            marker_d84a138e59f5972d9230edcee52c5fda.bindTooltip(
+                `<div>
+                     Deutschland
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_e0c2360e9f0f7c3ca80de464fa44dc9f = L.marker(
+                [52.6445557, 13.4567911],
+                {
+}
+            ).addTo(map_2f582f3ae607b4da067fb23955745a1c);
+        
+    
+        var popup_20bd450d31d946ad52987fa31083b273 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8bfb517f930447ae6dd3aee0df3dcd63 = $(`<div id="html_8bfb517f930447ae6dd3aee0df3dcd63" style="width: 100.0%; height: 100.0%;">Neuem<br>Occorrenze: 1</div>`)[0];
+                popup_20bd450d31d946ad52987fa31083b273.setContent(html_8bfb517f930447ae6dd3aee0df3dcd63);
+            
+        
+
+        marker_e0c2360e9f0f7c3ca80de464fa44dc9f.bindPopup(popup_20bd450d31d946ad52987fa31083b273)
+        ;
+
+        
+    
+    
+            marker_e0c2360e9f0f7c3ca80de464fa44dc9f.bindTooltip(
+                `<div>
+                     Neuem
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_fddd927c6b0dddc1d3078a666fed82ea = L.marker(
+                [50.2095747, 8.3338487],
+                {
+}
+            ).addTo(map_2f582f3ae607b4da067fb23955745a1c);
+        
+    
+        var popup_529050be2053defbeba4089f29340429 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_04572e938e5618e83657ae0b64370218 = $(`<div id="html_04572e938e5618e83657ae0b64370218" style="width: 100.0%; height: 100.0%;">Römischen Reiches<br>Occorrenze: 1</div>`)[0];
+                popup_529050be2053defbeba4089f29340429.setContent(html_04572e938e5618e83657ae0b64370218);
+            
+        
+
+        marker_fddd927c6b0dddc1d3078a666fed82ea.bindPopup(popup_529050be2053defbeba4089f29340429)
+        ;
+
+        
+    
+    
+            marker_fddd927c6b0dddc1d3078a666fed82ea.bindTooltip(
+                `<div>
+                     Römischen Reiches
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_4b6f868031c2c9f6d5a0561bf578a8cb = L.marker(
+                [59.3092604, 18.075334],
+                {
+}
+            ).addTo(map_2f582f3ae607b4da067fb23955745a1c);
+        
+    
+        var popup_50608067d907e13e482e16c1dae9edde = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_45f96ae96135f5daa90849b39533da41 = $(`<div id="html_45f96ae96135f5daa90849b39533da41" style="width: 100.0%; height: 100.0%;">Ringens<br>Occorrenze: 1</div>`)[0];
+                popup_50608067d907e13e482e16c1dae9edde.setContent(html_45f96ae96135f5daa90849b39533da41);
+            
+        
+
+        marker_4b6f868031c2c9f6d5a0561bf578a8cb.bindPopup(popup_50608067d907e13e482e16c1dae9edde)
+        ;
+
+        
+    
+    
+            marker_4b6f868031c2c9f6d5a0561bf578a8cb.bindTooltip(
+                `<div>
+                     Ringens
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_73018c6c007c718103650aae8305e40e = L.marker(
+                [46.9467585, 8.1354146],
+                {
+}
+            ).addTo(map_2f582f3ae607b4da067fb23955745a1c);
+        
+    
+        var popup_0ccfa88573396bdc06e53bb3ad6f8c9d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4bcbaafd9551cc40cbec97425ac84233 = $(`<div id="html_4bcbaafd9551cc40cbec97425ac84233" style="width: 100.0%; height: 100.0%;">Brüdern<br>Occorrenze: 1</div>`)[0];
+                popup_0ccfa88573396bdc06e53bb3ad6f8c9d.setContent(html_4bcbaafd9551cc40cbec97425ac84233);
+            
+        
+
+        marker_73018c6c007c718103650aae8305e40e.bindPopup(popup_0ccfa88573396bdc06e53bb3ad6f8c9d)
+        ;
+
+        
+    
+    
+            marker_73018c6c007c718103650aae8305e40e.bindTooltip(
+                `<div>
+                     Brüdern
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_0ff981091c32a92953736e6b75b04935 = L.marker(
+                [51.7878106, 11.1374403],
+                {
+}
+            ).addTo(map_2f582f3ae607b4da067fb23955745a1c);
+        
+    
+        var popup_ca7aafbf88ec4b68c437956530ebbc0b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_42f1151003afcf031d0cc2eaa7e66e67 = $(`<div id="html_42f1151003afcf031d0cc2eaa7e66e67" style="width: 100.0%; height: 100.0%;">Schiller's<br>Occorrenze: 1</div>`)[0];
+                popup_ca7aafbf88ec4b68c437956530ebbc0b.setContent(html_42f1151003afcf031d0cc2eaa7e66e67);
+            
+        
+
+        marker_0ff981091c32a92953736e6b75b04935.bindPopup(popup_ca7aafbf88ec4b68c437956530ebbc0b)
+        ;
+
+        
+    
+    
+            marker_0ff981091c32a92953736e6b75b04935.bindTooltip(
+                `<div>
+                     Schiller's
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_45b1119a59c5811df3dfb7750468d542 = L.marker(
+                [51.3406321, 12.3747329],
+                {
+}
+            ).addTo(map_2f582f3ae607b4da067fb23955745a1c);
+        
+    
+        var popup_c94b563e5e84b4437b0a5375eda685ed = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9d15f4fd99b0c1dd6f754955b308396e = $(`<div id="html_9d15f4fd99b0c1dd6f754955b308396e" style="width: 100.0%; height: 100.0%;">Leipzig<br>Occorrenze: 1</div>`)[0];
+                popup_c94b563e5e84b4437b0a5375eda685ed.setContent(html_9d15f4fd99b0c1dd6f754955b308396e);
+            
+        
+
+        marker_45b1119a59c5811df3dfb7750468d542.bindPopup(popup_c94b563e5e84b4437b0a5375eda685ed)
+        ;
+
+        
+    
+    
+            marker_45b1119a59c5811df3dfb7750468d542.bindTooltip(
+                `<div>
+                     Leipzig
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 6 - Dati esterni e Web</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/monokai.css">
+  <style>
+    .reveal h1 { font-size: 2.2em; }
+    .reveal h2 { font-size: 1.8em; }
+    .reveal h3 { font-size: 1.3em; color: #42affa; }
+    .reveal pre { width: 100%; box-shadow: none; }
+    .reveal pre code { font-size: 0.82em; line-height: 1.5; max-height: 420px; }
+    .reveal ul, .reveal ol { display: block; }
+    .reveal li { margin-bottom: 8px; }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.65em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+    .tag-esercizio { background: #f5a623; color: #000; }
+    .tag-soluzione  { background: #42affa; color: #000; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .box { border-radius: 6px; padding: 14px 16px; }
+    .box-err  { background: #2c0a0a; border-left: 3px solid #e74c3c; }
+    .box-ok   { background: #0a2c0a; border-left: 3px solid #2ecc71; }
+    .box-info { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); }
+    .box-err pre, .box-ok pre { margin: 0; }
+    .label-err { color: #e74c3c; font-size: 0.75em; font-weight: bold; margin: 0 0 6px 0; }
+    .label-ok  { color: #2ecc71; font-size: 0.75em; font-weight: bold; margin: 0 0 6px 0; }
+
+    /* ── Pyodide interactive code runner ── */
+    .code-runner { position: relative; margin: 0; }
+
+    .code-textarea {
+      width: 100%;
+      background: #272822;
+      color: #f8f8f2;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.82em;
+      line-height: 1.5;
+      border: 1px solid #444;
+      border-radius: 4px 4px 0 0;
+      padding: 12px;
+      box-sizing: border-box;
+      resize: none;
+      outline: none;
+      tab-size: 4;
+      display: block;
+    }
+    .code-textarea { max-height: 33vh; overflow-y: auto; }
+    .code-textarea:focus { border-color: #42affa; }
+    .code-textarea.small { font-size: 0.6em; }
+
+    .code-controls {
+      display: flex;
+      justify-content: flex-end;
+      background: #1e1e1e;
+      border: 1px solid #444;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      padding: 4px 8px;
+    }
+
+    .run-btn {
+      background: #f5a623;
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      padding: 3px 14px;
+      cursor: pointer;
+      font-size: 0.72em;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .run-btn:hover { background: #ffb84d; }
+    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── Modale output ── */
+    #output-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--r-main-font);
+    }
+    #output-modal.open { display: flex; }
+
+    #output-modal-box {
+      background: var(--r-background-color);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      min-width: 420px;
+      max-width: 640px;
+      width: 50vw;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    }
+
+    #output-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    /* font-size on #output-modal is set dynamically by JS (revealBase * revealScale) */
+    #output-modal-header span {
+      font-family: var(--r-main-font);
+      font-size: 0.6em;
+      color: var(--r-main-color);
+      opacity: 0.5;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    #output-modal-close {
+      background: none;
+      border: none;
+      color: var(--r-main-color);
+      opacity: 0.4;
+      cursor: pointer;
+      font-size: 0.7em;
+      font-family: var(--r-main-font);
+      line-height: 1;
+      padding: 0 2px;
+    }
+    #output-modal-close:hover { opacity: 1; }
+
+    #output-modal-content {
+      padding: 0.4em 0.6em;
+      font-family: monospace;
+      font-size: 0.7em;
+      color: #a8ff78;
+      white-space: pre-wrap;
+      margin: 0;
+      max-height: 40vh;
+      overflow-y: auto;
+    }
+    #output-modal-content.is-error { color: #ff8080; }
+
+    #pyodide-status {
+      position: fixed;
+      bottom: 10px;
+      left: 12px;
+      font-size: 0.6em;
+      color: #f5a623;
+      z-index: 1000;
+      font-family: monospace;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides"><section>
+<h1>Lezione 6<br>Dati esterni e dati dal Web</h1>
+  <p style="color:#888; margin-top:8px">Python per le Digital Humanities</p>
+  <br>
+  <p style="font-size:0.75em; color:#aaa">Tiziana Mancinelli</p>
+  <p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata</p>
+</section>
+<section>
+<h2>🎯 Obiettivi</h2>
+<ul style="font-size:0.9em"><li>Leggere file esterni</li>
+<li>Capire i percorsi dei file</li>
+<li>Lavorare con file TXT e CSV</li>
+<li>Scaricare dati dal Web</li>
+<li>Introdurre HTML, requests e BeautifulSoup</li></ul>
+</section>
+<section>
+<h2>Dai dati scritti nel codice ai dati reali</h2><p>Finora abbiamo inserito il testo direttamente nello script. Ora leggiamo dati da file e dal Web.</p>
+</section>
+<section>
+<h2>Dati esterni nelle DH</h2><ul><li>Testi digitalizzati</li><li>Documenti XML/TEI</li><li>Cataloghi</li><li>CSV</li><li>Pagine web</li><li>API</li></ul>
+</section>
+<section>
+<h2>File TXT</h2><p>Un file di testo contiene caratteri leggibili.</p><pre><code data-trim>
+frankenstein.txt
+  </code></pre>
+</section>
+<section>
+<h2>Aprire un file</h2><pre><code class="language-python" data-trim>
+with open(&quot;frankenstein.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as file:
+    testo = file.read()
+
+print(testo)
+  </code></pre>
+</section>
+<section>
+<h2>Che cosa significa r?</h2><p><code>r</code> significa read: aprire il file in modalità lettura.</p>
+</section>
+<section>
+<h2>encoding</h2><p><code>encoding="utf-8"</code> aiuta Python a leggere correttamente accenti e caratteri speciali.</p>
+</section>
+<section>
+<h2>Percorsi dei file</h2><pre><code data-trim>
+cartella/file.txt
+Documenti/corso/frankenstein.txt
+  </code></pre>
+</section>
+<section>
+<h2>Errore comune</h2><div class="box box-err"><p class="label-err">FileNotFoundError</p><p>Python non trova il file nel percorso indicato.</p></div>
+</section>
+<section>
+<h2>Controllare la cartella corrente</h2><pre><code class="language-python" data-trim>
+import os
+
+print(os.getcwd())
+print(os.listdir())
+  </code></pre>
+</section>
+<section>
+<h2>Leggere solo una parte</h2><pre><code class="language-python" data-trim>
+with open(&quot;frankenstein.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as file:
+    testo = file.read()
+
+print(testo[:500])
+  </code></pre>
+</section>
+<section>
+<h2>File CSV</h2><p>Un CSV è una tabella salvata come testo.</p><pre><code data-trim>
+Titolo,Anno
+Frankenstein,1818
+Dracula,1897
+  </code></pre>
+</section>
+<section>
+<h2>Pandas</h2><p>Pandas serve per lavorare con dati tabellari.</p><pre><code class="language-python" data-trim>
+import pandas as pd
+
+df = pd.read_csv(&quot;opere.csv&quot;)
+print(df)
+  </code></pre>
+</section>
+<section>
+<h2>DataFrame</h2><p>Un DataFrame è una tabella con righe e colonne.</p>
+</section>
+<section>
+<h2>Dati dal Web</h2><p>Molte risorse DH sono online: Project Gutenberg, Wikisource, Wikipedia, archivi digitali.</p>
+</section>
+<section>
+<h2>URL</h2><p>Un URL è l’indirizzo di una risorsa sul Web.</p><pre><code data-trim>
+https://www.gutenberg.org/files/84/84-0.txt
+  </code></pre>
+</section>
+<section>
+<h2>requests</h2><p>La libreria <code>requests</code> permette di scaricare contenuti dal Web.</p><pre><code class="language-python" data-trim>
+import requests
+
+url = &quot;https://www.gutenberg.org/files/84/84-0.txt&quot;
+risposta = requests.get(url)
+
+print(risposta.text[:500])
+  </code></pre>
+</section>
+<section>
+<h2>Workflow Web</h2><pre><code data-trim>
+URL → richiesta → risposta → testo
+  </code></pre>
+</section>
+<section>
+<h2>Salvare un testo scaricato</h2><pre><code class="language-python" data-trim>
+import requests
+
+url = &quot;https://www.gutenberg.org/files/84/84-0.txt&quot;
+testo = requests.get(url).text
+
+with open(&quot;frankenstein.txt&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as file:
+    file.write(testo)
+  </code></pre>
+</section>
+<section>
+<h2>HTML</h2><p>Le pagine web sono scritte in HTML, una struttura fatta di tag.</p><pre><code data-trim>
+&lt;h1&gt;Mary Shelley&lt;/h1&gt;
+&lt;p&gt;Autrice di Frankenstein&lt;/p&gt;
+  </code></pre>
+</section>
+<section>
+<h2>BeautifulSoup</h2><p>BeautifulSoup serve per leggere ed esplorare HTML.</p><pre><code class="language-python" data-trim>
+from bs4 import BeautifulSoup
+
+html = &quot;&lt;h1&gt;Mary Shelley&lt;/h1&gt;&quot;
+soup = BeautifulSoup(html, &quot;html.parser&quot;)
+print(soup.h1.text)
+  </code></pre>
+</section>
+<section>
+<h2>Estrarre il titolo di una pagina</h2><pre><code class="language-python" data-trim>
+import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://en.wikipedia.org/wiki/Mary_Shelley&quot;
+pagina = requests.get(url)
+soup = BeautifulSoup(pagina.text, &quot;html.parser&quot;)
+
+print(soup.title.text)
+  </code></pre>
+</section>
+<section>
+<h2>Web scraping</h2><p>Il web scraping è l’estrazione automatica di informazioni da pagine web.</p>
+</section>
+<section>
+<h2>Attenzione metodologica</h2><ul><li>Verificare la fonte</li><li>Rispettare licenze e condizioni d’uso</li><li>Conservare informazioni sulla provenienza</li><li>Documentare il processo</li></ul>
+</section>
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Esercizio</div>
+<h2>📝 Esercizio 1</h2>
+<p>Leggere un file <code>testo.txt</code> e stampare i primi 100 caratteri.</p>
+</section>
+<section data-background-color="#0d1020">
+<div class="tag tag-soluzione">Soluzione</div>
+<h2>📝 Soluzione 1</h2>
+<pre><code class="language-python" data-trim>
+with open(&quot;testo.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as file:
+    testo = file.read()
+
+print(testo[:100])
+  </code></pre>
+</section>
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Esercizio</div>
+<h2>📝 Esercizio 2</h2>
+<p>Controllare quali file sono presenti nella cartella.</p>
+</section>
+<section data-background-color="#0d1020">
+<div class="tag tag-soluzione">Soluzione</div>
+<h2>📝 Soluzione 2</h2>
+<pre><code class="language-python" data-trim>
+import os
+
+print(os.listdir())
+  </code></pre>
+</section>
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Esercizio</div>
+<h2>📝 Esercizio 3</h2>
+<p>Scaricare Frankenstein da Project Gutenberg e contare i caratteri.</p>
+</section>
+<section data-background-color="#0d1020">
+<div class="tag tag-soluzione">Soluzione</div>
+<h2>📝 Soluzione 3</h2>
+<pre><code class="language-python" data-trim>
+import requests
+
+url = &quot;https://www.gutenberg.org/files/84/84-0.txt&quot;
+testo = requests.get(url).text
+
+print(len(testo))
+  </code></pre>
+</section>
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Esercizio</div>
+<h2>📝 Esercizio 4</h2>
+<p>Estrarre il titolo di una pagina HTML semplice.</p>
+</section>
+<section data-background-color="#0d1020">
+<div class="tag tag-soluzione">Soluzione</div>
+<h2>📝 Soluzione 4</h2>
+<pre><code class="language-python" data-trim>
+from bs4 import BeautifulSoup
+
+html = &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Archivio digitale&lt;/title&gt;&lt;/head&gt;&lt;/html&gt;&quot;
+soup = BeautifulSoup(html, &quot;html.parser&quot;)
+
+print(soup.title.text)
+  </code></pre>
+</section>
+<section>
+<h2>Mini progetto</h2><p>Scaricare un testo, salvarlo e mostrarne una parte.</p><pre><code class="language-python" data-trim>
+import requests
+
+url = &quot;https://www.gutenberg.org/files/84/84-0.txt&quot;
+testo = requests.get(url).text
+
+with open(&quot;frankenstein.txt&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as file:
+    file.write(testo)
+
+print(&quot;Caratteri:&quot;, len(testo))
+print(testo[:300])
+  </code></pre>
+</section>
+<section>
+<h2>Pipeline della lezione</h2><pre><code data-trim>
+Fonte esterna → Download / Lettura → Variabile → Analisi → Output
+  </code></pre>
+</section>
+<section>
+<h2>Collegamento alla lezione successiva</h2><p>I dati recuperati potranno essere analizzati con XML/TEI, NLP, visualizzazioni e timeline.</p>
+</section>
+<section>
+<h2>🎯 Recap</h2>
+<ul style="font-size:0.9em"><li>Python legge file esterni</li>
+<li>Il path indica dove si trova un file</li>
+<li>CSV e TXT sono formati comuni</li>
+<li>requests scarica dati dal Web</li>
+<li>BeautifulSoup aiuta a leggere HTML</li></ul>
+</section>
+<section>
+<h2>❓ Domande</h2>
+</section>
+</div>
+</div>
+
+<div id="pyodide-status">● Caricamento Python...</div>
+
+<!-- ── Modale output ── -->
+<div id="output-modal">
+  <div id="output-modal-box">
+    <div id="output-modal-header">
+      <span>Output</span>
+      <button id="output-modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <pre id="output-modal-content"></pre>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/highlight.js"></script>
+<script>
+  // ── Pyodide ──
+  let pyodide = null;
+
+  (async function initPyodide() {
+    const status = document.getElementById('pyodide-status');
+    try {
+      pyodide = await loadPyodide({
+        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/'
+      });
+      status.textContent = '● Python pronto';
+      status.style.color = '#2ecc71';
+    } catch (e) {
+      status.textContent = '● Python non disponibile';
+      status.style.color = '#e74c3c';
+    }
+  })();
+
+  function syncModalFontSize() {
+    const revealEl = document.querySelector('.reveal');
+    const base = parseFloat(getComputedStyle(revealEl).fontSize);
+    const scale = Reveal.getScale ? Reveal.getScale() : 1;
+    document.getElementById('output-modal').style.fontSize = (base * scale) + 'px';
+  }
+
+  function openModal(text, isError) {
+    const content = document.getElementById('output-modal-content');
+    content.textContent = text;
+    content.className = isError ? 'is-error' : '';
+    syncModalFontSize();
+    document.getElementById('output-modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('output-modal').classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  async function runCode(btn) {
+    const runner = btn.closest('.code-runner');
+    const textarea = runner.querySelector('.code-textarea');
+
+    if (!pyodide) {
+      openModal('Attendi il caricamento di Python...', true);
+      return;
+    }
+
+    const prev = btn.textContent;
+    btn.textContent = '⏳';
+    btn.disabled = true;
+
+    try {
+      const preloadEl = runner.closest('section').querySelector('.code-preload');
+      const preload = preloadEl ? preloadEl.textContent.trim() + '\n\n' : '';
+      pyodide.globals.set('_user_code', preload + textarea.value);
+      pyodide.runPython(`
+import sys, traceback
+from io import StringIO
+_stdout = StringIO()
+_stderr = StringIO()
+sys.stdout = _stdout
+sys.stderr = _stderr
+try:
+    exec(_user_code, {})
+except Exception:
+    traceback.print_exc()
+finally:
+    sys.stdout = sys.__stdout__
+    sys.stderr = sys.__stderr__
+_out = _stdout.getvalue()
+_err = _stderr.getvalue()
+`);
+      const out = pyodide.globals.get('_out');
+      const err = pyodide.globals.get('_err');
+
+      if (err) {
+        openModal(err, true);
+      } else {
+        openModal(out || '(nessun output)', false);
+      }
+    } catch (e) {
+      try { pyodide.runPython('sys.stdout = sys.__stdout__\nsys.stderr = sys.__stderr__'); } catch (_) {}
+      openModal(e.message, true);
+    }
+
+    btn.textContent = prev;
+    btn.disabled = false;
+  }
+
+  // ── Reveal ──
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    plugins: [RevealHighlight],
+  });
+
+  Reveal.on('resize', syncModalFontSize);
+
+  // ── Trasforma i blocchi codice in editor interattivi ──
+  Reveal.on('ready', () => {
+    document.querySelectorAll('pre').forEach(pre => {
+      const code = pre.querySelector('code.language-python');
+      if (!code) return;
+
+      const rawCode = code.textContent.trim();
+      const lines = rawCode.split('\n').length;
+
+      const runner = document.createElement('div');
+      runner.className = 'code-runner';
+      pre.parentNode.insertBefore(runner, pre);
+      pre.remove();
+
+      const textarea = document.createElement('textarea');
+      textarea.className = 'code-textarea' + (pre.dataset.size === 'small' ? ' small' : '');
+      textarea.value = rawCode;
+      textarea.spellcheck = false;
+      textarea.rows = Math.min(lines + 1, 14);
+      textarea.addEventListener('keydown', e => {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          const s = textarea.selectionStart;
+          textarea.value = textarea.value.substring(0, s) + '    ' + textarea.value.substring(textarea.selectionEnd);
+          textarea.selectionStart = textarea.selectionEnd = s + 4;
+        }
+      });
+
+      const controls = document.createElement('div');
+      controls.className = 'code-controls';
+
+      const runBtn = document.createElement('button');
+      runBtn.className = 'run-btn';
+      runBtn.textContent = '▶ Esegui';
+      runBtn.onclick = () => runCode(runBtn);
+      controls.appendChild(runBtn);
+
+      runner.appendChild(textarea);
+      runner.appendChild(controls);
+    });
+  });
+</script>
+</body>
+</html>

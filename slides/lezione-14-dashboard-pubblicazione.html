@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 14 - Dashboard e pubblicazione dei risultati</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/monokai.css">
+  <style>
+.reveal h1 { font-size: 2.1em; }
+.reveal h2 { font-size: 1.65em; }
+.reveal h3 { font-size: 1.15em; color: #42affa; }
+.reveal pre { width: 100%; box-shadow: none; }
+.reveal pre code { font-size: 0.72em; line-height: 1.35; max-height: 430px; }
+.reveal ul, .reveal ol { display: block; }
+.reveal li { margin-bottom: 8px; }
+.tag { display:inline-block; padding:3px 14px; border-radius:20px; font-weight:bold; font-size:.62em; text-transform:uppercase; letter-spacing:2px; margin-bottom:18px; }
+.tag-esercizio { background:#f5a623; color:#000; }
+.tag-soluzione { background:#42affa; color:#000; }
+.tag-progetto { background:#2ecc71; color:#000; }
+.box { border-radius:6px; padding:14px 16px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.12); }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start; }
+.small { font-size:.75em; color:#aaa; }
+.pipeline { font-size:1em; color:#a8ff78; white-space:pre; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section>
+  <h1>Lezione 14<br>Dashboard e pubblicazione dei risultati</h1>
+  <p style="color:#888; margin-top:8px">Python per le Digital Humanities</p>
+  <br>
+  <p style="font-size:0.75em; color:#aaa">Tiziana Mancinelli</p>
+  <p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata</p>
+</section>
+<section>
+<h2>🎯 Obiettivi</h2>
+<ul style="font-size:.9em"><li>organizzare file di progetto</li><li>esportare visualizzazioni HTML</li><li>creare una dashboard semplice</li><li>collegare grafici, mappe e testi</li><li>preparare materiali per la pubblicazione online</li></ul>
+</section>
+<section>
+<h2>🧭 Struttura della lezione</h2>
+<ol><li>Concetti principali</li><li>Esempi guidati</li><li>Esercizi</li><li>Mini progetto</li><li>Discussione</li></ol>
+</section>
+<section>
+<h2>🧩 Perché una dashboard?</h2>
+<p>Una dashboard raccoglie in un unico spazio risultati diversi: grafici, mappe, timeline, testi.</p>
+</section>
+<section>
+<h2>Output del corso</h2>
+<ul><li>grafici Plotly</li><li>mappe Folium</li><li>wordcloud.png</li><li>network.png</li><li>tabelle CSV</li></ul>
+</section>
+<section>
+<h2>Organizzare cartelle</h2>
+<pre><code class="language-text" data-trim>
+progetto/
+  dati/
+  immagini/
+  html/
+  script/
+</code></pre>
+</section>
+<section>
+<h2>Salvare Plotly</h2>
+<pre><code class="language-python" data-trim>
+fig.write_html(&quot;html/timeline.html&quot;)
+</code></pre>
+</section>
+<section>
+<h2>Salvare Folium</h2>
+<pre><code class="language-python" data-trim>
+mappa.save(&quot;html/mappa.html&quot;)
+</code></pre>
+</section>
+<section>
+<h2>Salvare immagine</h2>
+<pre><code class="language-python" data-trim>
+plt.savefig(&quot;immagini/network.png&quot;, dpi=150)
+</code></pre>
+</section>
+<section>
+<h2>HTML base</h2>
+<pre><code class="language-html" data-trim>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;Dashboard DH&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Dashboard DH&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+</section>
+<section>
+<h2>Inserire immagine</h2>
+<pre><code class="language-html" data-trim>
+&lt;img src=&quot;immagini/wordcloud.png&quot; alt=&quot;Word Cloud&quot;&gt;
+</code></pre>
+</section>
+<section>
+<h2>Iframe per HTML esterni</h2>
+<pre><code class="language-html" data-trim>
+&lt;iframe src=&quot;html/mappa.html&quot; width=&quot;100%&quot; height=&quot;500&quot;&gt;&lt;/iframe&gt;
+</code></pre>
+</section>
+<section>
+<h2>Sezioni della dashboard</h2>
+<ul><li>Introduzione</li><li>Dataset</li><li>Metodo</li><li>Visualizzazioni</li><li>Conclusioni</li></ul>
+</section>
+<section>
+<h2>CSS semplice</h2>
+<pre><code class="language-css" data-trim>
+body { font-family: Arial; margin: 40px; }
+section { margin-bottom: 40px; }
+iframe { border: 1px solid #ccc; }
+</code></pre>
+</section>
+<section>
+<h2>README</h2>
+<p>Ogni progetto deve avere un file README che spiega dati, metodo e output.</p>
+</section>
+<section>
+<h2>Riproducibilità</h2>
+<p>Un progetto DH deve poter essere letto, controllato e possibilmente riusato.</p>
+</section>
+<section>
+<h2>Pubblicazione</h2>
+<ul><li>cartella locale</li><li>sito del corso</li><li>GitHub Pages</li><li>repository di progetto</li></ul>
+</section>
+<section>
+<h2>Checklist</h2>
+<ul><li>I file si aprono?</li><li>I link funzionano?</li><li>I dati sono documentati?</li><li>La metodologia è esplicita?</li></ul>
+</section>
+<section>
+<h2>Pipeline dashboard</h2>
+<pre class="pipeline">Analisi
+ ↓
+Visualizzazioni
+ ↓
+HTML
+ ↓
+Dashboard
+ ↓
+Pubblicazione</pre>
+</section>
+<section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio</div><h2>📝 Esercizio 1</h2><p>Crea una pagina HTML base.</p></section>
+<section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>📝 Soluzione 1</h2><pre><code class="language-python" data-trim>
+html = &quot;&lt;h1&gt;Dashboard DH&lt;/h1&gt;&quot;
+</code></pre></section>
+<section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio</div><h2>📝 Esercizio 2</h2><p>Inserisci una immagine nella dashboard.</p></section>
+<section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>📝 Soluzione 2</h2><pre><code class="language-python" data-trim>
+html += &#x27;&lt;img src=&quot;wordcloud.png&quot;&gt;&#x27;
+</code></pre></section>
+<section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio</div><h2>📝 Esercizio 3</h2><p>Salva il file HTML.</p></section>
+<section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>📝 Soluzione 3</h2><pre><code class="language-python" data-trim>
+open(&quot;dashboard.html&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;).write(html)
+</code></pre></section>
+<section data-background-color="#10230f"><div class="tag tag-progetto">Mini progetto</div><h2>💻 Mini progetto della lezione</h2><p>Applica gli strumenti della lezione a un piccolo caso DH e salva almeno un output riutilizzabile.</p><pre class="pipeline">Input
+ ↓
+Python
+ ↓
+Output
+ ↓
+Interpretazione</pre></section>
+<section>
+<h2>✅ Checklist mini progetto</h2>
+<ul><li>Il codice si esegue?</li><li>L’output è salvato?</li><li>Il risultato è interpretabile?</li><li>Hai annotato eventuali errori?</li></ul>
+</section>
+<section>
+<h2>🎯 Recap</h2>
+<ul><li>organizzare file di progetto</li><li>esportare visualizzazioni HTML</li><li>creare una dashboard semplice</li><li>collegare grafici, mappe e testi</li><li>preparare materiali per la pubblicazione online</li></ul>
+</section>
+<section>
+<h2>➡️ Collegamento al progetto finale</h2>
+<p>Ogni lezione produce un tassello del progetto finale: dati, analisi, visualizzazione o pubblicazione.</p>
+</section>
+<section>
+<h2>❓ Domande</h2>
+<p>Dubbi, problemi di codice, interpretazione dei risultati.</p>
+</section>
+<section>
+<h2>Approfondimento 1</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 2</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 3</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 4</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 5</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/highlight.js"></script>
+<script>Reveal.initialize({hash:true, slideNumber:'c/t', transition:'slide', transitionSpeed:'fast', plugins:[RevealHighlight]});</script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 10 - Date e Timeline</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/monokai.css">
+  <style>
+.reveal h1 { font-size: 2.1em; }
+.reveal h2 { font-size: 1.65em; }
+.reveal h3 { font-size: 1.15em; color: #42affa; }
+.reveal pre { width: 100%; box-shadow: none; }
+.reveal pre code { font-size: 0.72em; line-height: 1.35; max-height: 430px; }
+.reveal ul, .reveal ol { display: block; }
+.reveal li { margin-bottom: 8px; }
+.tag { display:inline-block; padding:3px 14px; border-radius:20px; font-weight:bold; font-size:.62em; text-transform:uppercase; letter-spacing:2px; margin-bottom:18px; }
+.tag-esercizio { background:#f5a623; color:#000; }
+.tag-soluzione { background:#42affa; color:#000; }
+.tag-progetto { background:#2ecc71; color:#000; }
+.box { border-radius:6px; padding:14px 16px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.12); }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start; }
+.small { font-size:.75em; color:#aaa; }
+.pipeline { font-size:1em; color:#a8ff78; white-space:pre; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section>
+  <h1>Lezione 10<br>Date e Timeline</h1>
+  <p style="color:#888; margin-top:8px">Python per le Digital Humanities</p>
+  <br>
+  <p style="font-size:0.75em; color:#aaa">Tiziana Mancinelli</p>
+  <p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata</p>
+</section>
+<section>
+<h2>🎯 Obiettivi</h2>
+<ul style="font-size:.9em"><li>estrarre date con regex e spaCy</li><li>distinguere date numeriche ed espressioni temporali</li><li>strutturare eventi in una tabella</li><li>creare timeline con Plotly</li><li>esportare una visualizzazione HTML</li></ul>
+</section>
+<section>
+<h2>🧭 Struttura della lezione</h2>
+<ol><li>Concetti principali</li><li>Esempi guidati</li><li>Esercizi</li><li>Mini progetto</li><li>Discussione</li></ol>
+</section>
+<section>
+<h2>📅 Perché le date?</h2>
+<p>Le date permettono di trasformare testi storici e letterari in sequenze cronologiche.</p>
+</section>
+<section>
+<h2>Date numeriche</h2>
+<pre><code class="language-python" data-trim>
+testo = &quot;Frankenstein was published in 1818.&quot;
+</code></pre>
+</section>
+<section>
+<h2>Regex</h2>
+<pre><code class="language-python" data-trim>
+import re
+date = re.findall(r&quot;\d{4}&quot;, testo)
+print(date)
+</code></pre>
+</section>
+<section>
+<h2>Limite delle regex</h2>
+<p>Le regex trovano forme, non significati: <code>Novecento</code> non contiene cifre.</p>
+</section>
+<section>
+<h2>Date con spaCy</h2>
+<pre><code class="language-python" data-trim>
+import spacy
+nlp = spacy.load(&quot;en_core_web_sm&quot;)
+doc = nlp(&quot;The novel became famous in the nineteenth century.&quot;)
+for ent in doc.ents:
+    if ent.label_ == &quot;DATE&quot;:
+        print(ent.text)
+</code></pre>
+</section>
+<section>
+<h2>Espressioni temporali</h2>
+<ul><li>1818</li><li>January 1818</li><li>the nineteenth century</li><li>today</li><li>Novecento</li></ul>
+</section>
+<section>
+<h2>Dal testo all’evento</h2>
+<p>Una timeline richiede almeno due informazioni: una data e una descrizione.</p>
+</section>
+<section>
+<h2>Lista di eventi</h2>
+<pre><code class="language-python" data-trim>
+eventi = [
+    {&quot;Data&quot;: &quot;1818-01-01&quot;, &quot;Evento&quot;: &quot;Frankenstein&quot;},
+    {&quot;Data&quot;: &quot;1831-01-01&quot;, &quot;Evento&quot;: &quot;Revised edition&quot;}
+]
+</code></pre>
+</section>
+<section>
+<h2>DataFrame</h2>
+<pre><code class="language-python" data-trim>
+import pandas as pd
+df = pd.DataFrame(eventi)
+print(df)
+</code></pre>
+</section>
+<section>
+<h2>Convertire date</h2>
+<pre><code class="language-python" data-trim>
+df[&quot;Data&quot;] = pd.to_datetime(df[&quot;Data&quot;])
+print(df.dtypes)
+</code></pre>
+</section>
+<section>
+<h2>Plotly</h2>
+<pre><code class="language-python" data-trim>
+import plotly.express as px
+fig = px.scatter(df, x=&quot;Data&quot;, y=&quot;Evento&quot;, text=&quot;Evento&quot;)
+fig.show()
+</code></pre>
+</section>
+<section>
+<h2>Categorie</h2>
+<pre><code class="language-python" data-trim>
+eventi = [
+ {&quot;Data&quot;:&quot;1818-01-01&quot;, &quot;Evento&quot;:&quot;Frankenstein&quot;, &quot;Categoria&quot;:&quot;Letteratura&quot;},
+ {&quot;Data&quot;:&quot;1859-01-01&quot;, &quot;Evento&quot;:&quot;Origin of Species&quot;, &quot;Categoria&quot;:&quot;Scienza&quot;}
+]
+</code></pre>
+</section>
+<section>
+<h2>Timeline con categorie</h2>
+<pre><code class="language-python" data-trim>
+df = pd.DataFrame(eventi)
+df[&quot;Data&quot;] = pd.to_datetime(df[&quot;Data&quot;])
+fig = px.scatter(df, x=&quot;Data&quot;, y=&quot;Categoria&quot;, text=&quot;Evento&quot;, color=&quot;Categoria&quot;)
+fig.show()
+</code></pre>
+</section>
+<section>
+<h2>Esportare HTML</h2>
+<pre><code class="language-python" data-trim>
+fig.write_html(&quot;timeline_eventi.html&quot;)
+print(&quot;File creato&quot;)
+</code></pre>
+</section>
+<section>
+<h2>Interpretazione</h2>
+<p>La timeline mostra successioni, concentrazioni, vuoti e rapporti tra fenomeni storici e culturali.</p>
+</section>
+<section>
+<h2>Pipeline timeline</h2>
+<pre class="pipeline">Testo
+ ↓
+Date
+ ↓
+Eventi
+ ↓
+DataFrame
+ ↓
+Timeline HTML</pre>
+</section>
+<section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio</div><h2>📝 Esercizio 1</h2><p>Estrai anni di quattro cifre con regex.</p></section>
+<section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>📝 Soluzione 1</h2><pre><code class="language-python" data-trim>
+import re
+print(re.findall(r&quot;\d{4}&quot;, testo))
+</code></pre></section>
+<section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio</div><h2>📝 Esercizio 2</h2><p>Crea un DataFrame di eventi.</p></section>
+<section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>📝 Soluzione 2</h2><pre><code class="language-python" data-trim>
+import pandas as pd
+df = pd.DataFrame(eventi)
+print(df)
+</code></pre></section>
+<section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio</div><h2>📝 Esercizio 3</h2><p>Salva la timeline in HTML.</p></section>
+<section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>📝 Soluzione 3</h2><pre><code class="language-python" data-trim>
+fig.write_html(&quot;timeline.html&quot;)
+</code></pre></section>
+<section data-background-color="#10230f"><div class="tag tag-progetto">Mini progetto</div><h2>💻 Mini progetto della lezione</h2><p>Applica gli strumenti della lezione a un piccolo caso DH e salva almeno un output riutilizzabile.</p><pre class="pipeline">Input
+ ↓
+Python
+ ↓
+Output
+ ↓
+Interpretazione</pre></section>
+<section>
+<h2>✅ Checklist mini progetto</h2>
+<ul><li>Il codice si esegue?</li><li>L’output è salvato?</li><li>Il risultato è interpretabile?</li><li>Hai annotato eventuali errori?</li></ul>
+</section>
+<section>
+<h2>🎯 Recap</h2>
+<ul><li>estrarre date con regex e spaCy</li><li>distinguere date numeriche ed espressioni temporali</li><li>strutturare eventi in una tabella</li><li>creare timeline con Plotly</li><li>esportare una visualizzazione HTML</li></ul>
+</section>
+<section>
+<h2>➡️ Collegamento al progetto finale</h2>
+<p>Ogni lezione produce un tassello del progetto finale: dati, analisi, visualizzazione o pubblicazione.</p>
+</section>
+<section>
+<h2>❓ Domande</h2>
+<p>Dubbi, problemi di codice, interpretazione dei risultati.</p>
+</section>
+<section>
+<h2>Approfondimento 1</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 2</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 3</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 4</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+<section>
+<h2>Approfondimento 5</h2>
+<p>Annota un possibile uso di questa tecnica in un progetto DH.</p>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/highlight.js"></script>
+<script>Reveal.initialize({hash:true, slideNumber:'c/t', transition:'slide', transitionSpeed:'fast', plugins:[RevealHighlight]});</script>
+</body>
+</html>

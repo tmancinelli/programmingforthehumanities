@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione 4 - Cicli e dizionari</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/monokai.css">
+  <style>
+    .reveal h1 { font-size: 2.2em; }
+    .reveal h2 { font-size: 1.8em; }
+    .reveal h3 { font-size: 1.3em; color: #42affa; }
+    .reveal pre { width: 100%; box-shadow: none; }
+    .reveal pre code { font-size: 0.82em; line-height: 1.5; max-height: 420px; }
+    .reveal ul, .reveal ol { display: block; }
+    .reveal li { margin-bottom: 8px; }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.65em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+    .tag-esercizio { background: #f5a623; color: #000; }
+    .tag-soluzione  { background: #42affa; color: #000; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .box { border-radius: 6px; padding: 14px 16px; }
+    .box-err  { background: #2c0a0a; border-left: 3px solid #e74c3c; }
+    .box-ok   { background: #0a2c0a; border-left: 3px solid #2ecc71; }
+    .box-info { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); }
+    .box-err pre, .box-ok pre { margin: 0; }
+    .label-err { color: #e74c3c; font-size: 0.75em; font-weight: bold; margin: 0 0 6px 0; }
+    .label-ok  { color: #2ecc71; font-size: 0.75em; font-weight: bold; margin: 0 0 6px 0; }
+
+    /* ── Pyodide interactive code runner ── */
+    .code-runner { position: relative; margin: 0; }
+
+    .code-textarea {
+      width: 100%;
+      background: #272822;
+      color: #f8f8f2;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.82em;
+      line-height: 1.5;
+      border: 1px solid #444;
+      border-radius: 4px 4px 0 0;
+      padding: 12px;
+      box-sizing: border-box;
+      resize: none;
+      outline: none;
+      tab-size: 4;
+      display: block;
+    }
+    .code-textarea { max-height: 33vh; overflow-y: auto; }
+    .code-textarea:focus { border-color: #42affa; }
+    .code-textarea.small { font-size: 0.6em; }
+
+    .code-controls {
+      display: flex;
+      justify-content: flex-end;
+      background: #1e1e1e;
+      border: 1px solid #444;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      padding: 4px 8px;
+    }
+
+    .run-btn {
+      background: #f5a623;
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      padding: 3px 14px;
+      cursor: pointer;
+      font-size: 0.72em;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .run-btn:hover { background: #ffb84d; }
+    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── Modale output ── */
+    #output-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--r-main-font);
+    }
+    #output-modal.open { display: flex; }
+
+    #output-modal-box {
+      background: var(--r-background-color);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      min-width: 420px;
+      max-width: 640px;
+      width: 50vw;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    }
+
+    #output-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    /* font-size on #output-modal is set dynamically by JS (revealBase * revealScale) */
+    #output-modal-header span {
+      font-family: var(--r-main-font);
+      font-size: 0.6em;
+      color: var(--r-main-color);
+      opacity: 0.5;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    #output-modal-close {
+      background: none;
+      border: none;
+      color: var(--r-main-color);
+      opacity: 0.4;
+      cursor: pointer;
+      font-size: 0.7em;
+      font-family: var(--r-main-font);
+      line-height: 1;
+      padding: 0 2px;
+    }
+    #output-modal-close:hover { opacity: 1; }
+
+    #output-modal-content {
+      padding: 0.4em 0.6em;
+      font-family: monospace;
+      font-size: 0.7em;
+      color: #a8ff78;
+      white-space: pre-wrap;
+      margin: 0;
+      max-height: 40vh;
+      overflow-y: auto;
+    }
+    #output-modal-content.is-error { color: #ff8080; }
+
+    #pyodide-status {
+      position: fixed;
+      bottom: 10px;
+      left: 12px;
+      font-size: 0.6em;
+      color: #f5a623;
+      z-index: 1000;
+      font-family: monospace;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides"><section>
+<h1>Lezione 4<br>Cicli, condizioni e dizionari</h1>
+  <p style="color:#888; margin-top:8px">Python per le Digital Humanities</p>
+  <br>
+  <p style="font-size:0.75em; color:#aaa">Tiziana Mancinelli</p>
+  <p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata</p>
+</section>
+<section>
+<h2>🎯 Obiettivi</h2>
+<ul style="font-size:0.9em"><li>Usare <code>for</code> e <code>if</code></li>
+<li>Cercare parole in un testo</li>
+<li>Contare occorrenze</li>
+<li>Capire i dizionari</li>
+<li>Costruire una frequenza lessicale</li></ul>
+</section>
+<section>
+<h2>Che cos’è un algoritmo?</h2><p>Una serie di passi per risolvere un problema.</p><pre><code data-trim>
+Problema → Passi → Risultato
+  </code></pre>
+</section>
+<section>
+<h2>Il ciclo for</h2><pre><code class="language-python" data-trim>
+parole = [&quot;Victor&quot;, &quot;science&quot;, &quot;creature&quot;]
+
+for parola in parole:
+    print(parola)
+  </code></pre>
+</section>
+<section>
+<h2>range()</h2><p>Genera una sequenza di numeri.</p><pre><code class="language-python" data-trim>
+for i in range(5):
+    print(i)
+  </code></pre>
+</section>
+<section>
+<h2>Condizione if</h2><p>Permette di eseguire codice solo se una condizione è vera.</p><pre><code class="language-python" data-trim>
+parola = &quot;Victor&quot;
+
+if parola == &quot;Victor&quot;:
+    print(&quot;Personaggio trovato&quot;)
+  </code></pre>
+</section>
+<section>
+<h2>Operatore in</h2><p>Controlla se qualcosa è contenuto in qualcosa.</p><pre><code class="language-python" data-trim>
+testo = &quot;Victor created the creature&quot;
+
+if &quot;Victor&quot; in testo:
+    print(&quot;Trovato&quot;)
+  </code></pre>
+</section>
+<section>
+<h2>Ricerca in un testo</h2><pre><code class="language-python" data-trim>
+testo = &quot;Victor met Walton&quot;
+nomi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+
+for nome in nomi:
+    if nome in testo:
+        print(&quot;Trovato:&quot;, nome)
+  </code></pre>
+</section>
+<section>
+<h2>Contare con una variabile</h2><pre><code class="language-python" data-trim>
+parole = [&quot;Victor&quot;, &quot;Victor&quot;, &quot;Creature&quot;]
+contatore = 0
+
+for parola in parole:
+    if parola == &quot;Victor&quot;:
+        contatore = contatore + 1
+
+print(contatore)
+  </code></pre>
+</section>
+<section>
+<h2>Dizionari</h2><p>Un dizionario associa una chiave a un valore.</p><pre><code class="language-python" data-trim>
+frequenze = {&quot;Victor&quot;: 2, &quot;Creature&quot;: 1}
+print(frequenze)
+  </code></pre>
+</section>
+<section>
+<h2>Chiave e valore</h2><pre><code data-trim>
+&quot;Victor&quot; → 2
+&quot;Creature&quot; → 1
+  </code></pre>
+</section>
+<section>
+<h2>Accedere a un valore</h2><pre><code class="language-python" data-trim>
+frequenze = {&quot;Victor&quot;: 2, &quot;Creature&quot;: 1}
+print(frequenze[&quot;Victor&quot;])
+  </code></pre>
+</section>
+<section>
+<h2>Aggiornare un valore</h2><pre><code class="language-python" data-trim>
+frequenze = {&quot;Victor&quot;: 2}
+frequenze[&quot;Victor&quot;] = frequenze[&quot;Victor&quot;] + 1
+print(frequenze)
+  </code></pre>
+</section>
+<section>
+<h2>Costruire frequenze</h2><pre><code class="language-python" data-trim>
+parole = [&quot;victor&quot;, &quot;creature&quot;, &quot;victor&quot;]
+frequenze = {}
+
+for parola in parole:
+    if parola in frequenze:
+        frequenze[parola] += 1
+    else:
+        frequenze[parola] = 1
+
+print(frequenze)
+  </code></pre>
+</section>
+<section>
+<h2>Perché un dizionario?</h2><p>Perché permette di collegare ogni parola al suo numero di occorrenze.</p>
+</section>
+<section>
+<h2>Digital Humanities</h2><ul><li>Frequenza delle parole</li><li>Frequenza dei personaggi</li><li>Frequenza dei luoghi</li><li>Prima analisi quantitativa del testo</li></ul>
+</section>
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Esercizio</div>
+<h2>📝 Esercizio 1</h2>
+<p>Cercare se la parola <code>Victor</code> è presente in un testo.</p>
+</section>
+<section data-background-color="#0d1020">
+<div class="tag tag-soluzione">Soluzione</div>
+<h2>📝 Soluzione 1</h2>
+<pre><code class="language-python" data-trim>
+testo = &quot;Victor studied science&quot;
+
+if &quot;Victor&quot; in testo:
+    print(&quot;Victor è presente&quot;)
+  </code></pre>
+</section>
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Esercizio</div>
+<h2>📝 Esercizio 2</h2>
+<p>Stampare solo i nomi presenti nel testo.</p>
+</section>
+<section data-background-color="#0d1020">
+<div class="tag tag-soluzione">Soluzione</div>
+<h2>📝 Soluzione 2</h2>
+<pre><code class="language-python" data-trim>
+testo = &quot;Victor met Walton&quot;
+nomi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+
+for nome in nomi:
+    if nome in testo:
+        print(nome)
+  </code></pre>
+</section>
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Esercizio</div>
+<h2>📝 Esercizio 3</h2>
+<p>Contare quante volte compare <code>Victor</code>.</p>
+</section>
+<section data-background-color="#0d1020">
+<div class="tag tag-soluzione">Soluzione</div>
+<h2>📝 Soluzione 3</h2>
+<pre><code class="language-python" data-trim>
+parole = [&quot;Victor&quot;, &quot;Walton&quot;, &quot;Victor&quot;, &quot;Creature&quot;]
+conteggio = 0
+
+for parola in parole:
+    if parola == &quot;Victor&quot;:
+        conteggio += 1
+
+print(conteggio)
+  </code></pre>
+</section>
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Esercizio</div>
+<h2>📝 Esercizio 4</h2>
+<p>Creare un dizionario con frequenze manuali.</p>
+</section>
+<section data-background-color="#0d1020">
+<div class="tag tag-soluzione">Soluzione</div>
+<h2>📝 Soluzione 4</h2>
+<pre><code class="language-python" data-trim>
+frequenze = {&quot;Victor&quot;: 3, &quot;Walton&quot;: 1, &quot;Creature&quot;: 2}
+print(frequenze)
+  </code></pre>
+</section>
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Esercizio</div>
+<h2>📝 Esercizio 5</h2>
+<p>Costruire automaticamente un vocabolario di frequenze.</p>
+</section>
+<section data-background-color="#0d1020">
+<div class="tag tag-soluzione">Soluzione</div>
+<h2>📝 Soluzione 5</h2>
+<pre><code class="language-python" data-trim>
+testo = &quot;Victor met Victor and the Creature&quot;
+parole = testo.lower().split()
+frequenze = {}
+
+for parola in parole:
+    if parola in frequenze:
+        frequenze[parola] += 1
+    else:
+        frequenze[parola] = 1
+
+print(frequenze)
+  </code></pre>
+</section>
+<section>
+<h2>Mini progetto</h2><p>Frequenza delle parole in una citazione.</p><pre><code class="language-python" data-trim>
+testo = &quot;Nel mezzo del cammin di nostra vita mezzo mezzo&quot;
+parole = testo.lower().split()
+frequenze = {}
+
+for parola in parole:
+    if parola in frequenze:
+        frequenze[parola] += 1
+    else:
+        frequenze[parola] = 1
+
+print(frequenze)
+  </code></pre>
+</section>
+<section>
+<h2>Interpretazione</h2><p>Le frequenze mostrano ciò che ricorre, ma non sostituiscono l’interpretazione critica.</p>
+</section>
+<section>
+<h2>Pipeline della lezione</h2><pre><code data-trim>
+Testo → Parole → Ciclo → Dizionario → Frequenze
+  </code></pre>
+</section>
+<section>
+<h2>🎯 Recap</h2>
+<ul style="font-size:0.9em"><li><code>for</code> automatizza ripetizioni</li>
+<li><code>if</code> controlla condizioni</li>
+<li>I dizionari associano chiavi e valori</li>
+<li>Le frequenze sono dati quantitativi</li>
+<li>Il codice trasforma testo in dati</li></ul>
+</section>
+<section>
+<h2>❓ Domande</h2>
+</section>
+</div>
+</div>
+
+<div id="pyodide-status">● Caricamento Python...</div>
+
+<!-- ── Modale output ── -->
+<div id="output-modal">
+  <div id="output-modal-box">
+    <div id="output-modal-header">
+      <span>Output</span>
+      <button id="output-modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <pre id="output-modal-content"></pre>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/highlight.js"></script>
+<script>
+  // ── Pyodide ──
+  let pyodide = null;
+
+  (async function initPyodide() {
+    const status = document.getElementById('pyodide-status');
+    try {
+      pyodide = await loadPyodide({
+        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/'
+      });
+      status.textContent = '● Python pronto';
+      status.style.color = '#2ecc71';
+    } catch (e) {
+      status.textContent = '● Python non disponibile';
+      status.style.color = '#e74c3c';
+    }
+  })();
+
+  function syncModalFontSize() {
+    const revealEl = document.querySelector('.reveal');
+    const base = parseFloat(getComputedStyle(revealEl).fontSize);
+    const scale = Reveal.getScale ? Reveal.getScale() : 1;
+    document.getElementById('output-modal').style.fontSize = (base * scale) + 'px';
+  }
+
+  function openModal(text, isError) {
+    const content = document.getElementById('output-modal-content');
+    content.textContent = text;
+    content.className = isError ? 'is-error' : '';
+    syncModalFontSize();
+    document.getElementById('output-modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('output-modal').classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  async function runCode(btn) {
+    const runner = btn.closest('.code-runner');
+    const textarea = runner.querySelector('.code-textarea');
+
+    if (!pyodide) {
+      openModal('Attendi il caricamento di Python...', true);
+      return;
+    }
+
+    const prev = btn.textContent;
+    btn.textContent = '⏳';
+    btn.disabled = true;
+
+    try {
+      const preloadEl = runner.closest('section').querySelector('.code-preload');
+      const preload = preloadEl ? preloadEl.textContent.trim() + '\n\n' : '';
+      pyodide.globals.set('_user_code', preload + textarea.value);
+      pyodide.runPython(`
+import sys, traceback
+from io import StringIO
+_stdout = StringIO()
+_stderr = StringIO()
+sys.stdout = _stdout
+sys.stderr = _stderr
+try:
+    exec(_user_code, {})
+except Exception:
+    traceback.print_exc()
+finally:
+    sys.stdout = sys.__stdout__
+    sys.stderr = sys.__stderr__
+_out = _stdout.getvalue()
+_err = _stderr.getvalue()
+`);
+      const out = pyodide.globals.get('_out');
+      const err = pyodide.globals.get('_err');
+
+      if (err) {
+        openModal(err, true);
+      } else {
+        openModal(out || '(nessun output)', false);
+      }
+    } catch (e) {
+      try { pyodide.runPython('sys.stdout = sys.__stdout__\nsys.stderr = sys.__stderr__'); } catch (_) {}
+      openModal(e.message, true);
+    }
+
+    btn.textContent = prev;
+    btn.disabled = false;
+  }
+
+  // ── Reveal ──
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    plugins: [RevealHighlight],
+  });
+
+  Reveal.on('resize', syncModalFontSize);
+
+  // ── Trasforma i blocchi codice in editor interattivi ──
+  Reveal.on('ready', () => {
+    document.querySelectorAll('pre').forEach(pre => {
+      const code = pre.querySelector('code.language-python');
+      if (!code) return;
+
+      const rawCode = code.textContent.trim();
+      const lines = rawCode.split('\n').length;
+
+      const runner = document.createElement('div');
+      runner.className = 'code-runner';
+      pre.parentNode.insertBefore(runner, pre);
+      pre.remove();
+
+      const textarea = document.createElement('textarea');
+      textarea.className = 'code-textarea' + (pre.dataset.size === 'small' ? ' small' : '');
+      textarea.value = rawCode;
+      textarea.spellcheck = false;
+      textarea.rows = Math.min(lines + 1, 14);
+      textarea.addEventListener('keydown', e => {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          const s = textarea.selectionStart;
+          textarea.value = textarea.value.substring(0, s) + '    ' + textarea.value.substring(textarea.selectionEnd);
+          textarea.selectionStart = textarea.selectionEnd = s + 4;
+        }
+      });
+
+      const controls = document.createElement('div');
+      controls.className = 'code-controls';
+
+      const runBtn = document.createElement('button');
+      runBtn.className = 'run-btn';
+      runBtn.textContent = '▶ Esegui';
+      runBtn.onclick = () => runCode(runBtn);
+      controls.appendChild(runBtn);
+
+      runner.appendChild(textarea);
+      runner.appendChild(controls);
+    });
+  });
+</script>
+</body>
+</html>
