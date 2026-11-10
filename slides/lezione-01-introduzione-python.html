@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lezione 1 - Introduzione a Python</title>
+  <title>Lezione 1 - Programmazione e pensiero computazionale</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css">
@@ -167,171 +167,1342 @@
       font-family: monospace;
       pointer-events: none;
     }
+
+    .reveal .section-kicker {
+      font-size: 0.62em;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #42affa;
+      font-weight: 700;
+      margin-bottom: 0.45em;
+    }
+    .reveal .lead {
+      font-size: 1.05em;
+      line-height: 1.45;
+    }
+    .reveal .small {
+      font-size: 0.72em;
+      line-height: 1.42;
+    }
+    .reveal .tiny {
+      font-size: 0.56em;
+      line-height: 1.35;
+    }
+    .reveal .big-question {
+      font-size: 1.45em;
+      line-height: 1.28;
+      font-weight: 700;
+      margin: 0.8em 0;
+    }
+    .reveal .accent { color: #42affa; }
+    .reveal .orange { color: #f5a623; }
+    .reveal .green { color: #2ecc71; }
+    .reveal .muted { color: #aaa; }
+    .reveal .step {
+      border-left: 4px solid #42affa;
+      padding: 0.55em 0.75em;
+      margin: 0.45em 0;
+      background: rgba(66,175,250,0.07);
+      text-align: left;
+    }
+    .reveal .step strong { color: #42affa; }
+    .reveal .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+    .reveal .compare > div {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 18px;
+      text-align: left;
+    }
+    .reveal .pill {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      padding: 0.18em 0.65em;
+      margin: 0.15em;
+      font-size: 0.62em;
+      color: #ddd;
+    }
+    .reveal .source {
+      margin-top: 1.2em;
+      font-size: 0.42em;
+      color: #888;
+      line-height: 1.3;
+    }
+    .reveal .source a { color: #8ccfff; }
+    .reveal .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+    .reveal .checklist li::before {
+      content: "✓";
+      color: #2ecc71;
+      font-weight: bold;
+      margin-right: 0.55em;
+    }
+    .reveal .warning {
+      background: rgba(245,166,35,0.10);
+      border-left: 4px solid #f5a623;
+      padding: 0.65em 0.85em;
+      text-align: left;
+    }
+    .reveal .quote-idea {
+      font-size: 1.12em;
+      line-height: 1.42;
+      padding: 0.7em 0.9em;
+      border-left: 5px solid #42affa;
+      background: rgba(66,175,250,0.06);
+      text-align: left;
+    }
+    .reveal table.compact {
+      font-size: 0.58em;
+      width: 100%;
+    }
+    .reveal table.compact th,
+    .reveal table.compact td {
+      padding: 0.45em 0.55em;
+    }
+    @media (max-width: 800px) {
+      .reveal .compare, .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+    .reveal .urlbox {
+      display: block;
+      margin: 0.55em auto;
+      padding: 0.55em 0.75em;
+      width: 88%;
+      background: rgba(66,175,250,0.08);
+      border: 1px solid rgba(66,175,250,0.35);
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 0.62em;
+      overflow-wrap: anywhere;
+    }
+    .reveal .urlbox a { color: #8ccfff; text-decoration: none; }
+    .reveal .path-label {
+      display: inline-block;
+      min-width: 7.5em;
+      color: #42affa;
+      font-weight: 700;
+    }
+    .reveal .kbd {
+      display: inline-block;
+      padding: 0.08em 0.35em;
+      border: 1px solid #777;
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      background: #222;
+      font-family: monospace;
+      font-size: 0.78em;
+    }
+    .reveal .flowline {
+      font-size: 0.72em;
+      line-height: 1.8;
+      color: #ddd;
+    }
+
   </style>
 </head>
 <body>
 <div class="reveal">
-<div class="slides"><section>
-<h1>Lezione 1<br>Introduzione a Python</h1>
-  <p style="color:#888; margin-top:8px">Python per le Digital Humanities</p>
-  <br>
-  <p style="font-size:0.75em; color:#aaa">Tiziana Mancinelli</p>
-  <p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata</p>
+<div class="slides">
+<section>
+
+<h1>Lezione 1<br>Programmazione e pensiero computazionale</h1>
+<p style="color:#888; margin-top:8px">Python per le Digital Humanities</p>
+<br>
+<p style="font-size:0.75em; color:#aaa">Tiziana Mancinelli</p>
+<p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata · 10 novembre 2026</p>
+
+</section>
+<section data-background-color="#101827">
+
+<div class="section-kicker">Per cominciare</div>
+<h2>Una domanda un po’ scomoda</h2>
+<p class="big-question">Perché imparare a programmare nel 2026,<br>quando l’AI può già scrivere codice?</p>
+<p class="muted">È una delle domande che guideranno tutto il corso.</p>
+
 </section>
 <section>
-<h2>🎯 Obiettivi</h2>
-<ul style="font-size:0.9em"><li>Capire che cos’è Python</li>
-<li>Conoscere Google Colab e Visual Studio Code</li>
-<li>Installare e verificare Python</li>
-<li>Scrivere il primo programma con <code>print()</code></li>
-<li>Riconoscere errori iniziali comuni</li></ul>
+
+<h2>🎯 Obiettivi di oggi</h2>
+<ul style="font-size:0.86em">
+  <li>Capire che cosa significa <strong>programmare</strong>, prima della sintassi.</li>
+  <li>Introdurre il <strong>pensiero computazionale</strong> in prospettiva DH.</li>
+  <li>Vedere alcune tappe della storia della programmazione.</li>
+  <li>Capire perché queste competenze restano importanti nell’era dell’AI.</li>
+  <li>Preparare <strong>Google Colab</strong> e <strong>Visual Studio Code</strong>.</li>
+  <li>Scrivere ed eseguire i primi programmi Python.</li>
+</ul>
+
 </section>
 <section>
-<h2>Che cosa sono le Digital Humanities?</h2><p>Le Digital Humanities usano strumenti digitali per studiare testi, archivi, immagini, dati culturali e collezioni.</p>
+
+<h2>La mappa della lezione</h2>
+<div class="compare">
+  <div><h3>1. Pensare</h3><p>Problemi, algoritmi, decomposizione, astrazione.</p></div>
+  <div><h3>2. Storia</h3><p>Da Babbage e Lovelace a Turing, Hopper, Papert, Knuth e Wing.</p></div>
+  <div><h3>3. AI</h3><p>Che cosa cambia quando una macchina può proporre codice?</p></div>
+  <div><h3>4. Fare</h3><p>Colab, VS Code, Python e primi esercizi.</p></div>
+</div>
+
 </section>
 <section>
-<h2>Perché Python?</h2><ul><li>Sintassi leggibile</li><li>Molte librerie</li><li>Ottimo per testi e dati</li><li>Usato in ricerca e didattica</li></ul>
+
+<div class="section-kicker">Programmare</div>
+<h2>Programmare ≠ digitare codice</h2>
+<p class="lead">Scrivere codice è solo l’ultima parte.</p>
+<p>Prima dobbiamo:</p>
+<p>
+  <span class="pill">formulare il problema</span>
+  <span class="pill">scegliere i dati</span>
+  <span class="pill">scomporre il compito</span>
+  <span class="pill">definire una procedura</span>
+  <span class="pill">controllare il risultato</span>
+</p>
+<p class="muted">La programmazione è un modo di rendere esplicito un ragionamento.</p>
+
 </section>
 <section>
-<h2>Python nelle DH</h2><ul><li>Analisi testuale</li><li>XML/TEI</li><li>Visualizzazioni</li><li>Web scraping</li><li>NLP e Intelligenza Artificiale</li></ul>
-</section>
-<section>
-<h2>Che cos’è un programma?</h2><p>Un programma è una sequenza di istruzioni che il computer esegue.</p><pre><code data-trim>
+
+<h2>Che cos’è un programma?</h2>
+<p class="lead">Una sequenza di istruzioni abbastanza precise da poter essere eseguite da una macchina.</p>
+<pre><code data-trim>
 Input → Istruzioni → Output
-  </code></pre>
+</code></pre>
+<p class="small">Il computer non “intuisce” ciò che volevamo dire: esegue una procedura secondo regole definite.</p>
+
 </section>
 <section>
-<h2>Due ambienti di lavoro</h2><div class="two-col"><div class="box box-info"><h3>Google Colab</h3><p>Lavora online nel browser.</p></div><div class="box box-info"><h3>VS Code</h3><p>Lavora sul computer locale.</p></div></div>
+
+<h2>Prima del codice: l’algoritmo</h2>
+<p>Un <strong>algoritmo</strong> è una procedura composta da passi ordinati.</p>
+<div class="step"><strong>Input:</strong> una lista di libri.</div>
+<div class="step"><strong>Procedura:</strong> controlla l’anno di pubblicazione di ogni libro.</div>
+<div class="step"><strong>Condizione:</strong> conserva quelli pubblicati prima del 1900.</div>
+<div class="step"><strong>Output:</strong> la nuova lista.</div>
+<p class="small muted">Possiamo descrivere l’algoritmo prima ancora di conoscere Python.</p>
+
 </section>
 <section>
-<h2>Google Colab</h2><ul><li>Non richiede installazione locale</li><li>Si usa dal browser</li><li>Organizzato in celle</li><li>Utile per esercizi condivisi</li></ul>
+
+<h2>Una domanda umanistica diventa una procedura</h2>
+<p class="lead">«Quali personaggi compaiono più spesso in questo romanzo?»</p>
+<ol class="small">
+  <li>Decidere quale testo usare e in quale versione.</li>
+  <li>Definire che cosa conta come “personaggio”.</li>
+  <li>Riconoscere varianti del nome: <em>Elizabeth</em>, <em>Lizzy</em>…</li>
+  <li>Contare le occorrenze.</li>
+  <li>Controllare gli errori e interpretare il risultato.</li>
+</ol>
+<p class="accent">Il problema non è soltanto tecnico: contiene decisioni filologiche e interpretative.</p>
+
 </section>
 <section>
-<h2>Visual Studio Code</h2><ul><li>Editor per scrivere script</li><li>Utile per file e progetti</li><li>Richiede Python installato</li><li>Permette di lavorare in locale</li></ul>
+
+<div class="section-kicker">Pensiero computazionale</div>
+<h2>Che cosa significa?</h2>
+<p class="quote-idea">Affrontare problemi e costruire soluzioni usando concetti propri dell’informatica: rappresentazione, astrazione, decomposizione, procedure, automazione e verifica.</p>
+<p class="small">Jeannette Wing ha contribuito a diffondere l’idea del computational thinking come competenza generale di problem solving, non limitata agli informatici.</p>
+<div class="source">Rif.: J. M. Wing, “Computational Thinking”, <em>Communications of the ACM</em>, 2006.</div>
+
 </section>
 <section>
-<h2>Installare Python</h2><ol><li>Scaricare Python da python.org</li><li>Installare la versione recente</li><li>Su Windows: selezionare “Add Python to PATH”</li><li>Verificare dal terminale</li></ol>
+
+<h2>Cinque mosse del pensiero computazionale</h2>
+<table class="compact">
+  <tr><th>Operazione</th><th>Domanda</th></tr>
+  <tr><td><strong>Decomposizione</strong></td><td>Posso dividere il problema in parti più piccole?</td></tr>
+  <tr><td><strong>Astrazione</strong></td><td>Quali dettagli sono essenziali e quali posso ignorare?</td></tr>
+  <tr><td><strong>Riconoscimento di pattern</strong></td><td>Ci sono regolarità o casi che si ripetono?</td></tr>
+  <tr><td><strong>Algoritmo</strong></td><td>Quale sequenza di passi può produrre il risultato?</td></tr>
+  <tr><td><strong>Verifica / debugging</strong></td><td>Come capisco se la procedura funziona davvero?</td></tr>
+</table>
+
 </section>
 <section>
-<h2>Verificare Python</h2><pre><code class="language-python" data-trim>
+
+<h2>Decomporre e astrarre: esempio DH</h2>
+<p><strong>Problema:</strong> confrontare il lessico di due corpora.</p>
+<div class="compare small">
+  <div>
+    <h3>Decomposizione</h3>
+    <ol>
+      <li>Caricare i testi.</li>
+      <li>Pulirli.</li>
+      <li>Dividere in parole.</li>
+      <li>Contare.</li>
+      <li>Confrontare.</li>
+    </ol>
+  </div>
+  <div>
+    <h3>Astrazione</h3>
+    <p>Decidiamo che, per questa domanda, ci interessano le <strong>parole</strong> e non per esempio la posizione tipografica sulla pagina.</p>
+  </div>
+</div>
+
+</section>
+<section data-background-color="#0d1f0d">
+
+<div class="tag tag-esercizio">Esercizio mentale</div>
+<h2>Prima di Python: scriviamo una procedura</h2>
+<p class="lead">Come fareste contare a un computer quante volte compare la parola <strong>“notte”</strong> in un testo?</p>
+<p class="small muted">Provate a descrivere i passi senza usare alcun linguaggio di programmazione.</p>
+
+</section>
+<section>
+
+<div class="section-kicker">Una storia fatta di idee</div>
+<h2>Chi ha “inventato” la programmazione?</h2>
+<p class="lead">Non c’è un unico inventore.</p>
+<p>La programmazione nasce dall’incontro di più idee:</p>
+<p>
+  <span class="pill">macchine programmabili</span>
+  <span class="pill">algoritmi</span>
+  <span class="pill">logica</span>
+  <span class="pill">linguaggi</span>
+  <span class="pill">compilatori</span>
+  <span class="pill">educazione</span>
+</p>
+
+</section>
+<section>
+
+<h2>Charles Babbage: una macchina programmabile</h2>
+<p class="lead">Nell’Ottocento Babbage progettò l’<strong>Analytical Engine</strong>, una macchina meccanica general-purpose rimasta in gran parte sulla carta.</p>
+<ul class="small">
+  <li>Memoria e unità di calcolo erano concepite come componenti distinte.</li>
+  <li>Le istruzioni avrebbero potuto essere fornite attraverso schede perforate.</li>
+  <li>L’idea importante: una stessa macchina può eseguire procedure diverse.</li>
+</ul>
+<div class="source">Rif.: History of Science Museum, Oxford, “Imagining AI – Babbage &amp; Lovelace”.</div>
+
+</section>
+<section>
+
+<h2>Ada Lovelace: dalla macchina alla procedura</h2>
+<p class="lead">Nel 1843, nelle note sull’Analytical Engine, Lovelace descrisse una procedura per il calcolo dei numeri di Bernoulli.</p>
+<ul class="small">
+  <li>È ampiamente considerata una delle prime descrizioni pubblicate di un programma destinato a una macchina.</li>
+  <li>Ma la sua intuizione più importante va oltre il calcolo: una macchina potrebbe operare su <strong>simboli</strong>, se questi fossero formalmente rappresentati.</li>
+</ul>
+<p class="accent">È già una domanda molto vicina alle Digital Humanities: come rappresentiamo formalmente oggetti culturali?</p>
+<div class="source">Rif.: UNESCO, “Ada Lovelace”; History of Science Museum, Oxford.</div>
+
+</section>
+<section>
+
+<h2>Alan Turing: che cosa è computabile?</h2>
+<p class="lead">Nel 1936 Turing propose un modello astratto di macchina per ragionare su quali procedure possono essere eseguite meccanicamente.</p>
+<p class="small">Il punto non è soltanto costruire una macchina, ma formalizzare il concetto stesso di <strong>procedura computabile</strong>.</p>
+<pre><code data-trim>
+stato + simbolo letto → operazione → nuovo stato
+</code></pre>
+<div class="source">Rif.: A. M. Turing, “On Computable Numbers, with an Application to the Entscheidungsproblem”, 1936.</div>
+
+</section>
+<section>
+
+<h2>Grace Hopper: rendere il codice più vicino agli esseri umani</h2>
+<p class="lead">Negli anni Cinquanta Grace Hopper lavorò ai primi compilatori e all’idea di usare linguaggi più vicini alle parole umane.</p>
+<div class="compare small">
+  <div><h3>Prima</h3><p>Istruzioni molto vicine alla macchina.</p></div>
+  <div><h3>Verso i linguaggi di alto livello</h3><p>Scriviamo istruzioni leggibili e un <strong>compilatore</strong> le traduce.</p></div>
+</div>
+<p class="accent">Una parte della storia della programmazione è la storia di come nascondere complessità senza perdere controllo.</p>
+<div class="source">Rif.: Yale University, Biography of Grace Murray Hopper; Computer History Museum.</div>
+
+</section>
+
+<section>
+<h2>Konrad Zuse: macchina programmabile e linguaggio</h2>
+<p class="lead">Negli anni Quaranta Konrad Zuse costruì il <strong>Z3</strong>, un computer elettromeccanico controllato da programma, e progettò <strong>Plankalkül</strong>.</p>
+<ul class="small">
+  <li>Plankalkül è considerato uno dei primi linguaggi di programmazione di alto livello.</li>
+  <li>L’idea centrale è separare sempre di più il problema dalla struttura fisica della macchina.</li>
+</ul>
+<p class="accent">La storia dei linguaggi è anche la storia di livelli crescenti di astrazione.</p>
+<div class="source">Rif.: Computer History Museum, profilo di Konrad Zuse e Timeline of Computer History.</div>
+</section>
+
+<section>
+<h2>John Backus e FORTRAN: programmare a un livello più alto</h2>
+<p class="lead">Negli anni Cinquanta John Backus guidò in IBM il gruppo che sviluppò <strong>FORTRAN</strong>, uno dei primi linguaggi di alto livello largamente utilizzati.</p>
+<ul class="small">
+  <li>Il programmatore può esprimere operazioni in una forma più vicina al problema.</li>
+  <li>Il compilatore traduce il programma in istruzioni eseguibili dalla macchina.</li>
+</ul>
+<p class="accent">È lo stesso principio che incontreremo con Python: lavorare attraverso un linguaggio leggibile senza pensare direttamente in codice macchina.</p>
+<div class="source">Rif.: IBM, “John Backus” e “Fortran”.</div>
+</section>
+
+<section>
+
+<h2>Seymour Papert: imparare pensando con il computer</h2>
+<p class="lead">Con <em>LOGO</em> e <em>Mindstorms</em>, Papert ha messo al centro il computer come strumento per costruire, sperimentare e ragionare.</p>
+<ul class="small">
+  <li>Non solo “imparare il computer”.</li>
+  <li>Usare la programmazione per rendere visibile il proprio ragionamento.</li>
+  <li>Imparare attraverso tentativi, errori e revisioni.</li>
+</ul>
+<p class="accent">Il debugging diventa anche una pratica di apprendimento.</p>
+<div class="source">Rif.: MIT Media Lab, “Mindstorms”; MIT Press, Seymour A. Papert.</div>
+
+</section>
+<section>
+
+<h2>Donald Knuth: la programmazione come disciplina e come arte</h2>
+<p class="lead">Knuth non è “l’inventore” della programmazione: è una figura fondamentale per lo studio rigoroso degli algoritmi e della programmazione.</p>
+<p class="small">Nel suo celebre intervento <em>Computer Programming as an Art</em> (1974) insiste sul fatto che programmare richiede precisione, metodo, ma anche scelte, stile e capacità progettuale.</p>
+<p class="accent">Un buon programma non è solo “funzionante”: deve poter essere compreso, discusso e migliorato.</p>
+<div class="source">Rif.: D. E. Knuth, “Computer Programming as an Art”, 1974; Stanford, <em>The Art of Computer Programming</em>.</div>
+
+</section>
+<section>
+
+<h2>Jeannette Wing: computational thinking per tutti</h2>
+<p class="lead">Nel 2006 Wing rilancia il pensiero computazionale come competenza che riguarda la formulazione dei problemi, non soltanto la scrittura di software.</p>
+<p>Il passaggio chiave è:</p>
+<pre><code data-trim>
+problema complesso
+→ rappresentazione
+→ decomposizione
+→ procedura
+→ automazione
+→ verifica
+</code></pre>
+<div class="source">Rif.: J. M. Wing, “Computational Thinking”, 2006.</div>
+
+</section>
+<section>
+
+<h2>Che cosa ereditiamo da questa storia?</h2>
+<ul>
+  <li><strong>Lovelace:</strong> rappresentare simboli e procedure.</li>
+  <li><strong>Turing:</strong> formalizzare ciò che può essere computato.</li>
+  <li><strong>Hopper:</strong> costruire linguaggi più accessibili.</li>
+  <li><strong>Papert:</strong> programmare per pensare e imparare.</li>
+  <li><strong>Knuth:</strong> progettare algoritmi con rigore e consapevolezza.</li>
+  <li><strong>Wing:</strong> il pensiero computazionale come competenza trasversale.</li>
+</ul>
+
+</section>
+<section data-background-color="#171323">
+
+<div class="section-kicker">E poi arriva l’AI generativa</div>
+<h2>Che cosa cambia?</h2>
+<p class="lead">Oggi un modello può:</p>
+<ul>
+  <li>proporre codice;</li>
+  <li>spiegare una funzione;</li>
+  <li>correggere errori;</li>
+  <li>trasformare una descrizione in uno script;</li>
+  <li>riscrivere e documentare programmi.</li>
+</ul>
+<p class="big-question">Quindi possiamo smettere di imparare programmazione?</p>
+
+</section>
+<section>
+
+<h2>AI può scrivere il codice. Ma chi formula il problema?</h2>
+<p class="lead">Prendiamo la domanda:</p>
+<p class="quote-idea">«Trova i temi più importanti in questo corpus.»</p>
+<p class="small">Prima di scrivere una sola riga dobbiamo decidere:</p>
+<ul class="small">
+  <li>Che cosa intendiamo per <strong>tema</strong>?</li>
+  <li>Quale corpus e quale versione dei testi?</li>
+  <li>Che cosa facciamo con varianti, nomi, stopword, punteggiatura?</li>
+  <li>Come distinguiamo un risultato plausibile da uno fuorviante?</li>
+</ul>
+<p class="accent">L’AI non elimina le decisioni metodologiche: spesso le rende meno visibili.</p>
+
+</section>
+<section>
+
+<h2>Perché continuare a imparare programmazione?</h2>
+<div class="compare small">
+  <div><h3>1. Per leggere</h3><p>Capire che cosa fa il codice generato dall’AI.</p></div>
+  <div><h3>2. Per verificare</h3><p>Controllare errori, assunzioni e risultati.</p></div>
+  <div><h3>3. Per modificare</h3><p>Adattare una soluzione al proprio corpus e alla propria domanda.</p></div>
+  <div><h3>4. Per documentare</h3><p>Rendere il metodo riproducibile e discutibile.</p></div>
+</div>
+
+</section>
+<section data-background-color="#0f1b20">
+
+<h2>La ragione più importante</h2>
+<p class="big-question">Programmare significa imparare a specificare con precisione <em>che cosa vogliamo che accada</em>.</p>
+<p class="lead">Nell’era dell’AI questa capacità diventa più importante, non meno.</p>
+<p class="small muted">Possiamo delegare parte della sintassi; non possiamo delegare completamente la responsabilità metodologica.</p>
+
+</section>
+<section>
+
+<h2>La competenza si sposta</h2>
+<table class="compact">
+  <tr><th>Prima</th><th>Con l’AI</th></tr>
+  <tr><td>Ricordare molta sintassi</td><td>Saper leggere e controllare la sintassi proposta</td></tr>
+  <tr><td>Scrivere ogni riga</td><td>Formulare, selezionare, modificare</td></tr>
+  <tr><td>Cercare un errore da soli</td><td>Usare l’AI come supporto al debugging</td></tr>
+  <tr><td>Conoscere “il comando giusto”</td><td>Capire il modello del problema e la struttura dei dati</td></tr>
+</table>
+<p class="accent">Il pensiero computazionale resta la competenza di fondo.</p>
+
+</section>
+<section>
+
+<h2>AI come pair programmer, non come oracolo</h2>
+<ul class="checklist small">
+  <li>Chiedere sempre una spiegazione del codice generato.</li>
+  <li>Eseguire il codice su esempi piccoli e controllabili.</li>
+  <li>Leggere gli errori, non cancellarli automaticamente.</li>
+  <li>Controllare input e output.</li>
+  <li>Salvare e documentare le versioni che funzionano.</li>
+  <li>Non usare un risultato che non sapremmo spiegare.</li>
+</ul>
+
+</section>
+<section>
+
+<h2>Nelle DH il codice è anche un argomento metodologico</h2>
+<p class="lead">Ogni scelta tecnica può cambiare l’interpretazione.</p>
+<div class="compare small">
+  <div><h3>Scelta</h3><p>Portare tutto in minuscolo.</p><p>Eliminare la punteggiatura.</p><p>Unificare varianti di un nome.</p></div>
+  <div><h3>Conseguenza</h3><p>Perdiamo differenze.</p><p>Modifichiamo il testo analizzato.</p><p>Introduciamo un’interpretazione.</p></div>
+</div>
+<p class="accent">Capire il codice significa poter discutere queste trasformazioni.</p>
+
+</section>
+<section>
+
+<div class="section-kicker">Perché Python?</div>
+<h2>Un buon linguaggio per iniziare</h2>
+<ul>
+  <li>Sintassi relativamente leggibile.</li>
+  <li>Grande ecosistema di librerie.</li>
+  <li>Molto usato per dati, testi, NLP e AI.</li>
+  <li>Ottimo per piccoli script e per progetti più grandi.</li>
+  <li>Funziona bene in notebook come Colab e in editor come VS Code.</li>
+</ul>
+
+</section>
+<section>
+
+<h2>Python nelle Digital Humanities</h2>
+<p>
+  <span class="pill">testi</span>
+  <span class="pill">XML / TEI</span>
+  <span class="pill">CSV</span>
+  <span class="pill">corpora</span>
+  <span class="pill">NLP</span>
+  <span class="pill">visualizzazioni</span>
+  <span class="pill">mappe</span>
+  <span class="pill">reti</span>
+  <span class="pill">web scraping</span>
+  <span class="pill">AI</span>
+</p>
+<p class="lead">Il nostro obiettivo non è “diventare programmatori”, ma usare la programmazione come metodo di ricerca.</p>
+
+</section>
+<section>
+
+<div class="section-kicker">Prima degli esercizi</div>
+<h2>Prepariamo l’ambiente di lavoro</h2>
+<p class="lead">Avremo due possibilità:</p>
+<div class="compare">
+  <div><h3>Google Colab</h3><p>Python nel browser. Ideale per iniziare subito.</p></div>
+  <div><h3>Visual Studio Code</h3><p>Editor locale. Ideale per lavorare con file, cartelle e progetti.</p></div>
+</div>
+<p class="accent">Per gli esercizi di oggi: Colab è la strada più semplice. VS Code è l’alternativa locale.</p>
+
+</section>
+<section>
+
+<h2>Colab vs VS Code: idea generale</h2>
+<table class="compact">
+  <tr><th></th><th>Google Colab</th><th>VS Code</th></tr>
+  <tr><td>Dove?</td><td>Browser / cloud</td><td>Computer locale</td></tr>
+  <tr><td>Python da installare?</td><td>No, per iniziare</td><td>Sì</td></tr>
+  <tr><td>Formato tipico</td><td><code>.ipynb</code></td><td><code>.py</code></td></tr>
+  <tr><td>Ottimo per</td><td>Esercizi, notebook, condivisione</td><td>Progetti, file, cartelle, Git</td></tr>
+</table>
+
+</section>
+<section>
+
+<div class="section-kicker">Google Colab</div>
+<h2>Che cos’è?</h2>
+<p class="lead">Un servizio di notebook Jupyter ospitato: permette di scrivere ed eseguire Python nel browser senza configurare un ambiente locale.</p>
+<ul class="small">
+  <li>I notebook possono essere salvati su Google Drive.</li>
+  <li>Le celle possono contenere <strong>codice</strong> oppure <strong>testo</strong>.</li>
+  <li>È particolarmente comodo per didattica, data science e sperimentazione.</li>
+</ul>
+<div class="source">Rif.: Google Colab, FAQ ufficiale e notebook “Welcome to Colab”.</div>
+
+</section>
+<section>
+
+<h2>Colab — Passo 1: aprire il servizio</h2>
+<div class="step"><strong>1.</strong> Apri <code>https://colab.research.google.com</code>.</div>
+<div class="step"><strong>2.</strong> Accedi con il tuo account Google.</div>
+<div class="step"><strong>3.</strong> Dal menu <strong>File</strong> crea un nuovo notebook.</div>
+<p class="small muted">Non serve installare Python sul computer per usare il runtime standard di Colab.</p>
+
+</section>
+<section>
+
+<h2>Colab — Passo 2: creare e rinominare il notebook</h2>
+<div class="step"><strong>1.</strong> Crea un nuovo notebook.</div>
+<div class="step"><strong>2.</strong> Fai clic sul titolo in alto.</div>
+<div class="step"><strong>3.</strong> Rinominalo:</div>
+<pre><code data-trim>
+lezione01_nome_cognome.ipynb
+</code></pre>
+<p class="small">Il formato <code>.ipynb</code> è il formato dei Jupyter Notebook.</p>
+
+</section>
+<section>
+
+<h2>Colab — Passo 3: due tipi di celle</h2>
+<div class="compare">
+  <div>
+    <h3>Cella di codice</h3>
+    <pre><code class="language-python" data-trim>
+print("Ciao!")
+</code></pre>
+  </div>
+  <div>
+    <h3>Cella di testo</h3>
+    <p>Serve per titoli, spiegazioni, note e documentazione.</p>
+    <p class="small muted">Usa Markdown.</p>
+  </div>
+</div>
+
+</section>
+<section>
+
+<h2>Colab — Passo 4: eseguire una cella</h2>
+<p class="lead">Due modi semplici:</p>
+<div class="step"><strong>▶</strong> fai clic sul pulsante a sinistra della cella.</div>
+<div class="step"><strong>Shift + Enter</strong> esegue la cella e passa a quella successiva.</div>
+<p class="small">L’output compare immediatamente sotto la cella.</p>
+
+</section>
+<section>
+
+<h2>Colab — Passo 5: salvare il lavoro</h2>
+<ul>
+  <li>I notebook creati con il proprio account possono essere salvati su Google Drive.</li>
+  <li>Rinomina il file in modo riconoscibile.</li>
+  <li>Il notebook contiene codice, testo e — se salvati — anche gli output.</li>
+</ul>
+<div class="warning small"><strong>Buona pratica:</strong> alla fine della lezione controlla sempre che il notebook sia nel tuo Drive.</div>
+
+</section>
+<section>
+
+<h2>Colab — Passo 6: lavorare con file esterni</h2>
+<p class="small">Più avanti useremo TXT, CSV, XML e altri file. In Colab possiamo caricare file locali.</p>
+<pre><code class="language-python" data-trim>
+from google.colab import files
+uploaded = files.upload()
+</code></pre>
+<p class="small muted">In alternativa si può usare il pannello “File” sulla sinistra o collegare Google Drive.</p>
+<div class="source">Rif.: Google Colab, “External data: Local Files, Drive, Sheets, and Cloud Storage”.</div>
+
+</section>
+<section>
+
+<h2>Colab — Una cosa importante sul runtime</h2>
+<div class="warning">
+  <strong>Notebook e macchina virtuale non sono la stessa cosa.</strong>
+</div>
+<ul class="small">
+  <li>Il notebook può essere salvato su Drive.</li>
+  <li>Il codice viene eseguito su una macchina virtuale.</li>
+  <li>La sessione può terminare; file temporanei e stato del runtime possono andare persi.</li>
+</ul>
+<p class="accent">Quindi: salvare il notebook ≠ conservare automaticamente tutto ciò che esiste nel runtime.</p>
+<div class="source">Rif.: Google Colab FAQ ufficiale.</div>
+
+</section>
+<section data-background-color="#0d1f0d">
+
+<h2>Colab — Checklist prima dell’esercizio</h2>
+<ul class="checklist">
+  <li>Ho aperto Colab.</li>
+  <li>Ho creato un notebook.</li>
+  <li>L’ho rinominato.</li>
+  <li>So distinguere celle di testo e di codice.</li>
+  <li>So eseguire una cella.</li>
+</ul>
+<p class="green">Se sì, siamo pronti.</p>
+
+</section>
+<section>
+
+<div class="section-kicker">Visual Studio Code</div>
+<h2>Che cos’è?</h2>
+<p class="lead">VS Code è un editor di codice. Organizza file e cartelle, integra il terminale e può essere esteso con supporto specifico per Python.</p>
+<p class="accent">Importante: VS Code non è Python.</p>
+<p class="small">Per eseguire Python in locale servono più componenti che lavorano insieme.</p>
+<div class="source">Rif.: Visual Studio Code, documentazione ufficiale.</div>
+
+</section>
+<section>
+
+<h2>VS Code + Python: tre pezzi distinti</h2>
+<div class="compare small">
+  <div><h3>1. VS Code</h3><p>L’editor in cui scriviamo e organizziamo il codice.</p></div>
+  <div><h3>2. Python</h3><p>L’interprete che esegue il programma.</p></div>
+  <div><h3>3. Estensione Python</h3><p>Aggiunge a VS Code supporto, selezione dell’interprete, completamento e strumenti Python.</p></div>
+  <div><h3>Insieme</h3><p>Editor + estensione + interprete = ambiente locale funzionante.</p></div>
+</div>
+<div class="source">Rif.: VS Code, “Quick Start Guide for Python in VS Code”.</div>
+
+</section>
+
+<section>
+<h2>VS Code — il percorso completo</h2>
+<p class="flowline">
+  1. Scaricare VS Code → 2. Installare Python → 3. Installare l’estensione Python →
+  4. Aprire una cartella → 5. Creare un file <code>.py</code> →
+  6. Scegliere l’interprete → 7. Scrivere il codice → 8. Eseguirlo
+</p>
+<p class="accent">Alla fine vedremo comparire l’output nel terminale integrato di VS Code.</p>
+</section>
+
+<section>
+<div class="section-kicker">1 · Installare VS Code</div>
+<h2>Link ufficiale</h2>
+<p>Apri il sito ufficiale di Visual Studio Code:</p>
+<div class="urlbox">
+  <a href="https://code.visualstudio.com/download" target="_blank" rel="noopener noreferrer">
+    https://code.visualstudio.com/download
+  </a>
+</div>
+<p class="small">La pagina riconosce normalmente il sistema operativo e propone il download adatto.</p>
+<div class="warning small"><strong>Attenzione:</strong> Visual Studio Code e Visual Studio sono due prodotti diversi. Per il corso usiamo <strong>Visual Studio Code (VS Code)</strong>.</div>
+<div class="source">Fonte: documentazione ufficiale Visual Studio Code.</div>
+</section>
+
+<section>
+<h2>Installare VS Code su Windows</h2>
+<div class="step"><strong>1.</strong> Nella pagina di download scegli <strong>Windows</strong>.</div>
+<div class="step"><strong>2.</strong> Scarica il <strong>User Installer</strong> <code>.exe</code>.</div>
+<div class="step"><strong>3.</strong> Apri il file scaricato.</div>
+<div class="step"><strong>4.</strong> Segui la procedura di installazione.</div>
+<div class="step"><strong>5.</strong> Al termine apri <strong>Visual Studio Code</strong> dal menu Start.</div>
+<p class="small muted">Il normale User Installer non richiede in genere privilegi di amministratore.</p>
+</section>
+
+<section>
+<h2>Installare VS Code su macOS</h2>
+<div class="step"><strong>1.</strong> Nella pagina di download scegli <strong>macOS</strong>.</div>
+<div class="step"><strong>2.</strong> Scarica il file <code>.dmg</code>.</div>
+<div class="step"><strong>3.</strong> Apri il file <code>.dmg</code>.</div>
+<div class="step"><strong>4.</strong> Trascina <strong>Visual Studio Code.app</strong> nella cartella <strong>Applications</strong>.</div>
+<div class="step"><strong>5.</strong> Apri VS Code da Applications oppure con Spotlight.</div>
+</section>
+
+<section>
+<div class="section-kicker">2 · Installare Python</div>
+<h2>Link ufficiale di Python</h2>
+<p>VS Code è soltanto l’editor: per eseguire Python serve anche un interprete Python installato sul computer.</p>
+<div class="urlbox">
+  <a href="https://www.python.org/downloads/" target="_blank" rel="noopener noreferrer">
+    https://www.python.org/downloads/
+  </a>
+</div>
+<p class="small">Per il corso è sufficiente una versione stabile e supportata di Python 3.</p>
+<div class="source">Fonte: Python Software Foundation.</div>
+</section>
+
+<section>
+<h2>Python su Windows — procedura attuale</h2>
+<p class="small">Nelle versioni recenti di Python, il sito ufficiale propone per Windows il <strong>Python Install Manager</strong>.</p>
+<div class="step"><strong>1.</strong> Vai su <code>python.org/downloads</code>.</div>
+<div class="step"><strong>2.</strong> Scegli <strong>Download Python install manager</strong>.</div>
+<div class="step"><strong>3.</strong> Apri il file scaricato e premi <strong>Install</strong>.</div>
+<div class="step"><strong>4.</strong> Apri <strong>Windows Terminal</strong> o <strong>PowerShell</strong>.</div>
+<div class="step"><strong>5.</strong> Digita <code>python</code>: se non hai ancora un runtime Python, il manager può installare automaticamente la versione stabile predefinita.</div>
+<p class="small muted">In alternativa puoi gestire le versioni con il comando <code>py</code>.</p>
+</section>
+
+<section>
+<h2>Windows — verifichiamo Python</h2>
+<p>Apri PowerShell o il Terminale e prova:</p>
+<pre><code class="language-bash" data-trim>
 python --version
-  </code></pre>
+</code></pre>
+<p>Puoi anche vedere le versioni gestite con:</p>
+<pre><code class="language-bash" data-trim>
+py list
+</code></pre>
+<p class="green">Se compare una versione di Python, l’interprete è disponibile.</p>
+<div class="warning small"><strong>Se hai appena installato Python:</strong> chiudi e riapri il terminale e, se necessario, VS Code.</div>
+</section>
+
+<section>
+<h2>Python su macOS</h2>
+<div class="step"><strong>1.</strong> Vai su <code>https://www.python.org/downloads/</code>.</div>
+<div class="step"><strong>2.</strong> Scarica il <strong>macOS installer</strong> ufficiale.</div>
+<div class="step"><strong>3.</strong> Apri il pacchetto <code>.pkg</code> e completa l’installazione.</div>
+<div class="step"><strong>4.</strong> Apri l’applicazione <strong>Terminale</strong>.</div>
+<div class="step"><strong>5.</strong> Verifica con <code>python3 --version</code>.</div>
+<div class="warning small"><strong>Nota:</strong> macOS può includere un proprio <code>python3</code> legato agli strumenti Apple. Per il corso è preferibile selezionare in VS Code l’installazione fatta da <strong>python.org</strong>.</div>
+</section>
+
+<section>
+<h2>macOS — verifichiamo Python</h2>
+<pre><code class="language-bash" data-trim>
+python3 --version
+</code></pre>
+<p>Per vedere dove si trova l’interprete:</p>
+<pre><code class="language-bash" data-trim>
+which python3
+</code></pre>
+<p class="small">Più avanti sarà VS Code a mostrarci quale interprete sta usando.</p>
+</section>
+
+<section>
+<h2>E su Linux?</h2>
+<p class="small">Molte distribuzioni hanno già Python 3. Per prima cosa verifica:</p>
+<pre><code class="language-bash" data-trim>
+python3 --version
+</code></pre>
+<p>Per VS Code usa il pacchetto adatto alla distribuzione:</p>
+<div class="urlbox">
+  <a href="https://code.visualstudio.com/download" target="_blank" rel="noopener noreferrer">
+    https://code.visualstudio.com/download
+  </a>
+</div>
+<p class="small muted">La pagina ufficiale offre pacchetti <code>.deb</code> per Debian/Ubuntu e <code>.rpm</code> per Fedora/RHEL.</p>
+</section>
+
+<section>
+<div class="section-kicker">3 · Preparare VS Code per Python</div>
+<h2>Aprire VS Code per la prima volta</h2>
+<p>Quando VS Code si apre vedrai una schermata iniziale.</p>
+<p class="small">Per ora non servono account, Copilot o funzioni AI.</p>
+<p class="accent">Ci servono soltanto: editor + Python + estensione Python.</p>
+</section>
+
+<section>
+<h2>Installare l’estensione Python</h2>
+<div class="step"><strong>1.</strong> Nella barra laterale sinistra fai clic su <strong>Extensions</strong> (icona con quattro quadratini).</div>
+<div class="step"><strong>2.</strong> Nella casella di ricerca scrivi <code>Python</code>.</div>
+<div class="step"><strong>3.</strong> Cerca l’estensione <strong>Python</strong> pubblicata da <strong>Microsoft</strong>.</div>
+<div class="step"><strong>4.</strong> Fai clic su <strong>Install</strong>.</div>
+<p class="small muted">Identificativo dell’estensione: <code>ms-python.python</code>.</p>
+<div class="urlbox">
+  <a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python" target="_blank" rel="noopener noreferrer">
+    marketplace.visualstudio.com/items?itemName=ms-python.python
+  </a>
+</div>
+</section>
+
+<section>
+<h2>Che cosa fa l’estensione Python?</h2>
+<ul class="small">
+  <li>riconosce i file <code>.py</code>;</li>
+  <li>permette di scegliere l’interprete Python;</li>
+  <li>aggiunge il pulsante <strong>Run Python File</strong>;</li>
+  <li>fornisce completamento, controlli e supporto al debugging;</li>
+  <li>integra Python con il terminale di VS Code.</li>
+</ul>
+<p class="accent">L’estensione non sostituisce Python: l’interprete deve comunque essere installato.</p>
+</section>
+
+<section>
+<div class="section-kicker">4 · Creare il progetto</div>
+<h2>Creiamo una cartella di lavoro</h2>
+<p>Crea sul computer una cartella, per esempio:</p>
+<pre><code data-trim>
+corso-programmazione
+</code></pre>
+<p>Puoi metterla sul Desktop oppure nella cartella Documenti.</p>
+<div class="warning small"><strong>Perché una cartella?</strong> Nei progetti reali avremo insieme codice, testi, CSV, XML e risultati. È meglio abituarsi subito a organizzare i file.</div>
+</section>
+
+<section>
+<h2>Aprire la cartella in VS Code</h2>
+<div class="step"><strong>1.</strong> Apri VS Code.</div>
+<div class="step"><strong>2.</strong> Vai su <strong>File → Open Folder…</strong>.</div>
+<div class="step"><strong>3.</strong> Seleziona la cartella <code>corso-programmazione</code>.</div>
+<div class="step"><strong>4.</strong> Conferma l’apertura.</div>
+<p class="small">A sinistra, nel pannello <strong>Explorer</strong>, vedrai la cartella del progetto.</p>
+</section>
+
+<section>
+<div class="section-kicker">5 · Creare il primo programma</div>
+<h2>Creare un file Python</h2>
+<div class="step"><strong>1.</strong> Nel pannello Explorer fai clic su <strong>New File</strong>.</div>
+<div class="step"><strong>2.</strong> Chiamalo:</div>
+<pre><code data-trim>
+ciao.py
+</code></pre>
+<div class="step"><strong>3.</strong> Premi Invio.</div>
+<p class="accent">L’estensione <code>.py</code> dice a VS Code che il file contiene codice Python.</p>
+</section>
+
+<section>
+<h2>Scrivere il codice</h2>
+<p>Nel file <code>ciao.py</code> scrivi:</p>
+<pre><code class="language-python" data-trim>
+print("Ciao, sto usando Python in VS Code!")
+</code></pre>
+<p>Poi salva:</p>
+<p class="small">
+  Windows/Linux: <span class="kbd">Ctrl</span> + <span class="kbd">S</span>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  macOS: <span class="kbd">⌘</span> + <span class="kbd">S</span>
+</p>
+</section>
+
+<section>
+<div class="section-kicker">6 · Scegliere l’interprete</div>
+<h2>Quale Python deve usare VS Code?</h2>
+<p class="small">VS Code può trovare più installazioni di Python. Dobbiamo scegliere quella corretta.</p>
+<div class="step"><strong>1.</strong> Apri la <strong>Command Palette</strong>.</div>
+<p class="small">
+  Windows/Linux: <span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">P</span>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  macOS: <span class="kbd">⌘</span> + <span class="kbd">Shift</span> + <span class="kbd">P</span>
+</p>
+<div class="step"><strong>2.</strong> Scrivi <code>Python: Select Interpreter</code>.</div>
+<div class="step"><strong>3.</strong> Seleziona il Python installato sul computer.</div>
+</section>
+
+<section>
+<h2>Come controllo l’interprete scelto?</h2>
+<p class="small">Dopo la selezione, VS Code mostra normalmente la versione/interprete Python nella barra di stato.</p>
+<p>Possiamo anche aprire il terminale interno:</p>
+<div class="step"><strong>Terminal → New Terminal</strong></div>
+<p>e verificare:</p>
+<pre><code class="language-bash" data-trim>
+# Windows
+python --version
+
+# macOS / Linux
+python3 --version
+</code></pre>
+</section>
+
+<section>
+<div class="section-kicker">7 · Eseguire il programma</div>
+<h2>Metodo più semplice: il pulsante ▶</h2>
+<div class="step"><strong>1.</strong> Apri <code>ciao.py</code>.</div>
+<div class="step"><strong>2.</strong> Salva il file.</div>
+<div class="step"><strong>3.</strong> In alto a destra fai clic sul pulsante ▶ <strong>Run Python File in Terminal</strong>.</div>
+<div class="step"><strong>4.</strong> Guarda il pannello <strong>Terminal</strong> in basso.</div>
+<p>Dovresti vedere:</p>
+<pre><code data-trim>
+Ciao, sto usando Python in VS Code!
+</code></pre>
+<div class="source">Fonte: Quick Start Guide for Python in VS Code.</div>
+</section>
+
+<section>
+<h2>Che cosa è appena successo?</h2>
+<p class="lead">VS Code ha aperto il terminale e ha chiesto all’interprete Python di eseguire il file.</p>
+<p class="small">In pratica è avvenuta un’operazione simile a:</p>
+<pre><code class="language-bash" data-trim>
+# Windows
+python ciao.py
+
+# macOS / Linux
+python3 ciao.py
+</code></pre>
+<p class="accent">Il terminale non è un altro programma Python: è il luogo in cui lanciamo comandi.</p>
+</section>
+
+<section>
+<h2>Metodo 2: eseguire dal terminale</h2>
+<div class="step"><strong>1.</strong> Apri <strong>Terminal → New Terminal</strong>.</div>
+<div class="step"><strong>2.</strong> Controlla che il terminale sia nella cartella del progetto.</div>
+<div class="step"><strong>3.</strong> Esegui:</div>
+<pre><code class="language-bash" data-trim>
+# Windows
+python ciao.py
+
+# macOS / Linux
+python3 ciao.py
+</code></pre>
+<p class="small">Se il comando termina senza errori, vedrai l’output nel terminale.</p>
+</section>
+
+<section>
+<h2>Metodo 3: provare solo alcune righe</h2>
+<p class="small">L’estensione Python permette anche di eseguire una selezione o una piccola parte del file.</p>
+<div class="step"><strong>1.</strong> Seleziona una o più righe.</div>
+<div class="step"><strong>2.</strong> Premi <span class="kbd">Shift</span> + <span class="kbd">Enter</span>.</div>
+<p>È utile per fare piccoli esperimenti senza eseguire tutto il programma.</p>
+<div class="source">Fonte: documentazione ufficiale VS Code, Running Python code.</div>
+</section>
+
+<section>
+<h2>Proviamo adesso</h2>
+<p>Modifica il file:</p>
+<pre><code class="language-python" data-trim>
+print("Nome: ...")
+print("Corso: ...")
+print("Prima lezione di Python")
+</code></pre>
+<p>Poi:</p>
+<ol class="small">
+  <li>salva;</li>
+  <li>premi ▶;</li>
+  <li>controlla l’output;</li>
+  <li>modifica una riga;</li>
+  <li>esegui di nuovo.</li>
+</ol>
+</section>
+
+<section>
+<h2>Errore: “Python was not found” / comando non trovato</h2>
+<p class="small">Controlla in quest’ordine:</p>
+<ol class="small">
+  <li>Python è stato realmente installato?</li>
+  <li>Hai chiuso e riaperto VS Code dopo l’installazione?</li>
+  <li>Nel terminale funziona <code>python --version</code> o <code>python3 --version</code>?</li>
+  <li>Hai selezionato l’interprete con <strong>Python: Select Interpreter</strong>?</li>
+</ol>
+<div class="warning small">Su Windows, con il nuovo Python Install Manager, prova anche <code>py list</code> per vedere le versioni disponibili.</div>
+</section>
+
+<section>
+<h2>Errore: non compare il pulsante ▶ Python</h2>
+<p class="small">Controlla:</p>
+<ul class="checklist small">
+  <li>il file termina con <code>.py</code>;</li>
+  <li>l’estensione <strong>Python</strong> di Microsoft è installata e attiva;</li>
+  <li>hai aperto un file Python nell’editor;</li>
+  <li>VS Code ha rilevato un interprete Python.</li>
+</ul>
+</section>
+
+<section>
+<h2>Errore: VS Code usa il Python sbagliato</h2>
+<p>Apri la Command Palette e scegli di nuovo:</p>
+<pre><code data-trim>
+Python: Select Interpreter
+</code></pre>
+<p class="small">Quando avremo più progetti, potremo usare ambienti virtuali diversi. Per oggi ci basta un solo interprete funzionante.</p>
+</section>
+
+<section>
+<h2>Errore nel codice ≠ errore di installazione</h2>
+<div class="compare small">
+  <div>
+    <h3>Problema di ambiente</h3>
+    <p>Python non trovato, estensione mancante, interprete non selezionato.</p>
+  </div>
+  <div>
+    <h3>Problema nel codice</h3>
+    <p><code>SyntaxError</code>, <code>NameError</code>, parentesi o virgolette mancanti.</p>
+  </div>
+</div>
+<p class="accent">Prima capiamo <em>che tipo di errore</em> abbiamo, poi cerchiamo la soluzione.</p>
+</section>
+
+<section data-background-color="#0d1f0d">
+<div class="tag tag-esercizio">Checklist</div>
+<h2>VS Code pronto: controllo finale</h2>
+<ul class="checklist small">
+  <li>VS Code è installato.</li>
+  <li>Python è installato.</li>
+  <li>Nel terminale vedo la versione di Python.</li>
+  <li>L’estensione Python di Microsoft è installata.</li>
+  <li>Ho aperto la cartella del corso.</li>
+  <li>Ho creato <code>ciao.py</code>.</li>
+  <li>Ho selezionato l’interprete.</li>
+  <li>Premendo ▶ vedo l’output nel terminale.</li>
+</ul>
+<p class="green"><strong>Se tutti i punti sono verificati, il tuo ambiente locale è pronto.</strong></p>
+</section>
+
+<section>
+<h2>Quale usiamo oggi?</h2>
+<div class="compare">
+  <div>
+    <h3>Se vuoi partire subito</h3>
+    <p class="green"><strong>Google Colab</strong></p>
+    <p>Nessuna installazione locale.</p>
+  </div>
+  <div>
+    <h3>Se hai già configurato Python</h3>
+    <p class="accent"><strong>VS Code</strong></p>
+    <p>Segui la procedura passo passo e lavora in un file <code>.py</code>.</p>
+  </div>
+</div>
+<p class="small muted">Gli esempi Python della lezione funzionano in entrambi gli ambienti.</p>
+
 </section>
 <section>
-<h2>Terminale</h2><p>Il terminale serve per eseguire comandi, installare librerie e lanciare script.</p><pre><code class="language-python" data-trim>
-python nome_file.py
-  </code></pre>
+
+<div class="section-kicker">Finalmente Python</div>
+<h2>Il primo comando: <code>print()</code></h2>
+<p><code>print()</code> mostra un risultato sullo schermo.</p>
+<pre><code class="language-python" data-trim>
+print("Ciao mondo")
+</code></pre>
+<p class="small">Provate a eseguirlo. Poi cambiate il testo.</p>
+
 </section>
 <section>
-<h2>Primo file Python</h2><p>Un file Python ha estensione <code>.py</code>.</p><pre><code data-trim>
-lezione1.py
-  </code></pre>
+
+<h2>Testo tra virgolette</h2>
+<p>Una sequenza di caratteri testuali è una <strong>stringa</strong>.</p>
+<pre><code class="language-python" data-trim>
+print("Digital Humanities")
+print("Tor Vergata")
+print("Programmare significa rendere esplicita una procedura")
+</code></pre>
+<p class="small muted">Le virgolette dicono a Python: “questo è testo”.</p>
+
 </section>
 <section>
-<h2>Il comando print()</h2><p><code>print()</code> mostra un risultato sullo schermo.</p><pre><code class="language-python" data-trim>
-print(&quot;Ciao mondo&quot;)
-  </code></pre>
+
+<h2>Più istruzioni, una dopo l’altra</h2>
+<pre><code class="language-python" data-trim>
+print("Titolo: Frankenstein")
+print("Autrice: Mary Shelley")
+print("Anno: 1818")
+</code></pre>
+<p class="small">Python esegue le istruzioni dall’alto verso il basso.</p>
+
 </section>
 <section>
-<h2>Testo tra virgolette</h2><p>Le stringhe di testo devono essere racchiuse tra virgolette.</p><pre><code class="language-python" data-trim>
-print(&quot;Digital Humanities&quot;)
-  </code></pre>
+
+<h2>I commenti</h2>
+<p>I commenti servono a spiegare il codice e non vengono eseguiti.</p>
+<pre><code class="language-python" data-trim>
+# Questa riga è un commento
+print("Frankenstein")
+
+# Possiamo documentare le nostre scelte
+print("Anno: 1818")
+</code></pre>
+<p class="accent">Documentare è particolarmente importante nella ricerca.</p>
+
 </section>
 <section>
-<h2>Stampare una citazione</h2><pre><code class="language-python" data-trim>
-print(&quot;Nel mezzo del cammin di nostra vita&quot;)
-  </code></pre>
-</section>
-<section>
-<h2>Più istruzioni</h2><pre><code class="language-python" data-trim>
-print(&quot;Titolo: Frankenstein&quot;)
-print(&quot;Autrice: Mary Shelley&quot;)
-print(&quot;Anno: 1818&quot;)
-  </code></pre>
-</section>
-<section>
-<h2>Commenti</h2><p>I commenti spiegano il codice e non vengono eseguiti.</p><pre><code class="language-python" data-trim>
-# Questo è un commento
-print(&quot;Frankenstein&quot;)
-  </code></pre>
-</section>
-<section>
-<h2>Errore comune</h2><div class="box box-err"><p class="label-err">Virgolette mancanti</p><pre><code class="language-python" data-trim>
+
+<h2>Un errore comune</h2>
+<div class="box box-err">
+  <p class="label-err">Mancano le virgolette</p>
+  <pre><code class="language-python" data-trim>
 print(Frankenstein)
-  </code></pre></div>
+</code></pre>
+</div>
+<p class="small">Python interpreta <code>Frankenstein</code> come un nome di variabile, non come testo.</p>
+
 </section>
 <section>
-<h2>Versione corretta</h2><div class="box box-ok"><p class="label-ok">Stringa corretta</p><pre><code class="language-python" data-trim>
-print(&quot;Frankenstein&quot;)
-  </code></pre></div>
+
+<h2>Versione corretta</h2>
+<div class="box box-ok">
+  <p class="label-ok">Stringa corretta</p>
+  <pre><code class="language-python" data-trim>
+print("Frankenstein")
+</code></pre>
+</div>
+<p class="lead">Il debugging comincia da qui: leggere l’errore, formulare un’ipotesi, correggere, riprovare.</p>
+
 </section>
 <section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 1</h2>
-<p>Scrivere un programma che stampi il proprio nome.</p>
+
+<div class="tag tag-esercizio">Esercizio 1</div>
+<h2>Presentarsi con Python</h2>
+<p>Scrivi un programma che stampi:</p>
+<ul>
+  <li>il tuo nome;</li>
+  <li>il tuo corso di laurea;</li>
+  <li>una frase su ciò che vorresti imparare.</li>
+</ul>
+<p class="small muted">Eseguilo in Colab oppure in VS Code.</p>
+
 </section>
 <section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 1</h2>
+
+<div class="tag tag-soluzione">Una possibile soluzione</div>
+<h2>Soluzione 1</h2>
 <pre><code class="language-python" data-trim>
-print(&quot;Tiziana&quot;)
-  </code></pre>
+print("Nome: Anna")
+print("Corso: Comunicazione e Intelligenza Artificiale")
+print("Vorrei imparare a lavorare con testi e dati")
+</code></pre>
+
 </section>
 <section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 2</h2>
-<p>Stampare titolo, autore e anno di un’opera letteraria.</p>
+
+<div class="tag tag-esercizio">Esercizio 2</div>
+<h2>Una piccola scheda di un’opera</h2>
+<p>Stampa quattro righe:</p>
+<ul>
+  <li>titolo;</li>
+  <li>autore/autrice;</li>
+  <li>anno;</li>
+  <li>genere o tipologia.</li>
+</ul>
+
 </section>
 <section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 2</h2>
+
+<div class="tag tag-soluzione">Una possibile soluzione</div>
+<h2>Soluzione 2</h2>
 <pre><code class="language-python" data-trim>
-print(&quot;Titolo: Frankenstein&quot;)
-print(&quot;Autrice: Mary Shelley&quot;)
-print(&quot;Anno: 1818&quot;)
-  </code></pre>
+print("Titolo: Frankenstein")
+print("Autrice: Mary Shelley")
+print("Anno: 1818")
+print("Genere: romanzo")
+</code></pre>
+
 </section>
 <section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 3</h2>
-<p>Stampare tre righe con una breve scheda di un testo.</p>
+
+<div class="tag tag-esercizio">Esercizio 3</div>
+<h2>Aggiungiamo documentazione</h2>
+<p>Riprendi l’esercizio precedente e inserisci almeno due commenti:</p>
+<ul class="small">
+  <li>uno che spieghi che cosa fa il programma;</li>
+  <li>uno che documenti una scelta o una fonte.</li>
+</ul>
+
 </section>
 <section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 3</h2>
+
+<div class="tag tag-soluzione">Una possibile soluzione</div>
+<h2>Soluzione 3</h2>
 <pre><code class="language-python" data-trim>
-print(&quot;Opera: Dracula&quot;)
-print(&quot;Autore: Bram Stoker&quot;)
-print(&quot;Genere: romanzo gotico&quot;)
-  </code></pre>
+# Piccola scheda bibliografica
+print("Titolo: Dracula")
+print("Autore: Bram Stoker")
+
+# Data della prima pubblicazione
+print("Anno: 1897")
+print("Genere: romanzo gotico")
+</code></pre>
+
 </section>
 <section>
-<h2>Mini progetto</h2><p>Costruire una piccola scheda testuale stampata da Python.</p><pre><code class="language-python" data-trim>
-print(&quot;=== SCHEDA OPERA ===&quot;)
-print(&quot;Titolo: Frankenstein&quot;)
-print(&quot;Autrice: Mary Shelley&quot;)
-print(&quot;Anno: 1818&quot;)
-print(&quot;Tema: scienza e creazione&quot;)
-  </code></pre>
+
+<h2>Mini progetto della lezione</h2>
+<p>Costruire una piccola scheda testuale stampata da Python.</p>
+<pre><code class="language-python" data-trim>
+print("=== SCHEDA OPERA ===")
+print("Titolo: Frankenstein")
+print("Autrice: Mary Shelley")
+print("Anno: 1818")
+print("Tema: scienza e creazione")
+print("====================")
+</code></pre>
+<p class="small">Personalizzala con un’opera scelta da te.</p>
+
 </section>
 <section>
-<h2>Domanda DH</h2><p>Che cosa cambia se una scheda bibliografica viene scritta a mano o generata automaticamente?</p>
+
+<h2>Domanda DH</h2>
+<p class="big-question">Che cosa cambia se una scheda bibliografica viene scritta a mano oppure generata automaticamente?</p>
+<ul class="small">
+  <li>Quali informazioni devono essere strutturate?</li>
+  <li>Quali regole devono essere esplicite?</li>
+  <li>Come controlliamo la correttezza?</li>
+  <li>Che cosa possiamo riusare su 10, 100 o 10.000 record?</li>
+</ul>
+
 </section>
 <section>
-<h2>Pipeline della lezione</h2><pre><code data-trim>
-Idea → Codice → Esecuzione → Output
-  </code></pre>
+
+<h2>La pipeline di oggi</h2>
+<pre><code data-trim>
+Domanda
+  ↓
+Problema
+  ↓
+Procedura
+  ↓
+Codice Python
+  ↓
+Esecuzione
+  ↓
+Output
+  ↓
+Controllo
+</code></pre>
+<p class="accent">Questa struttura tornerà per tutto il corso.</p>
+
 </section>
 <section>
+
 <h2>🎯 Recap</h2>
-<ul style="font-size:0.9em"><li>Python esegue istruzioni</li>
-<li>Colab lavora online</li>
-<li>VS Code lavora in locale</li>
-<li><code>print()</code> produce output</li>
-<li>Gli errori fanno parte dell’apprendimento</li></ul>
+<ul style="font-size:0.84em">
+  <li>Programmare non significa solo scrivere sintassi.</li>
+  <li>Il pensiero computazionale aiuta a formulare e scomporre problemi.</li>
+  <li>La storia della programmazione è una storia di astrazione e accessibilità.</li>
+  <li>L’AI può generare codice, ma dobbiamo saperlo leggere, verificare e adattare.</li>
+  <li>Colab lavora nel browser; VS Code lavora in locale.</li>
+  <li><code>print()</code> produce il nostro primo output.</li>
+</ul>
+
 </section>
 <section>
+
+<h2>La prossima volta</h2>
+<p class="lead">Dalle istruzioni ai <strong>dati</strong>.</p>
+<p>
+  <span class="pill">variabili</span>
+  <span class="pill">stringhe</span>
+  <span class="pill">numeri</span>
+  <span class="pill">metadati</span>
+  <span class="pill">prime trasformazioni testuali</span>
+</p>
+<p class="small muted">Cominceremo a memorizzare informazioni e a modificarle con Python.</p>
+
+</section>
+<section>
+
+<h2>Riferimenti teorici essenziali</h2>
+<ul class="tiny">
+  <li>A. M. Turing, <em>On Computable Numbers, with an Application to the Entscheidungsproblem</em>, 1936.</li>
+  <li>Seymour Papert, <em>Mindstorms: Children, Computers, and Powerful Ideas</em>, 1980.</li>
+  <li>Donald E. Knuth, “Computer Programming as an Art”, 1974.</li>
+  <li>Jeannette M. Wing, “Computational Thinking”, <em>Communications of the ACM</em>, 2006.</li>
+  <li>History of Science Museum, Oxford, <em>Imagining AI – Babbage &amp; Lovelace</em>.</li>
+  <li>Computer History Museum, materiali su Konrad Zuse e Plankalkül.</li>
+  <li>IBM History, materiali su John Backus e FORTRAN.</li>
+  <li>Yale University / Computer History Museum, materiali biografici su Grace Hopper.</li>
+</ul>
+
+</section>
+<section>
+
+<h2>Riferimenti per gli strumenti</h2>
+<ul class="tiny">
+  <li>Google Colab: <code>https://colab.research.google.com</code></li>
+  <li>Colab FAQ: <code>https://research.google.com/colaboratory/faq.html</code></li>
+  <li>Python: <code>https://www.python.org/downloads/</code></li>
+  <li>Visual Studio Code: <code>https://code.visualstudio.com</code></li>
+  <li>Python in VS Code: <code>https://code.visualstudio.com/docs/python/python-quick-start</code></li>
+</ul>
+<p class="small muted">Le istruzioni operative sono state allineate alla documentazione ufficiale.</p>
+
+</section>
+<section>
+
 <h2>❓ Domande</h2>
+<p class="big-question">E soprattutto: che cosa vorreste riuscire a fare con il codice alla fine del corso?</p>
+
 </section>
 </div>
 </div>
