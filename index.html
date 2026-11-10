@@ -9,6 +9,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
+
+    <style>
+      /* Font Awesome 6 compatibility fix for the HTML5 UP theme */
+      .icon:before,
+      .icon.solid:before,
+      .icon.brands:before {
+        font-family: "Font Awesome 6 Free" !important;
+      }
+      .icon.solid:before {
+        font-weight: 900 !important;
+      }
+      .icon.brands:before {
+        font-family: "Font Awesome 6 Brands" !important;
+        font-weight: 400 !important;
+      }
+    
+      /* Navigazione rapida del corso */
+      #header .course-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        margin-left: auto;
+        flex-wrap: wrap;
+      }
+      #header .course-nav a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid rgba(210, 215, 217, 0.9);
+        border-radius: 0.35rem;
+        text-decoration: none;
+        white-space: nowrap;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      #header .course-nav a:hover {
+        border-color: #f56a6a;
+      }
+      #header .course-nav i {
+        width: 1.1rem;
+        text-align: center;
+      }
+      @media screen and (max-width: 736px) {
+        #header {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 0.8rem;
+        }
+        #header .course-nav {
+          margin-left: 0;
+        }
+      }
+
+    </style>
+
   </head>
   <body class="is-preload">
     <div id="wrapper">
@@ -16,20 +72,20 @@
         <div class="inner">
           <header id="header">
             <a href="#top" class="logo"><strong>Introduzione alla programmazione e al pensiero computazionale</strong></a>
-            <ul class="icons">
-              <li><a href="#about" class="icon solid fa-user"><span class="label">About</span></a></li>
-              <li><a href="#orario" class="icon solid fa-clock"><span class="label">Orario</span></a></li>
-              <li><a href="#lezioni" class="icon solid fa-book"><span class="label">Lezioni</span></a></li>
-            </ul>
+            <nav class="course-nav" aria-label="Navigazione rapida">
+              <a href="#about"><i class="fa-solid fa-user" aria-hidden="true"></i><span>About</span></a>
+              <a href="#orario"><i class="fa-solid fa-clock" aria-hidden="true"></i><span>Orario</span></a>
+              <a href="#lezioni"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Lezioni</span></a>
+            </nav>
           </header>
 
           <section id="banner">
             <div class="content">
               <header>
                 <h1>Introduzione alla programmazione e al pensiero computazionale</h1>
-                <p>Marzo - Maggio 2026 · Università di Roma Tor Vergata · 30 ore · 15 lezioni</p>
+                <p>10 novembre - 18 dicembre 2026 · Università di Roma Tor Vergata · 30 ore · 15 lezioni</p>
               </header>
-              <p>Il corso introduce le basi di programmazione e di pensiero computazionale con particolare attenzione agli usi nel campo delle Digital Humanities, del trattamento dei testi e dell’analisi dei dati testuali. Il percorso alterna teoria, esempi, laboratorio ed esercizi progressivi.</p>
+              <p>Che cosa significa programmare quando si lavora con testi, archivi, documenti e dati culturali? Questo corso nasce come introduzione alla programmazione per le Digital Humanities e parte da una domanda semplice: come possiamo trasformare un problema di ricerca umanistica in una sequenza di operazioni che un computer possa eseguire? A partire da esempi concreti, impareremo gradualmente a leggere e scrivere semplici programmi in Python, a organizzare e manipolare dati e testi digitali e a comprendere la logica che sta dietro agli strumenti computazionali. Non sono richieste conoscenze pregresse di programmazione: il percorso alternerà spiegazioni, esempi guidati, laboratorio ed esercizi.</p>
               <ul class="actions">
                 <li><a href="#lezioni" class="button big">Vai alle lezioni</a></li>
               </ul>
@@ -46,13 +102,13 @@
             <div class="row">
               <div class="col-8 col-12-medium">
                 <p><strong>Tiziana Mancinelli</strong> · Ricercatrice presso Istituto Italiano di Studi Germanici.</p>
-                <p>Il corso affronta quattro aree principali: basi di programmazione, testi e dati nelle Digital Humanities, text analysis, e introduzione critica agli strumenti di intelligenza artificiale per i testi.</p>
+                <p>Il corso introduce alla programmazione a partire da problemi e materiali delle Digital Humanities: testi, dati strutturati, corpora e risorse culturali digitali. L’obiettivo è acquisire le basi di Python e del pensiero computazionale e imparare a usarle in modo consapevole per semplici attività di analisi, trasformazione e interpretazione dei dati umanistici.</p>
               </div>
               <div class="col-4 col-12-medium">
                 <ul class="contact">
-                  <li class="icon solid fa-building-columns">Università di Roma Tor Vergata</li>
-                  <li class="icon solid fa-calendar-alt">Marzo - Maggio 2026</li>
-                  <li class="icon solid fa-hourglass-half">30 ore</li>
+                  <li class="icon solid fa-university">Università di Roma Tor Vergata</li>
+                  <li class="icon solid fa-calendar">10 novembre - 18 dicembre 2026</li>
+                  <li class="icon solid fa-hourglass">30 ore</li>
                 </ul>
               </div>
             </div>
@@ -64,19 +120,27 @@
             </header>
             <div class="features">
               <article>
-                <span class="icon solid fa-sun"></span>
+                <span class="icon solid fa-clock"></span>
                 <div class="content">
-                  <h3>Lunedì</h3>
-                  <p>10:00–12:00</p>
-                  <p>T 35</p>
+                  <h3>Martedì</h3>
+                  <p>13:00–15:00</p>
+                  <p>T20</p>
                 </div>
               </article>
               <article>
-                <span class="icon solid fa-moon"></span>
+                <span class="icon solid fa-clock"></span>
                 <div class="content">
-                  <h3>Martedì</h3>
-                  <p>10:00–12:00</p>
-                  <p>T 35</p>
+                  <h3>Mercoledì</h3>
+                  <p>13:00–15:00</p>
+                  <p>Aula Roma</p>
+                </div>
+              </article>
+              <article>
+                <span class="icon solid fa-clock"></span>
+                <div class="content">
+                  <h3>Venerdì</h3>
+                  <p>14:00–16:00</p>
+                  <p>P25</p>
                 </div>
               </article>
             </div>
@@ -341,7 +405,7 @@
                 <p><strong>Sede</strong><br />Università di Roma Tor Vergata</p>
               </article>
               <article>
-                <p><strong>Periodo</strong><br />Marzo - Maggio 2026</p>
+                <p><strong>Periodo</strong><br />10 novembre - 18 dicembre 2026</p>
               </article>
             </div>
           </section>
@@ -353,7 +417,8 @@
             <ul class="contact">
               <li class="icon solid fa-user">Tiziana Mancinelli</li>
               <li class="icon solid fa-building">Istituto Italiano di Studi Germanici</li>
-              <li class="icon solid fa-clock">Lunedì 10–12 · Martedì 14–16</li>
+              <li class="icon solid fa-envelope">Tiziana.Mancinelli@uniroma2.it</li>
+              <li class="icon solid fa-clock">Martedì 13–15 · Mercoledì 13–15 · Venerdì 14–16</li>
             </ul>
           </section>
 
