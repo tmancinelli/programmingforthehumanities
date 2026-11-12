@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="it">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lezione 2 - Variabili e stringhe</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/monokai.css">
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lezione 2 - Variabili e stringhe</title>
+<link href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/monokai.css" rel="stylesheet"/>
+<style>
     .reveal h1 { font-size: 2.2em; }
     .reveal h2 { font-size: 1.8em; }
     .reveal h3 { font-size: 1.3em; color: #42affa; }
@@ -167,16 +168,19 @@
       font-family: monospace;
       pointer-events: none;
     }
-  </style>
+  
+.class-time{font-size:.55em;color:#f5a623;margin:0 0 10px;} .hint{font-size:.67em;color:#a8c9e6;margin-top:14px;} .work-note{font-size:.62em;color:#d6e8d6;margin-top:18px;} .reveal .slides section>p{max-width:100%;} 
+</style>
 </head>
 <body>
 <div class="reveal">
 <div class="slides"><section>
-<h1>Lezione 2<br>Variabili e stringhe</h1>
-  <p style="color:#888; margin-top:8px">Python per le Digital Humanities</p>
-  <br>
-  <p style="font-size:0.75em; color:#aaa">Tiziana Mancinelli</p>
-  <p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata</p>
+<h1>Lezione 2<br/>Variabili e stringhe</h1>
+<p style="color:#888; margin-top:8px">Python per le Digital Humanities</p>
+<br/>
+<p style="font-size:0.75em; color:#aaa">Tiziana Mancinelli</p>
+<p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata</p>
+<p style="font-size:0.65em; color:#aaa; margin-top:22px">12 novembre 2026</p>
 </section>
 <section>
 <h2>🎯 Obiettivi</h2>
@@ -184,89 +188,185 @@
 <li>Usare stringhe e numeri</li>
 <li>Manipolare brevi testi</li>
 <li>Usare funzioni base come <code>len()</code></li>
-<li>Costruire una scheda testuale</li></ul>
-</section>
+<li>Costruire una scheda testuale</li><li>Riconoscere il ruolo dell’indentazione e leggere gli errori</li></ul>
+</section><section><h2>Come lavoriamo oggi</h2><ul><li>Osserviamo un esempio e prevediamo che cosa accadrà.</li><li>Eseguiamo il codice nelle slide o in Colab / VS Code.</li><li>Modifichiamo il programma e leggiamo insieme gli errori.</li><li>Concludiamo con una piccola scheda bibliografica.</li></ul><p class="hint">90 minuti · spiegazioni brevi + esercizi frequenti</p></section><section><h2>Il caso della scorsa lezione: uno spazio?</h2><p>Quale delle due forme è corretta? Proviamole entrambe.</p><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+print(titolo)
+print (titolo)
+</code></pre><p class="hint">Entrambe funzionano. Lo spazio prima della parentesi non è obbligatorio (e normalmente si omette).</p></section><section><h2>Leggere un errore di Python</h2><p>Un errore non significa necessariamente che l’idea sia sbagliata: dobbiamo individuare la riga e interpretare il messaggio.</p><pre><code class="language-python" data-trim="">
+titolo = \"Frankenstein\"
+print(titolo)
+</code></pre><p class="hint">Osserviamo <code>SyntaxError</code>: le barre rovesciate davanti alle virgolette non vanno inserite così nel codice.</p></section>
 <section>
-<h2>Che cos’è una variabile?</h2><p>Una variabile è un nome che associamo a un valore.</p><pre><code class="language-python" data-trim>
-titolo = &quot;Frankenstein&quot;
+<h2>Che cos’è una variabile?</h2><p>Una variabile è un nome che associamo a un valore.</p><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
   </code></pre>
 </section>
 <section>
-<h2>Assegnazione</h2><p>Il simbolo <code>=</code> assegna un valore a una variabile.</p><pre><code class="language-python" data-trim>
-autore = &quot;Mary Shelley&quot;
+<h2>Assegnazione</h2><p>Il simbolo <code>=</code> assegna un valore a una variabile.</p><pre><code class="language-python" data-trim="">
+autore = "Mary Shelley"
 anno = 1818
   </code></pre>
-</section>
+</section><section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio in classe</div><h2>Esercizio 1 — La mia opera</h2><p class="class-time">⏱ 5 min</p><p>Scegliete un’opera, create le variabili <code>titolo</code>, <code>autore</code> e <code>anno</code>. Stampatele su tre righe.</p><p class="hint">💡 Le stringhe vanno tra virgolette, gli interi no.</p><p class="work-note">Scrivete e lanciate il codice sul vostro computer, poi confrontate il risultato.</p></section><section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>Soluzione 1 — La mia opera</h2><pre><code class="language-python" data-trim="">
+titolo = "Orlando"
+autore = "Virginia Woolf"
+anno = 1928
+print(titolo)
+print(autore)
+print(anno)
+</code></pre><p class="hint">Ogni studente può usare un’opera diversa.</p></section>
 <section>
-<h2>Stampare variabili</h2><pre><code class="language-python" data-trim>
-titolo = &quot;Frankenstein&quot;
+<h2>Stampare variabili</h2><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
 print(titolo)
   </code></pre>
-</section>
+</section><section><h2>Indentazione 1/5 — Che cos’è?</h2><p><strong>Indentare</strong> significa inserire spazi all’inizio della riga per indicare che un’istruzione fa parte di un blocco.</p><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+print(titolo)
+</code></pre><p>Qui le istruzioni sono allo stesso livello: nessun rientro necessario.</p></section><section><h2>Indentazione 2/5 — Un blocco con if</h2><p>Non abbiamo ancora studiato <code>if</code>: per ora leggiamolo come «se la condizione è vera».</p><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+if titolo == "Frankenstein":
+    print("Titolo trovato")
+print("Controllo terminato")
+</code></pre><p class="hint">I quattro spazi davanti al primo <code>print</code> indicano che fa parte di <code>if</code>.</p></section><section><h2>Indentazione 3/5 — Se manca, errore</h2><p>Proviamo il codice senza spazi prima di <code>print</code>.</p><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+if titolo == "Frankenstein":
+print("Titolo trovato")
+</code></pre><p class="hint"><code>IndentationError</code>: dopo i due punti Python si aspetta un blocco indentato.</p></section><section><h2>Indentazione 4/5 — Spazi e significato</h2><p>Le istruzioni dentro e fuori dal blocco hanno ruoli diversi.</p><pre><code class="language-python" data-trim="">
+titolo = "Dracula"
+if titolo == "Frankenstein":
+    print("Frankenstein trovato")
+print("Fine")
+</code></pre><p class="hint">Che cosa viene stampato? Cambiate <code>titolo</code> e confrontate l’output.</p></section><section><h2>Indentazione 5/5 — Regole pratiche</h2><ul><li>In genere usiamo <strong>4 spazi</strong> per ogni livello.</li><li>Le righe dello stesso blocco hanno lo stesso rientro.</li><li>Evitiamo di mescolare TAB e spazi.</li><li>In Colab e VS Code, dopo <code>:</code>, l’editor spesso propone il rientro.</li><li>L’indentazione serve anche nei cicli e nelle funzioni, che affronteremo più avanti.</li></ul></section><section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio in classe</div><h2>Esercizio A — Trova l’errore</h2><p class="class-time">⏱ 4 min</p><p>Correggete il codice perché stampi il messaggio quando il titolo è Frankenstein.</p><p class="hint">💡 L’errore riguarda gli spazi all’inizio di una riga.</p><p class="work-note">Scrivete e lanciate il codice sul vostro computer, poi confrontate il risultato.</p></section><section><h2>Codice di partenza — Esercizio A</h2><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+if titolo == "Frankenstein":
+print("È Frankenstein")
+</code></pre></section><section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>Soluzione A — Indentazione</h2><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+if titolo == "Frankenstein":
+    print("È Frankenstein")
+</code></pre><p class="hint">La riga dopo <code>if</code> appartiene al blocco.</p></section><section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio in classe</div><h2>Esercizio B — Prevedi il risultato</h2><p class="class-time">⏱ 4 min</p><p>Il programma stamperà una, due oppure nessuna riga? Cambiate poi il valore di <code>titolo</code>.</p><p class="hint">💡 Guardate quali istruzioni sono allineate con if.</p><p class="work-note">Scrivete e lanciate il codice sul vostro computer, poi confrontate il risultato.</p></section><section><h2>Codice di partenza — Esercizio B</h2><pre><code class="language-python" data-trim="">
+titolo = "Dracula"
+if titolo == "Frankenstein":
+    print("Trovato")
+print("Fine programma")
+</code></pre></section><section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>Soluzione B — Dentro e fuori</h2><pre><code class="language-python" data-trim="">
+titolo = "Dracula"
+if titolo == "Frankenstein":
+    print("Trovato")
+print("Fine programma")
+</code></pre><p class="hint">Con <code>Dracula</code> vedremo solo «Fine programma».</p></section>
 <section>
 <h2>Tipi di dato</h2><ul><li>Stringhe: testo</li><li>Interi: numeri senza virgola</li><li>Decimali: numeri con virgola</li><li>Booleani: vero/falso</li></ul>
 </section>
 <section>
-<h2>Stringhe</h2><p>Una stringa è una sequenza di caratteri.</p><pre><code class="language-python" data-trim>
-frase = &quot;Victor studied science&quot;
+<h2>Stringhe</h2><p>Una stringa è una sequenza di caratteri.</p><pre><code class="language-python" data-trim="">
+frase = "Victor studied science"
 print(frase)
   </code></pre>
 </section>
 <section>
-<h2>Numeri</h2><pre><code class="language-python" data-trim>
+<h2>Numeri</h2><pre><code class="language-python" data-trim="">
 anno = 1818
 pagine = 280
 print(anno)
 print(pagine)
   </code></pre>
-</section>
+</section><section><h2>Quale tipo di dato?</h2><p><code>type()</code> permette di osservare il tipo di un valore.</p><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+anno = 1818
+valutazione = 4.5
+letto = True
+print(type(titolo))
+print(type(anno))
+print(type(valutazione))
+print(type(letto))
+</code></pre></section><section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio in classe</div><h2>Esercizio 2 — Una piccola previsione</h2><p class="class-time">⏱ 3 min</p><p>Prima di eseguire il codice, prevedete il risultato di <code>type(anno)</code> e <code>type("1818")</code>.</p><p class="hint">💡 Le virgolette cambiano il tipo del dato.</p><p class="work-note">Scrivete e lanciate il codice sul vostro computer, poi confrontate il risultato.</p></section><section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>Soluzione 2 — Il tipo conta</h2><pre><code class="language-python" data-trim="">
+anno = 1818
+print(type(anno))
+print(type("1818"))
+</code></pre></section>
 <section>
-<h2>Concatenazione</h2><p>Unire stringhe con <code>+</code>.</p><pre><code class="language-python" data-trim>
-nome = &quot;Mary&quot;
-cognome = &quot;Shelley&quot;
-print(nome + &quot; &quot; + cognome)
+<h2>Concatenazione</h2><p>Unire stringhe con <code>+</code>.</p><pre><code class="language-python" data-trim="">
+nome = "Mary"
+cognome = "Shelley"
+print(nome + " " + cognome)
   </code></pre>
-</section>
+</section><section><h2>Quando il + non funziona</h2><p>Stringhe e numeri non possono essere concatenati direttamente.</p><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+anno = 1818
+print(titolo + anno)
+</code></pre><p class="hint">Leggiamo il <code>TypeError</code> e distinguiamo il problema dal caso di <code>SyntaxError</code>.</p></section><section><h2>Come unire testo e numeri</h2><p>Due possibilità: separare gli argomenti con la virgola oppure convertire il numero con <code>str()</code>.</p><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+anno = 1818
+print(titolo, anno)
+print(titolo + " (" + str(anno) + ")")
+</code></pre></section><section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio in classe</div><h2>Esercizio 3 — Costruisci una frase</h2><p class="class-time">⏱ 5 min</p><p>Usando le variabili <code>titolo</code> e <code>anno</code>, stampate: <em>Frankenstein è stato pubblicato nel 1818</em>.</p><p class="hint">💡 Provate prima con le virgole e poi con str().</p><p class="work-note">Scrivete e lanciate il codice sul vostro computer, poi confrontate il risultato.</p></section><section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>Soluzione 3 — Frase e anno</h2><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+anno = 1818
+print(titolo, "è stato pubblicato nel", anno)
+print(titolo + " è stato pubblicato nel " + str(anno))
+</code></pre></section>
 <section>
-<h2>Attenzione ai tipi</h2><p>Testo e numeri non si uniscono direttamente.</p><pre><code class="language-python" data-trim>
-titolo = &quot;Frankenstein&quot;
+<h2>Attenzione ai tipi</h2><p>Testo e numeri non si uniscono direttamente.</p><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
 anno = 1818
 print(titolo, anno)
   </code></pre>
 </section>
 <section>
-<h2>La funzione len()</h2><p><code>len()</code> conta la lunghezza di una stringa.</p><pre><code class="language-python" data-trim>
-testo = &quot;Frankenstein&quot;
+<h2>La funzione len()</h2><p><code>len()</code> conta la lunghezza di una stringa.</p><pre><code class="language-python" data-trim="">
+testo = "Frankenstein"
 print(len(testo))
   </code></pre>
-</section>
+</section><section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio in classe</div><h2>Esercizio 4 — Quanti caratteri?</h2><p class="class-time">⏱ 4 min</p><p>Scrivete una breve frase e calcolate la sua lunghezza. Poi aggiungete uno spazio: cambia il risultato?</p><p class="hint">💡 Anche gli spazi e la punteggiatura sono caratteri.</p><p class="work-note">Scrivete e lanciate il codice sul vostro computer, poi confrontate il risultato.</p></section><section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>Soluzione 4 — Caratteri</h2><pre><code class="language-python" data-trim="">
+citazione = "Knowledge is dangerous"
+print(len(citazione))
+print(len(citazione + " "))
+</code></pre></section>
 <section>
-<h2>Maiuscole e minuscole</h2><pre><code class="language-python" data-trim>
-testo = &quot;Frankenstein&quot;
+<h2>Maiuscole e minuscole</h2><pre><code class="language-python" data-trim="">
+testo = "Frankenstein"
 print(testo.upper())
 print(testo.lower())
   </code></pre>
 </section>
 <section>
-<h2>Sostituire parole</h2><pre><code class="language-python" data-trim>
-frase = &quot;Victor loves science&quot;
-nuova = frase.replace(&quot;science&quot;, &quot;knowledge&quot;)
+<h2>Sostituire parole</h2><pre><code class="language-python" data-trim="">
+frase = "Victor loves science"
+nuova = frase.replace("science", "knowledge")
 print(nuova)
   </code></pre>
 </section>
 <section>
-<h2>Dividere un testo</h2><p><code>split()</code> trasforma una stringa in una lista di parole.</p><pre><code class="language-python" data-trim>
-frase = &quot;Victor studied science&quot;
+<h2>Dividere un testo</h2><p><code>split()</code> trasforma una stringa in una lista di parole.</p><pre><code class="language-python" data-trim="">
+frase = "Victor studied science"
 parole = frase.split()
 print(parole)
   </code></pre>
-</section>
+</section><section><h2>Dai caratteri alle parole</h2><p>Combiniamo due operazioni per risolvere un piccolo problema testuale.</p><pre><code class="language-python" data-trim="">
+frase = "Victor studied science"
+parole = frase.split()
+print(parole)
+print(len(parole))
+</code></pre><p class="hint"><code>len(frase)</code> conta i caratteri; <code>len(frase.split())</code> conta gli elementi della lista.</p></section><section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio in classe</div><h2>Esercizio 5 — Esploriamo una frase</h2><p class="class-time">⏱ 6 min</p><p>Scrivete una frase di almeno cinque parole. Stampate: frase originale, versione minuscola, numero di caratteri e numero di parole.</p><p class="hint">💡 Usate lower(), len(), split().</p><p class="work-note">Scrivete e lanciate il codice sul vostro computer, poi confrontate il risultato.</p></section><section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>Soluzione 5 — Esplorazione</h2><pre><code class="language-python" data-trim="">
+frase = "Victor Frankenstein studia la natura"
+print(frase)
+print(frase.lower())
+print(len(frase))
+print(len(frase.split()))
+</code></pre></section><section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio in classe</div><h2>Esercizio 6 — Cambia una parola</h2><p class="class-time">⏱ 4 min</p><p>Partite da <code>"Victor studied science"</code> e sostituite <code>science</code> con <code>literature</code>. Stampate la frase iniziale e quella nuova.</p><p class="hint">💡 Usate replace() e assegnate il risultato a un nuovo nome.</p><p class="work-note">Scrivete e lanciate il codice sul vostro computer, poi confrontate il risultato.</p></section><section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>Soluzione 6 — Sostituzione</h2><pre><code class="language-python" data-trim="">
+frase = "Victor studied science"
+nuova_frase = frase.replace("science", "literature")
+print(frase)
+print(nuova_frase)
+</code></pre><p class="hint">La stringa originale non viene modificata: <code>replace()</code> restituisce una nuova stringa.</p></section>
 <section>
-<h2>Stringhe multilinea</h2><pre><code class="language-python" data-trim>
-testo = &quot;&quot;&quot;
+<h2>Stringhe multilinea</h2><pre><code class="language-python" data-trim="">
+testo = """
 Victor writes.
 Elizabeth listens.
-&quot;&quot;&quot;
+"""
 print(testo)
   </code></pre>
 </section>
@@ -274,9 +374,9 @@ print(testo)
 <h2>Metadati umanistici</h2><p>Titolo, autore, anno e genere possono essere rappresentati con variabili.</p>
 </section>
 <section>
-<h2>Esempio DH</h2><pre><code class="language-python" data-trim>
-titolo = &quot;Frankenstein&quot;
-autrice = &quot;Mary Shelley&quot;
+<h2>Esempio DH</h2><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+autrice = "Mary Shelley"
 anno = 1818
 print(titolo, autrice, anno)
   </code></pre>
@@ -289,8 +389,8 @@ print(titolo, autrice, anno)
 <section data-background-color="#0d1020">
 <div class="tag tag-soluzione">Soluzione</div>
 <h2>📝 Soluzione 1</h2>
-<pre><code class="language-python" data-trim>
-opera = &quot;Frankenstein&quot;
+<pre><code class="language-python" data-trim="">
+opera = "Frankenstein"
 print(opera)
   </code></pre>
 </section>
@@ -302,9 +402,9 @@ print(opera)
 <section data-background-color="#0d1020">
 <div class="tag tag-soluzione">Soluzione</div>
 <h2>📝 Soluzione 2</h2>
-<pre><code class="language-python" data-trim>
-titolo = &quot;Dracula&quot;
-autore = &quot;Bram Stoker&quot;
+<pre><code class="language-python" data-trim="">
+titolo = "Dracula"
+autore = "Bram Stoker"
 anno = 1897
 print(titolo)
 print(autore)
@@ -319,8 +419,8 @@ print(anno)
 <section data-background-color="#0d1020">
 <div class="tag tag-soluzione">Soluzione</div>
 <h2>📝 Soluzione 3</h2>
-<pre><code class="language-python" data-trim>
-citazione = &quot;Knowledge is dangerous&quot;
+<pre><code class="language-python" data-trim="">
+citazione = "Knowledge is dangerous"
 print(len(citazione))
   </code></pre>
 </section>
@@ -332,8 +432,8 @@ print(len(citazione))
 <section data-background-color="#0d1020">
 <div class="tag tag-soluzione">Soluzione</div>
 <h2>📝 Soluzione 4</h2>
-<pre><code class="language-python" data-trim>
-frase = &quot;VICTOR FRANKENSTEIN&quot;
+<pre><code class="language-python" data-trim="">
+frase = "VICTOR FRANKENSTEIN"
 print(frase.lower())
   </code></pre>
 </section>
@@ -345,34 +445,56 @@ print(frase.lower())
 <section data-background-color="#0d1020">
 <div class="tag tag-soluzione">Soluzione</div>
 <h2>📝 Soluzione 5</h2>
-<pre><code class="language-python" data-trim>
-frase = &quot;Victor created the creature&quot;
+<pre><code class="language-python" data-trim="">
+frase = "Victor created the creature"
 parole = frase.split()
 print(parole)
   </code></pre>
 </section>
-<section>
-<h2>Mini progetto</h2><p>Creare una scheda bibliografica usando variabili.</p><pre><code class="language-python" data-trim>
-titolo = &quot;Frankenstein&quot;
-autrice = &quot;Mary Shelley&quot;
-anno = 1818
-genere = &quot;romanzo gotico&quot;
+<section data-background-color="#0d1f0d"><div class="tag tag-esercizio">Esercizio in classe</div><h2>Mini-progetto — Consegna</h2><p>Costruite una <strong>scheda bibliografica</strong> per un’opera a scelta.</p><ol><li>Definite titolo, autore/autrice, anno, genere, descrizione.</li><li>Stampate ogni campo con la sua etichetta.</li><li>Stampate il numero di caratteri della descrizione.</li><li>Stampate il numero di parole della descrizione.</li><li><strong>Bonus:</strong> una versione maiuscola del titolo.</li></ol><p class="hint">Lavoro individuale o a coppie · 12 minuti</p></section><section><h2>Mini-progetto — Pista di partenza</h2><pre><code class="language-python" data-trim="">
+titolo = "..."
+autore = "..."
+anno = 0
+genere = "..."
+descrizione = "..."
 
-print(&quot;Titolo:&quot;, titolo)
-print(&quot;Autrice:&quot;, autrice)
-print(&quot;Anno:&quot;, anno)
-print(&quot;Genere:&quot;, genere)
+# Completate qui le istruzioni print()
+</code></pre></section><section>
+<h2>Mini progetto</h2><p>Creare una scheda bibliografica usando variabili.</p><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+autrice = "Mary Shelley"
+anno = 1818
+genere = "romanzo gotico"
+
+print("Titolo:", titolo)
+print("Autrice:", autrice)
+print("Anno:", anno)
+print("Genere:", genere)
   </code></pre>
 </section>
 <section>
 <h2>Domanda DH</h2><p>Quali metadati servono per descrivere correttamente un’opera?</p>
 </section>
 <section>
-<h2>Pipeline della lezione</h2><pre><code data-trim>
+<h2>Pipeline della lezione</h2><pre><code data-trim="">
 Dato → Variabile → Elaborazione → Output
   </code></pre>
 </section>
-<section>
+<section data-background-color="#0d1020"><div class="tag tag-soluzione">Soluzione</div><h2>Mini-progetto — Una soluzione possibile</h2><pre><code class="language-python" data-trim="">
+titolo = "Frankenstein"
+autrice = "Mary Shelley"
+anno = 1818
+genere = "Romanzo gotico"
+descrizione = "Victor crea una creatura"
+print("Titolo:", titolo)
+print("Autrice:", autrice)
+print("Anno:", anno)
+print("Genere:", genere)
+print("Descrizione:", descrizione)
+print("Caratteri:", len(descrizione))
+print("Parole:", len(descrizione.split()))
+print("Titolo maiuscolo:", titolo.upper())
+</code></pre></section><section><h2>Verifica finale — Tre domande</h2><ol><li>Perché <code>print(titolo)</code> e <code>print("titolo")</code> producono risultati diversi?</li><li>Che cosa conta <code>len("Mary Shelley")</code>?</li><li>Perché dopo <code>if ...:</code> una riga può richiedere quattro spazi?</li></ol><p class="hint">Rispondete prima senza eseguire nulla, poi verificate.</p></section><section>
 <h2>🎯 Recap</h2>
 <ul style="font-size:0.9em"><li>Le variabili conservano dati</li>
 <li>Le stringhe rappresentano testo</li>
@@ -385,20 +507,17 @@ Dato → Variabile → Elaborazione → Output
 </section>
 </div>
 </div>
-
 <div id="pyodide-status">● Caricamento Python...</div>
-
 <!-- ── Modale output ── -->
 <div id="output-modal">
-  <div id="output-modal-box">
-    <div id="output-modal-header">
-      <span>Output</span>
-      <button id="output-modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <pre id="output-modal-content"></pre>
-  </div>
+<div id="output-modal-box">
+<div id="output-modal-header">
+<span>Output</span>
+<button id="output-modal-close" onclick="closeModal()">✕</button>
 </div>
-
+<pre id="output-modal-content"></pre>
+</div>
+</div>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/highlight.js"></script>
