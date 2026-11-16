@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lezione 3 - Liste</title>
+  <title>Lezione 3 – Funzioni, metodi, liste e cicli | MDN e Python Docs | 16 novembre 2026</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css">
@@ -167,208 +167,636 @@
       font-family: monospace;
       pointer-events: none;
     }
-  </style>
+  
+  /* UI nuova presentazione: coerente con le due lezioni originali */
+  .reveal { font-size: 32px; }
+  .reveal .slides section { text-align: left; }
+  .reveal h1, .reveal h2 { text-align: left; text-transform: none; letter-spacing: -0.01em; }
+  .reveal h1 { font-size: 2em; line-height: 1.12; }
+  .reveal h2 { font-size: 1.38em; margin-bottom: .40em; }
+  .reveal h3 { font-size: .94em; text-transform: none; letter-spacing: 0; }
+  .reveal p { font-size: .85em; line-height: 1.4; margin: .28em 0 .45em; }
+  .reveal ul, .reveal ol { font-size: .80em; line-height: 1.35; margin-left: .9em; }
+  .reveal li { margin-bottom: .26em; }
+  .reveal pre { margin: .40em 0; width: 100%; }
+  .reveal pre code { line-height: 1.35; max-height: none; font-size: .68em; }
+  .reveal code:not(pre code) { color: #fff1aa; background: rgba(255,255,255,.08); padding: .03em .17em; border-radius: .15em; }
+  .reveal .code-textarea { font-size: .68em; line-height: 1.33; max-height: 43vh; min-height: 3em; }
+  .reveal .code-textarea.small { font-size: .59em; }
+  .reveal .run-btn { font-size: .60em; padding: 6px 15px; }
+  .reveal .code-controls { padding: 2px 8px; }
+  .reveal .tag { font-size: .48em; margin-bottom: .5em; padding: .32em .75em; }
+  .pill { display:inline-block; padding:.21em .58em; color:#abdbff; border:1px solid rgba(66,175,250,.55); border-radius:25px; font-size:.53em; margin-right:.35em; }
+  .subtitle { color:#9da5ad; font-size:.78em !important; }
+  .accent { color:#42affa; }
+  .warm { color:#ffcf78; }
+  .muted { color:#bfc0c4; }
+  .cols { display:grid;grid-template-columns:1fr 1fr;gap:.65em;align-items:start; }
+  .cols-3 { display:grid;grid-template-columns:1fr 1fr 1fr;gap:.45em; }
+  .frame { background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.13);border-radius:10px;padding:.6em .72em; }
+  .frame h3 { margin:0 0 .3em; color:#a8d9ff; }
+  .frame p { margin:.15em 0; }
+  .output { background:#151d17;border-left:4px solid #43bf76;padding:.45em .7em;margin:.55em 0;font-family:Consolas,monospace;font-size:.74em;white-space:pre-wrap;color:#b8edc7; }
+  .note { border-left:4px solid #f5a623;background:rgba(245,166,35,.085);padding:.38em .65em;font-size:.71em;line-height:1.45;margin:.55em 0; }
+  .definition { border-left:4px solid #42affa;background:rgba(66,175,250,.08);padding:.5em .65em;font-size:.82em;line-height:1.43;margin:.5em 0; }
+  .visual-line { display:flex;align-items:center;gap:.2em;flex-wrap:wrap;margin:.6em 0; }
+  .cell { min-width:2.1em;padding:.38em .42em;border:1px solid #6396b4;background:#112532;border-radius:6px;text-align:center;font: .67em Consolas,monospace; }
+  .cell .idx { display:block;font-size:.62em;color:#9ba8b2;margin-top:.25em; }
+  .big-symbol { font-size:1.5em;color:#f5a623; text-align:center; }
+  .kv { border-radius:8px;padding:.4em;background:rgba(255,255,255,.05);text-align:center; }
+  .section-band { display:inline-block;background:#193653;color:#badcf5;border-radius:6px;padding:.26em .65em;font-size:.55em;font-weight:bold;letter-spacing:.08em;text-transform:uppercase; }
+  .foot { font-size:.58em!important;color:#8e9fac;position:absolute;bottom:-.55em;left:0; }
+  .small-text { font-size:.67em!important; }
+  .code-caption { font-size:.56em!important; text-transform:uppercase;letter-spacing:.04em;color:#a6b7c4;margin-bottom:.05em!important; }
+  .reveal section.cover h1 { font-size:2.15em; }
+  .reveal section.exercise h2 { color:#ffcc78; }
+  .reveal section.solution h2 { color:#7dceff; }
+  .reveal section.exercise { background:linear-gradient(115deg, rgba(18,47,25,.35),rgba(0,0,0,0)); }
+  .reveal section.solution { background:linear-gradient(115deg, rgba(20,34,65,.30),rgba(0,0,0,0)); }
+  .reveal section.breaker h2 { font-size:1.9em; }
+  .table-like { width:100%;font-size:.7em;border-collapse:collapse;margin:.65em 0; }
+  .table-like th { color:#7ccaff;text-align:left; }
+  .table-like td, .table-like th { padding:.4em .5em; border-bottom:1px solid rgba(255,255,255,.2); }
+  .reveal strong { color:#fafafa; }
+  @media (max-width:650px) {.cols,.cols-3{grid-template-columns:1fr;} .reveal{font-size:26px;}}
+</style>
 </head>
 <body>
 <div class="reveal">
-<div class="slides"><section>
-<h1>Lezione 3<br>Liste</h1>
-  <p style="color:#888; margin-top:8px">Python per le Digital Humanities</p>
-  <br>
-  <p style="font-size:0.75em; color:#aaa">Tiziana Mancinelli</p>
-  <p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata</p>
-</section>
-<section>
-<h2>🎯 Obiettivi</h2>
-<ul style="font-size:0.9em"><li>Capire che cos’è una lista</li>
-<li>Accedere agli elementi con gli indici</li>
-<li>Aggiungere elementi</li>
-<li>Usare liste per personaggi, luoghi e opere</li>
-<li>Introdurre il ciclo <code>for</code></li></ul>
-</section>
-<section>
-<h2>Che cos’è una lista?</h2><p>Una lista è una collezione ordinata di elementi.</p><pre><code class="language-python" data-trim>
-personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
-  </code></pre>
-</section>
-<section>
-<h2>Perché usare liste?</h2><p>Per rappresentare insiemi di dati: personaggi, luoghi, opere, parole.</p>
-</section>
-<section>
-<h2>Sintassi</h2><p>Gli elementi sono separati da virgole e racchiusi tra parentesi quadre.</p><pre><code class="language-python" data-trim>
-opere = [&quot;Frankenstein&quot;, &quot;Dracula&quot;, &quot;Jane Eyre&quot;]
-  </code></pre>
-</section>
-<section>
-<h2>Stampare una lista</h2><pre><code class="language-python" data-trim>
-opere = [&quot;Frankenstein&quot;, &quot;Dracula&quot;]
-print(opere)
-  </code></pre>
-</section>
-<section>
-<h2>Indici</h2><p>Python conta da zero.</p><pre><code class="language-python" data-trim>
-personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
-print(personaggi[0])
-  </code></pre>
-</section>
-<section>
-<h2>Secondo elemento</h2><pre><code class="language-python" data-trim>
-personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
-print(personaggi[1])
-  </code></pre>
-</section>
-<section>
-<h2>Ultimo elemento</h2><pre><code class="language-python" data-trim>
-personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
-print(personaggi[-1])
-  </code></pre>
-</section>
-<section>
-<h2>Aggiungere elementi</h2><p><code>append()</code> aggiunge un elemento alla fine.</p><pre><code class="language-python" data-trim>
-personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;]
-personaggi.append(&quot;Creature&quot;)
-print(personaggi)
-  </code></pre>
-</section>
-<section>
-<h2>Contare elementi</h2><pre><code class="language-python" data-trim>
-personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
-print(len(personaggi))
-  </code></pre>
-</section>
-<section>
-<h2>Liste di luoghi</h2><pre><code class="language-python" data-trim>
-luoghi = [&quot;Geneva&quot;, &quot;Ingolstadt&quot;, &quot;Arctic&quot;]
-print(luoghi)
-  </code></pre>
-</section>
-<section>
-<h2>Liste di parole</h2><pre><code class="language-python" data-trim>
-frase = &quot;Victor created the creature&quot;
+<div class="slides">
+<section class="cover" ><div class="section-band">Introduzione alla programmazione · 16 novembre 2026</div>
+<h1>Dal testo ai dati:<br><span class="accent">funzioni, metodi, liste e cicli</span></h1>
+<p class="subtitle">Lezione 3 · Python per le Digital Humanities · 2 ore</p>
+<p style="font-size:.64em;color:#b4bdc6;margin-top:2em">Università degli Studi di Roma Tor Vergata · Tiziana Mancinelli</p>
+<aside class="notes">Aprire chiedendo agli studenti cosa ricordano del metodo split e della funzione len.</aside></section>
+<section ><h2>Come lavoreremo oggi</h2><table class="table-like"><tr><th>Tempo</th><th>Attività</th></tr>
+<tr><td>0–10 min</td><td>Ripasso e previsione dell’output</td></tr>
+<tr><td>10–45 min</td><td>Definizioni, funzioni integrate e metodi delle stringhe</td></tr>
+<tr><td>45–50 min</td><td>Breve pausa</td></tr>
+<tr><td>50–75 min</td><td>Liste: indici, lunghezza e metodi</td></tr>
+<tr><td>75–100 min</td><td>Il ciclo <code>for</code> e l’indentazione</td></tr>
+<tr><td>100–115 min</td><td>Mini-progetto guidato su un testo</td></tr>
+<tr><td>115–120 min</td><td>Riepilogo e ponte verso domani</td></tr></table><aside class="notes">Rispettare i tempi e saltare eventuali esercizi extra se la classe è lenta.</aside></section>
+<section ><h2>Obiettivi di apprendimento</h2><ul><li>Distinguere una <strong>funzione integrata</strong> da un <strong>metodo</strong>.</li>
+<li>Spiegare <code>print()</code>, <code>len()</code>, <code>.lower()</code> e <code>.split()</code>.</li>
+<li>Usare una <strong>lista</strong> per rappresentare parole, opere o personaggi.</li>
+<li>Usare <code>for</code> per lavorare sugli elementi della lista.</li>
+<li>Leggere e commentare ogni istruzione del codice.</li></ul></section>
+
+<section><h2>Che cos’è Python? La definizione di MDN</h2>
+<div class="definition"><strong>Python</strong> è un linguaggio di programmazione <strong>di alto livello</strong>, <strong>di uso generale</strong> e <strong>multiparadigma</strong>.</div>
+<div class="cols-3">
+  <div class="frame"><h3>Alto livello</h3><p>Ci permette di descrivere operazioni senza gestire direttamente tutti i dettagli dell’hardware.</p></div>
+  <div class="frame"><h3>Uso generale</h3><p>Può essere impiegato per applicazioni diverse: analisi di dati, automazione, siti e studi testuali.</p></div>
+  <div class="frame"><h3>Multiparadigma</h3><p>Permette diversi modi di organizzare programmi: ad esempio, istruzioni in sequenza e programmazione a oggetti.</p></div>
+</div>
+<p class="small-text">La definizione è rielaborata da <a href="https://developer.mozilla.org/en-US/docs/Glossary/Python" target="_blank" rel="noopener noreferrer">MDN Web Docs · Glossario: Python</a>. Una definizione più generale di «alto livello» è nel <a href="https://developer.mozilla.org/en-US/docs/Glossary/High-level_programming_language" target="_blank" rel="noopener noreferrer">glossario MDN</a>.</p>
+<aside class="notes">Circa 2 minuti. Chiedere: perché è utile per chi analizza testi invece che costruire un programma in linguaggio macchina?</aside></section>
+<section><h2>Dal linguaggio al nostro programma</h2>
+<div class="cols"><div class="frame"><h3>Programma</h3><p>Un insieme di istruzioni che Python può eseguire.</p><h3>Istruzione</h3><p>Un’operazione richiesta al programma: assegnare un valore, chiamare una funzione, stampare un risultato.</p></div>
+<div class="frame"><h3>Dato</h3><p>Un valore sul quale lavoriamo: testo, numero, lista.</p><h3>Variabile</h3><p>Un <strong>nome</strong> associato a un oggetto, che possiamo riutilizzare nel programma.</p></div></div>
+<pre><code class="language-python" data-trim>frase = "Victor Frankenstein studia la natura"  # Assegno una stringa a un nome
+print(frase)                                   # Chiedo a Python di mostrarla
+# Questa riga è un commento: non viene eseguita</code></pre>
+<p class="small-text">Terminologia coerente con il <a href="https://docs.python.org/3/tutorial/introduction.html" target="_blank" rel="noopener noreferrer">tutorial ufficiale di Python</a>.</p></section>
+
+<section ><h2>Ripartiamo dall’esercizio scorso</h2><p>Prima di eseguirlo: <strong>cosa stamperà ogni riga?</strong></p><pre><code class="language-python" data-trim>frase = &quot;Victor Frankenstein studia la natura&quot;
+print(frase)
+print(frase.lower())
+print(len(frase))
+print(len(frase.split()))</code></pre><div class="note">Prevedere il risultato prima di premere <strong>▶ Esegui</strong> è un modo per imparare a leggere il codice.</div><aside class="notes">Lasciare 2 minuti per ipotesi: cosa conterà len? 36 o 5?</aside></section>
+<section ><h2>Quattro istruzioni, quattro domande</h2><div class="cols"><div class="frame"><h3>1 · <code>print(frase)</code></h3><p>Che cosa mostra a schermo?</p></div>
+<div class="frame"><h3>2 · <code>frase.lower()</code></h3><p>Cambia la stringa originale?</p></div>
+<div class="frame"><h3>3 · <code>len(frase)</code></h3><p>Conta le lettere o tutti i caratteri?</p></div>
+<div class="frame"><h3>4 · <code>len(frase.split())</code></h3><p>Conta i caratteri o le parole?</p></div></div></section>
+<section ><h2>La risposta complessiva</h2><pre><code class="language-python" data-trim>frase = &quot;Victor Frankenstein studia la natura&quot;
+
+print(frase)              # Testo originale
+print(frase.lower())      # Testo in minuscolo
+print(len(frase))         # Numero di caratteri
+print(len(frase.split())) # Numero di parole</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Victor Frankenstein studia la natura
+victor frankenstein studia la natura
+36
+5</div><div class="note">Le ultime due righe <strong>non</strong> contano la stessa cosa: <code>len()</code> riceve due tipi di dato diversi.</div></section>
+<section ><h2>Che cos’è una funzione?</h2><div class="definition">Una <strong>funzione</strong> esegue un’operazione. Può ricevere degli argomenti fra parentesi e può restituire un risultato.</div><pre><code class="language-python" data-trim>testo = &quot;Frankenstein&quot;   # Creo una variabile
+print(testo)              # print() mostra un valore
+print(len(testo))         # len() calcola la lunghezza</code></pre><div class="note">In Python <code>print()</code> e <code>len()</code> sono <strong>funzioni integrate</strong>: già disponibili, senza importare librerie.</div></section>
+
+<section><h2>Definizioni da ricordare: chiamata, argomento, risultato</h2>
+<div class="cols-3"><div class="frame"><h3>Chiamata</h3><p>Usare una funzione scrivendo il suo nome e le parentesi: <code>len(...)</code>.</p></div>
+<div class="frame"><h3>Argomento</h3><p>Il valore passato alla funzione: in <code>len(frase)</code> è <code>frase</code>.</p></div>
+<div class="frame"><h3>Valore restituito</h3><p>Il risultato prodotto: <code>len(frase)</code> restituisce un numero.</p></div></div>
+<pre><code class="language-python" data-trim>frase = "Victor Frankenstein studia la natura" # Creo una variabile
+numero = len(frase)                           # Passo la stringa a len(): ottengo 36
+print(numero)                                 # Passo 36 a print(): lo visualizzo
+# print() serve a mostrare un risultato; non è il conteggio stesso</code></pre>
+<div class="note"><strong>Domanda alla classe:</strong> in <code>print(len(frase))</code>, quale funzione viene eseguita per prima? <strong><code>len()</code></strong>: il suo risultato diventa l’argomento di <code>print()</code>.</div>
+<aside class="notes">Sottolineare differenza fra calcolare/restituire e visualizzare. Fonte: manuale Python, Built-in functions.</aside></section>
+
+<section ><h2>Funzioni integrate: tre esempi</h2><div class="cols-3"><div class="frame"><h3><code>print(x)</code></h3><p>Mostra <code>x</code> a schermo.</p></div>
+<div class="frame"><h3><code>len(x)</code></h3><p>Restituisce quanti elementi contiene <code>x</code>.</p></div>
+<div class="frame"><h3><code>type(x)</code></h3><p>Restituisce il tipo del dato <code>x</code>.</p></div></div><pre><code class="language-python" data-trim>frase = &quot;Victor&quot;                 # Stringa di testo
+print(frase)                      # Visualizza &quot;Victor&quot;
+print(len(frase))                 # Visualizza 6
+print(type(frase))                # Visualizza &lt;class &#x27;str&#x27;&gt;</code></pre></section>
+<section ><h2>Che cos’è un metodo?</h2><div class="definition">Un <strong>metodo</strong> è una funzione associata a un oggetto. Lo richiamiamo dopo un punto: <code>oggetto.metodo()</code>.</div><pre><code class="language-python" data-trim>frase = &quot;VICTOR&quot;          # Creo una stringa
+minuscolo = frase.lower() # Chiamo un metodo della stringa
+print(minuscolo)          # Stampo il risultato</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+victor</div><div class="note">Il punto <code>.</code> è importante: stiamo chiedendo alla <strong>stringa</strong> di svolgere un’operazione.</div></section>
+<section ><h2>Funzione o metodo? Confronto</h2><div class="cols"><div class="frame"><h3>Funzione integrata</h3><pre><code class="language-text">len(frase)
+print(frase)</code></pre><p>L’oggetto è passato <strong>come argomento</strong>.</p></div>
+<div class="frame"><h3>Metodo</h3><pre><code class="language-text">frase.lower()
+frase.split()</code></pre><p>Il metodo è richiamato <strong>sull’oggetto</strong>.</p></div></div><div class="note">Non scriviamo <code>frase.len()</code> né <code>lower(frase)</code> con i soli strumenti presentati oggi.</div></section>
+
+<section><h2>Glossario essenziale: oggetto, tipo, metodo</h2>
+<div class="cols"><div class="frame"><h3>Oggetto</h3><p>Un valore gestito da Python. Ogni oggetto ha un <strong>tipo</strong>, che determina le operazioni disponibili.</p><h3>Tipo</h3><p><code>str</code> per le stringhe, <code>list</code> per le liste, <code>int</code> per i numeri interi.</p></div><div class="frame"><h3>Metodo</h3><p>Una funzione associata a un tipo di oggetto, richiamata con la notazione <code>oggetto.metodo()</code>.</p><h3>Perché è importante?</h3><p><code>frase.lower()</code> funziona per una stringa; <code>opere.append(...)</code> per una lista.</p></div></div>
+<pre><code class="language-python" data-trim>frase = "VICTOR"        # Il tipo di frase è str
+opere = ["Frankenstein"] # Il tipo di opere è list
+print(type(frase))       # Visualizza &lt;class 'str'&gt;
+print(type(opere))       # Visualizza &lt;class 'list'&gt;
+print(frase.lower())     # Metodo della stringa: 'victor'
+opere.append("Dracula")  # Metodo della lista: aggiunge un titolo
+print(opere)             # Visualizza entrambe le opere</code></pre>
+<p class="small-text">Per approfondire: <a href="https://docs.python.org/3/library/stdtypes.html" target="_blank" rel="noopener noreferrer">Python Docs · Built-in Types</a>.</p></section>
+
+<section ><h2>Perché ci sono le parentesi tonde?</h2><div class="cols"><div class="frame"><h3>Senza parentesi</h3><p><code>frase.lower</code></p><p>Indica il metodo, ma <strong>non lo esegue</strong>.</p></div>
+<div class="frame"><h3>Con parentesi</h3><p><code>frase.lower()</code></p><p><strong>Esegue</strong> il metodo e restituisce una stringa.</p></div></div><pre><code class="language-python" data-trim>frase = &quot;VICTOR&quot;
+print(frase.lower()) # Le parentesi () eseguono il metodo</code></pre><div class="note"><code>print</code> e <code>print()</code> non sono intercambiabili: senza parentesi non stiamo chiamando la funzione.</div></section>
+<section ><h2>Il segno = non è una definizione di uguaglianza</h2><div class="definition"><code>=</code> è un’<strong>assegnazione</strong>: memorizza nella variabile il valore che si trova a destra.</div><pre><code class="language-python" data-trim>frase = &quot;Victor&quot;            # Associo una stringa al nome frase
+frase = frase + &quot; studia&quot;  # Calcolo una nuova stringa e la assegno
+print(frase)               # Uso il valore aggiornato</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Victor studia</div><div class="note">Lo stesso nome di variabile può essere riutilizzato per conservare un nuovo valore.</div></section>
+<section ><h2>Passo 1: <code>print(frase)</code></h2><pre><code class="language-python" data-trim>frase = &quot;Victor Frankenstein studia la natura&quot;
+# Salvo una stringa nella variabile chiamata frase
+
+print(frase)
+# print() mostra a schermo il contenuto della variabile</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Victor Frankenstein studia la natura</div><div class="note">La funzione <code>print()</code> serve a <strong>visualizzare</strong>, non a trasformare il testo.</div></section>
+<section ><h2>Passo 2: <code>frase.lower()</code></h2><pre><code class="language-python" data-trim>frase = &quot;Victor Frankenstein studia la natura&quot;
+# Creo la stringa, con le maiuscole presenti nel testo
+
+print(frase.lower())
+# lower() restituisce una nuova stringa in minuscolo
+# print() visualizza la nuova stringa</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+victor frankenstein studia la natura</div><div class="note">Usare il minuscolo aiuta a trattare <code>Victor</code> e <code>victor</code> nello stesso modo, in una prima analisi testuale.</div></section>
+<section ><h2><code>lower()</code> modifica la variabile?</h2><pre><code class="language-python" data-trim>frase = &quot;VICTOR&quot;         # Testo originale
+print(frase.lower())      # Stampo la versione in minuscolo
+print(frase)              # Stampo ancora il testo originale</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+victor
+VICTOR</div><div class="note">Le stringhe sono <strong>immutabili</strong>: <code>lower()</code> crea un nuovo valore, non riscrive il testo di partenza.</div></section>
+<section ><h2>Come conservare il risultato di <code>lower()</code></h2><pre><code class="language-python" data-trim>frase = &quot;VICTOR&quot;            # Creo una stringa
+frase = frase.lower()      # Riassegno il risultato alla variabile
+print(frase)               # Ora frase contiene &quot;victor&quot;</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+victor</div><div class="note">Qui il valore associato a <code>frase</code> cambia, perché lo abbiamo <strong>riassegnato</strong> esplicitamente.</div></section>
+<section ><h2>Passo 3: <code>len(frase)</code></h2><pre><code class="language-python" data-trim>frase = &quot;Victor Frankenstein studia la natura&quot;
+# len() riceve una stringa e conta i suoi caratteri
+
+numero_caratteri = len(frase)
+# Salvo il risultato numerico in una variabile
+
+print(numero_caratteri)
+# Visualizzo il numero ottenuto</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+36</div><div class="note">Gli <strong>spazi sono caratteri</strong>! In questo esempio si contano anche i quattro spazi fra le cinque parole.</div></section>
+<section ><h2>Che cosa conta davvero <code>len()</code>?</h2><p>Consideriamo una stringa molto corta:</p><pre><code class="language-python" data-trim>testo = &quot;a b&quot;           # Una lettera, uno spazio, una lettera
+print(len(testo))       # Conta tutti e tre i caratteri</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+3</div><div class="visual-line"><div class="cell">a<span class="idx">indice 0</span></div><div class="cell">␣<span class="idx">indice 1</span></div><div class="cell">b<span class="idx">indice 2</span></div></div><div class="note">Qui <code>␣</code> indica lo spazio: è presente nella stringa anche se non lo vediamo come una lettera.</div></section>
+<section ><h2><code>len()</code> non significa sempre “numero di lettere”</h2><div class="cols"><div class="frame"><h3>Con una stringa</h3><pre><code class="language-python" data-trim>testo = &quot;a b&quot;      # 3 caratteri
+print(len(testo))  # 3</code></pre></div><div class="frame"><h3>Con una lista</h3><pre><code class="language-python" data-trim>parole = [&quot;a&quot;, &quot;b&quot;]  # 2 elementi
+print(len(parole))   # 2</code></pre></div></div><div class="note"><code>len()</code> è la <strong>stessa funzione</strong>, ma il risultato dipende dal tipo di oggetto che riceve.</div></section>
+<section ><h2>Passo 4: <code>frase.split()</code></h2><pre><code class="language-python" data-trim>frase = &quot;Victor Frankenstein studia la natura&quot;
+# split() separa la stringa in parole negli spazi
+
 parole = frase.split()
+# Il risultato non è più una stringa: è una lista
+
 print(parole)
-  </code></pre>
-</section>
-<section>
-<h2>Il ciclo for</h2><p>Serve per leggere gli elementi uno alla volta.</p><pre><code class="language-python" data-trim>
-personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+# Stampo la lista ottenuta</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+[&#x27;Victor&#x27;, &#x27;Frankenstein&#x27;, &#x27;studia&#x27;, &#x27;la&#x27;, &#x27;natura&#x27;]</div><div class="note">In questo primo caso usiamo <code>split()</code> senza argomenti: separa secondo gli spazi bianchi.</div></section>
+<section ><h2>Visualizziamo il risultato di <code>split()</code></h2><p>Da <strong>un’unica stringa</strong> a <strong>una lista di cinque elementi</strong>.</p><div class="frame"><p class="small-text">Prima · <code>str</code></p><p><code>"Victor Frankenstein studia la natura"</code></p></div><div class="big-symbol">↓ split()</div>
+<div class="visual-line"><div class="cell">Victor<span class="idx">0</span></div><div class="cell">Frankenstein<span class="idx">1</span></div><div class="cell">studia<span class="idx">2</span></div><div class="cell">la<span class="idx">3</span></div><div class="cell">natura<span class="idx">4</span></div></div></section>
+<section ><h2>Qual è il tipo del risultato?</h2><pre><code class="language-python" data-trim>frase = &quot;Victor Frankenstein studia la natura&quot;
+# type() ci aiuta a riconoscere il tipo di dato
+
+print(type(frase))         # str: è una stringa
+print(type(frase.split())) # list: è una lista</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+&lt;class &#x27;str&#x27;&gt;
+&lt;class &#x27;list&#x27;&gt;</div><div class="note">Oggi lavoreremo soprattutto con questi due tipi: <strong>stringhe</strong> e <strong>liste</strong>.</div></section>
+<section ><h2>Passo 5: <code>len(frase.split())</code></h2><pre><code class="language-python" data-trim>frase = &quot;Victor Frankenstein studia la natura&quot;
+# Prima split() separa la stringa in parole
+# Poi len() conta gli elementi della lista ottenuta
+
+print(len(frase.split()))
+# Il risultato è il numero di parole</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+5</div><div class="note">Il codice è annidato: la parte <strong>interna</strong> <code>frase.split()</code> viene valutata prima di <code>len(...)</code>.</div></section>
+<section ><h2>Scomponiamo l’istruzione dall’interno</h2><div class="cols-3"><div class="frame"><h3>1 · Testo</h3><p><code>frase</code></p><p class="small-text">Una stringa</p></div><div class="frame"><h3>2 · Parole</h3><p><code>frase.split()</code></p><p class="small-text">Una lista</p></div><div class="frame"><h3>3 · Conteggio</h3><p><code>len(frase.split())</code></p><p class="small-text">Un intero: <strong>5</strong></p></div></div><pre><code class="language-python" data-trim>frase = &quot;Victor Frankenstein studia la natura&quot; # Testo
+parole = frase.split()        # 1. Separo in parole
+numero = len(parole)         # 2. Conto le parole
+print(numero)                # 3. Stampo il numero</code></pre><div class="note">Questa versione in tre righe è equivalente alla versione annidata. È più leggibile per chi comincia.</div><aside class="notes">Far riscrivere la versione annidata in tre righe, spiegando perché il risultato è identico.</aside></section>
+<section ><h2>Stringa, lista, numero: tre oggetti diversi</h2><table class="table-like"><tr><th>Espressione</th><th>Tipo</th><th>Risultato</th></tr>
+<tr><td><code>frase</code></td><td><code>str</code></td><td>Testo originale</td></tr>
+<tr><td><code>frase.lower()</code></td><td><code>str</code></td><td>Testo in minuscolo</td></tr>
+<tr><td><code>len(frase)</code></td><td><code>int</code></td><td><code>36</code></td></tr>
+<tr><td><code>frase.split()</code></td><td><code>list</code></td><td>5 parole</td></tr>
+<tr><td><code>len(frase.split())</code></td><td><code>int</code></td><td><code>5</code></td></tr></table><div class="note">Questa tabella è importante: <strong>l’input e l’output possono essere di tipi diversi</strong>.</div></section>
+<section ><h2><code>split()</code>: cosa succede con più spazi?</h2><pre><code class="language-python" data-trim>testo = &quot;Victor   studia  la natura&quot;
+# Ci sono 3 spazi dopo Victor e 2 dopo studia
+
+parole = testo.split()   # Separa sugli spazi bianchi
+print(parole)            # Gli spazi multipli non generano vuoti
+print(len(parole))       # Il numero di parole resta 4</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+[&#x27;Victor&#x27;, &#x27;studia&#x27;, &#x27;la&#x27;, &#x27;natura&#x27;]
+4</div><div class="note">Con <code>split()</code> senza argomenti, Python tratta sequenze di spazi, tabulazioni e a capo come separatori.</div></section>
+<section ><h2><code>split()</code> e la punteggiatura</h2><pre><code class="language-python" data-trim>testo = &quot;Victor, studia la natura.&quot;
+# La punteggiatura è ancora attaccata alle parole
+
+parole = testo.split()
+print(parole)</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+[&#x27;Victor,&#x27;, &#x27;studia&#x27;, &#x27;la&#x27;, &#x27;natura.&#x27;]</div><div class="note">Per una vera analisi linguistica <code>split()</code> è un <strong>primo passo</strong>, non un tokenizzatore completo. La punteggiatura andrà gestita in seguito.</div></section>
+<section ><h2>Quale differenza fra questi due risultati?</h2><pre><code class="language-python" data-trim>testo = &quot;Victor Victor victor&quot;
+# Confronto il testo originale con quello normalizzato
+
+print(testo.split())              # Le maiuscole restano
+print(testo.lower().split())      # Converto e poi separo</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+[&#x27;Victor&#x27;, &#x27;Victor&#x27;, &#x27;victor&#x27;]
+[&#x27;victor&#x27;, &#x27;victor&#x27;, &#x27;victor&#x27;]</div><div class="note">I metodi possono essere <strong>concatenati</strong>: <code>lower()</code> produce una stringa su cui possiamo applicare <code>split()</code>.</div></section>
+<section class="exercise" ><h2>Esercizio A · Prevedi l’output</h2><div class="tag tag-esercizio">Prova tu · esegui il codice</div><p>Senza eseguire, scrivi quante parole e quanti caratteri ci sono. Poi verifica.</p><pre><code class="language-python" data-trim>testo = &quot;La creatura osserva Victor&quot;
+# Prevedi i due numeri prima di eseguire
+
+print(len(testo))          # ? caratteri, spazi inclusi
+print(len(testo.split()))  # ? parole</code></pre><aside class="notes">Dare almeno 2 minuti di lavoro individuale.</aside></section>
+<section class="solution" ><h2>Esercizio A · Soluzione</h2><div class="tag tag-soluzione">Soluzione commentata</div><pre><code class="language-python" data-trim>testo = &quot;La creatura osserva Victor&quot;
+# Ci sono 4 parole separate da spazi
+# Per i caratteri sono inclusi anche gli spazi
+
+print(len(testo))          # 26 caratteri
+print(len(testo.split()))  # 4 parole</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+26
+4</div></section>
+<section ><h2>Due errori molto comuni</h2><div class="cols"><div class="frame"><h3 style="color:#ff9999">Non corretto</h3><pre><code class="language-text">len frase
+frase.split
+frase.len()</code></pre><p class="small-text">Mancano le parentesi oppure si usa una sintassi non prevista.</p></div><div class="frame"><h3 style="color:#8fe0a5">Corretto</h3><pre><code class="language-python" data-trim>frase = &quot;Victor&quot;      # Stringa
+print(len(frase))     # Funzione integrata
+print(frase.split())  # Metodo di stringa</code></pre></div></div><div class="note"><code>frase.split</code> senza parentesi identifica un metodo, ma <strong>non</strong> esegue la separazione.</div></section>
+<section ><h2>Un’altra distinzione fondamentale</h2><div class="cols"><div class="frame"><h3>Valore restituito</h3><pre><code class="language-python" data-trim>testo = &quot;VICTOR&quot;      # Stringa
+nuovo = testo.lower() # Nuovo valore
+print(nuovo)          # Lo vedo</code></pre></div><div class="frame"><h3>Effetto di <code>print()</code></h3><pre><code class="language-python" data-trim>testo = &quot;VICTOR&quot;
+risultato = print(testo)  # Stampa VICTOR
+print(risultato)          # Stampa None</code></pre></div></div><div class="note"><code>print()</code> visualizza, ma <strong>restituisce <code>None</code></strong>. Non bisogna usarlo per conservare il testo trasformato.</div><aside class="notes">Se livello classe iniziale: opzionale, chiarimento avanzato che non va a sostituire esercizi pratici.</aside></section>
+<section class="exercise" ><h2>Esercizio B · Riscrivi con commenti</h2><div class="tag tag-esercizio">Prova tu · esegui il codice</div><p>Aggiungi a una frase altre due istruzioni: stampa la versione minuscola e conta le parole.</p><pre><code class="language-python" data-trim>frase = &quot;Elizabeth e Victor studiano&quot;
+# 1. Stampa la stringa originale
+print(frase)
+
+# 2. Qui stampa il testo in minuscolo
+
+# 3. Qui stampa il numero di parole</code></pre><aside class="notes">Lavoro a coppie per 3 minuti. Far dire il perché delle parentesi.</aside></section>
+<section class="solution" ><h2>Esercizio B · Soluzione commentata</h2><div class="tag tag-soluzione">Soluzione commentata</div><pre><code class="language-python" data-trim>frase = &quot;Elizabeth e Victor studiano&quot;
+# Creo una stringa con una frase
+
+print(frase)                 # Stampo il testo originale
+print(frase.lower())         # Stampo il testo in minuscolo
+print(len(frase.split()))    # Stampo il numero di parole</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Elizabeth e Victor studiano
+elizabeth e victor studiano
+4</div></section>
+<section ><h2>Ricapitoliamo: codice commentato riga per riga</h2><pre data-size="small"><code class="language-python" data-trim>frase = &quot;Victor Frankenstein studia la natura&quot;
+# 1. Creo una variabile che contiene un testo (str)
+
+print(frase)
+# 2. Visualizzo la frase, senza cambiarla
+
+print(frase.lower())
+# 3. Visualizzo una nuova stringa in minuscolo
+
+print(len(frase))
+# 4. Conto i caratteri della stringa (36)
+
+print(len(frase.split()))
+# 5. Divido il testo in parole e conto gli elementi (5)</code></pre><div class="note">Le righe che iniziano con <code>#</code> sono <strong>commenti</strong>: Python le ignora, ma aiutano le persone a capire il programma.</div></section>
+
+<section><h2>Come leggere una documentazione tecnica</h2>
+<p>Quando incontrate una funzione o un metodo, cercate <strong>quattro informazioni</strong>:</p>
+<ol><li><strong>Che cos’è?</strong> Una funzione integrata o un metodo di un tipo?</li><li><strong>Quali argomenti accetta?</strong> Che cosa mettiamo tra parentesi?</li><li><strong>Che cosa restituisce?</strong> Una stringa, una lista, un numero oppure <code>None</code>?</li><li><strong>Modifica l’oggetto originale?</strong> Confrontate <code>lower()</code> e <code>append()</code>.</li></ol>
+<div class="cols"><div class="frame"><h3><code>str.lower()</code></h3><p>Restituisce una <strong>nuova stringa</strong> in minuscolo; la stringa originale rimane invariata.</p></div><div class="frame"><h3><code>str.split()</code></h3><p>Restituisce una <strong>lista di stringhe</strong>; senza argomenti usa gli spazi bianchi come separatori.</p></div></div>
+<p class="small-text">Fonti: <a href="https://docs.python.org/3/library/functions.html" target="_blank" rel="noopener noreferrer">funzioni integrate</a> e <a href="https://docs.python.org/3/library/stdtypes.html#string-methods" target="_blank" rel="noopener noreferrer">metodi delle stringhe</a> nella documentazione ufficiale.</p></section>
+
+<section class="breaker" ><div class="section-band">45–50 minuti</div><h2>Pausa di 5 minuti</h2><p>Fino a questo punto abbiamo trasformato una <strong>stringa</strong> in una <strong>lista di parole</strong>.</p>
+<p>Alla ripresa useremo le liste per organizzare dati umanistici e il ciclo <code>for</code> per percorrerle.</p></section>
+<section ><h2>Perché ci servono le liste?</h2><div class="definition">Una <strong>lista</strong> è una collezione <strong>ordinata e modificabile</strong> di elementi. Si scrive con parentesi quadre <code>[ ]</code>.</div><pre><code class="language-python" data-trim>personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+# Tre nomi conservati insieme in una lista
+
+print(personaggi) # Visualizzo l’intera lista</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+[&#x27;Victor&#x27;, &#x27;Elizabeth&#x27;, &#x27;Walton&#x27;]</div><div class="note">Una lista è utile per rappresentare personaggi, opere, luoghi, parole o altri dati estratti dai testi.</div></section>
+<section ><h2>Una stringa non è una lista</h2><div class="cols"><div class="frame"><h3>Stringa <code>str</code></h3><pre><code class="language-python" data-trim>opera = &quot;Frankenstein&quot;
+# Un singolo dato testuale
+print(type(opera))</code></pre></div><div class="frame"><h3>Lista <code>list</code></h3><pre><code class="language-python" data-trim>opere = [&quot;Frankenstein&quot;, &quot;Dracula&quot;]
+# Una collezione di dati
+print(type(opere))</code></pre></div></div><div class="note">Le virgolette indicano <strong>testo</strong>. Le parentesi quadre indicano una <strong>lista</strong>.</div></section>
+<section ><h2>Una lista ha elementi e posizioni</h2><div class="visual-line"><div class="cell">Victor<span class="idx">indice 0</span></div><div class="cell">Elizabeth<span class="idx">indice 1</span></div><div class="cell">Walton<span class="idx">indice 2</span></div></div><pre><code class="language-python" data-trim>personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+# Gli indici iniziano da zero, non da uno
+
+print(personaggi[0]) # Primo elemento: Victor
+print(personaggi[1]) # Secondo elemento: Elizabeth</code></pre><div class="note">Chiedere: perché il terzo elemento ha indice <code>2</code>? Perché contiamo da zero.</div></section>
+<section ><h2>Gli indici partono da zero</h2><pre><code class="language-python" data-trim>personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+# 0 = prima posizione
+# 1 = seconda posizione
+# 2 = terza posizione
+
+print(personaggi[0]) # Victor
+print(personaggi[2]) # Walton</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Victor
+Walton</div><div class="note">L’indice identifica la posizione dell’elemento, <strong>non</strong> il suo valore.</div></section>
+<section ><h2>Per accedere all’ultimo elemento: <code>[-1]</code></h2><pre><code class="language-python" data-trim>personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+# -1 indica l’ultimo elemento della lista
+
+print(personaggi[-1]) # Walton</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Walton</div><div class="note">Un indice negativo conta a partire dalla fine. È comodo anche quando non conosciamo la lunghezza della lista.</div></section>
+<section ><h2>La stessa <code>len()</code> su una lista</h2><pre><code class="language-python" data-trim>personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+# len() su una lista conta i suoi elementi
+
+print(len(personaggi)) # 3 elementi
+
+testo = &quot;Victor&quot;
+# len() su una stringa conta i caratteri
+print(len(testo)) # 6 caratteri</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+3
+6</div><div class="note">Chiarimento centrale: <code>len()</code> non “conta sempre le parole”. Conta gli elementi contenuti nell’oggetto ricevuto.</div></section>
+<section ><h2>Modificare un elemento della lista</h2><pre><code class="language-python" data-trim>personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+# Le liste possono cambiare dopo la loro creazione
+
+personaggi[1] = &quot;Creature&quot; # Sostituisco il secondo elemento
+print(personaggi)           # Visualizzo la nuova lista</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+[&#x27;Victor&#x27;, &#x27;Creature&#x27;, &#x27;Walton&#x27;]</div><div class="note">Diversamente dalle stringhe, le liste sono <strong>modificabili</strong>.</div></section>
+<section ><h2>Aggiungere un elemento con <code>append()</code></h2><pre><code class="language-python" data-trim>personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;]
+# Creo una lista con due elementi
+
+personaggi.append(&quot;Walton&quot;)
+# append() aggiunge un nuovo elemento alla fine
+
+print(personaggi) # La lista ora contiene tre elementi</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+[&#x27;Victor&#x27;, &#x27;Elizabeth&#x27;, &#x27;Walton&#x27;]</div><div class="note"><code>append()</code> è un <strong>metodo delle liste</strong>, così come <code>lower()</code> è un metodo delle stringhe.</div></section>
+<section ><h2>Due metodi, due comportamenti</h2><div class="cols"><div class="frame"><h3><code>lower()</code> · stringhe</h3><pre><code class="language-python" data-trim>testo = &quot;VICTOR&quot;
+nuovo = testo.lower() # Nuova stringa
+print(testo)          # VICTOR
+print(nuovo)          # victor</code></pre></div><div class="frame"><h3><code>append()</code> · liste</h3><pre><code class="language-python" data-trim>nomi = [&quot;Victor&quot;]
+nomi.append(&quot;Walton&quot;) # Modifica la lista
+print(nomi)            # Due nomi</code></pre></div></div><div class="note"><strong>Non tutti i metodi funzionano allo stesso modo:</strong> alcuni restituiscono un nuovo oggetto, altri modificano quello esistente.</div></section>
+<section ><h2>Attenzione: <code>append()</code> non restituisce la lista</h2><pre><code class="language-python" data-trim>opere = [&quot;Frankenstein&quot;]
+# Aggiungo un nuovo titolo modificando la lista originale
+risultato = opere.append(&quot;Dracula&quot;)
+
+print(opere)     # Lista aggiornata
+print(risultato) # None: append non restituisce la lista</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+[&#x27;Frankenstein&#x27;, &#x27;Dracula&#x27;]
+None</div><div class="note">Meglio scrivere <code>opere.append("Dracula")</code> e poi <code>print(opere)</code>.</div></section>
+<section ><h2>Errore comune: indice inesistente</h2><p>Una lista con tre elementi ha indici <code>0</code>, <code>1</code>, <code>2</code>.</p><pre><code class="language-text">personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+print(personaggi[3])  # IndexError!</code></pre><div class="note"><code>personaggi[3]</code> chiede il quarto elemento, che non esiste. L’errore si chiama <code>IndexError</code>.</div></section>
+<section ><h2>Il collegamento con <code>split()</code></h2><pre><code class="language-python" data-trim>frase = &quot;Victor studia la natura&quot;
+# split() ci consente di ottenere una lista dal testo
+
+parole = frase.split()
+# Parole: [&quot;Victor&quot;, &quot;studia&quot;, &quot;la&quot;, &quot;natura&quot;]
+
+print(parole[0])     # Prima parola
+print(parole[-1])    # Ultima parola
+print(len(parole))   # Numero di parole</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Victor
+natura
+4</div><div class="note">Questa è la transizione cruciale: <strong>testo → lista di parole</strong>.</div></section>
+<section class="exercise" ><h2>Esercizio C · Una piccola biblioteca</h2><div class="tag tag-esercizio">Prova tu · esegui il codice</div><p>Crea una lista di tre opere. Stampa la prima, aggiungine una quarta e stampa il numero totale.</p><pre><code class="language-python" data-trim>opere = [&quot;Frankenstein&quot;, &quot;Dracula&quot;, &quot;Jane Eyre&quot;]
+# 1. Stampa il primo titolo
+
+# 2. Aggiungi &quot;Wuthering Heights&quot; con append()
+
+# 3. Stampa il numero di elementi con len()</code></pre><aside class="notes">Lasciare 4 minuti. Far lavorare in due o tre persone.</aside></section>
+<section class="solution" ><h2>Esercizio C · Soluzione commentata</h2><div class="tag tag-soluzione">Soluzione commentata</div><pre><code class="language-python" data-trim>opere = [&quot;Frankenstein&quot;, &quot;Dracula&quot;, &quot;Jane Eyre&quot;]
+# Creo una lista di tre titoli
+
+print(opere[0])
+# Stampo il primo elemento: indice zero
+
+opere.append(&quot;Wuthering Heights&quot;)
+# Aggiungo il quarto titolo alla fine della lista
+
+print(len(opere))
+# Conto tutti gli elementi della lista</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Frankenstein
+4</div></section>
+<section ><h2>Un modello semplicissimo del testo</h2><div class="cols"><div class="frame"><h3>Testo narrativo</h3><p>Una storia comprende personaggi, luoghi, opere, eventi...</p></div>
+<div class="frame"><h3>Dati in Python</h3><pre><code class="language-python" data-trim>personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;]
+luoghi = [&quot;Geneva&quot;, &quot;Ingolstadt&quot;]
+# Organizzo informazioni in collezioni</code></pre></div></div><div class="note">Una lista è già un primo modo di <strong>selezionare e strutturare</strong> informazioni, ma non descrive ancora le relazioni fra le entità.</div></section>
+<section ><h2>Dalla lista al ciclo <code>for</code></h2><div class="definition">Un ciclo <code>for</code> permette di eseguire lo stesso blocco di istruzioni <strong>per ogni elemento</strong> di una collezione.</div><pre><code class="language-python" data-trim>personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+# Per ogni nome contenuto nella lista...
 
 for nome in personaggi:
-    print(nome)
-  </code></pre>
-</section>
-<section>
-<h2>Come leggere il ciclo</h2><pre><code data-trim>
-Per ogni nome nella lista personaggi, stampa nome.
-  </code></pre>
-</section>
-<section>
-<h2>Liste e DH</h2><ul><li>Lista di personaggi</li><li>Lista di opere</li><li>Lista di luoghi</li><li>Lista di parole estratte da un testo</li></ul>
-</section>
-<section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 1</h2>
-<p>Creare una lista con tre opere letterarie.</p>
-</section>
-<section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 1</h2>
-<pre><code class="language-python" data-trim>
-opere = [&quot;Frankenstein&quot;, &quot;Dracula&quot;, &quot;Jane Eyre&quot;]
-print(opere)
-  </code></pre>
-</section>
-<section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 2</h2>
-<p>Stampare il primo elemento della lista.</p>
-</section>
-<section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 2</h2>
-<pre><code class="language-python" data-trim>
-opere = [&quot;Frankenstein&quot;, &quot;Dracula&quot;, &quot;Jane Eyre&quot;]
-print(opere[0])
-  </code></pre>
-</section>
-<section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 3</h2>
-<p>Aggiungere un nuovo personaggio alla lista.</p>
-</section>
-<section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 3</h2>
-<pre><code class="language-python" data-trim>
-personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;]
-personaggi.append(&quot;Walton&quot;)
-print(personaggi)
-  </code></pre>
-</section>
-<section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 4</h2>
-<p>Stampare tutti i personaggi con un ciclo.</p>
-</section>
-<section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 4</h2>
-<pre><code class="language-python" data-trim>
-personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+    print(nome) # ...stampo quel nome</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Victor
+Elizabeth
+Walton</div></section>
+<section ><h2>Come leggere un ciclo ad alta voce</h2><div class="frame"><p><code>for nome in personaggi:</code></p><p><strong>«Per ogni <span class="accent">nome</span> nella lista <span class="accent">personaggi</span>»</strong></p>
+<p><code>    print(nome)</code></p><p><strong>«stampa il nome corrente»</strong></p></div><div class="note"><code>nome</code> è una <strong>variabile temporanea</strong>: assume uno dopo l’altro i valori presenti nella lista.</div></section>
+<section ><h2>Il ciclo passo dopo passo</h2><div class="cols-3"><div class="frame"><h3>1ª iterazione</h3><p><code>nome = "Victor"</code></p><p>Stampa Victor</p></div><div class="frame"><h3>2ª iterazione</h3><p><code>nome = "Elizabeth"</code></p><p>Stampa Elizabeth</p></div><div class="frame"><h3>3ª iterazione</h3><p><code>nome = "Walton"</code></p><p>Stampa Walton</p></div></div><div class="note">Il ciclo esegue le istruzioni interne una volta per ogni elemento.</div></section>
+<section ><h2>L’indentazione in Python non è decorativa</h2><div class="cols"><div class="frame"><h3 style="color:#80e5b5">Corretto</h3><pre><code class="language-python" data-trim>nomi = [&quot;Victor&quot;, &quot;Walton&quot;]
+for nome in nomi:
+    print(nome) # 4 spazi all’inizio</code></pre></div><div class="frame"><h3 style="color:#fa9b96">Errato</h3><pre><code class="language-text">nomi = [&quot;Victor&quot;, &quot;Walton&quot;]
+for nome in nomi:
+print(nome) # manca l’indentazione</code></pre></div></div><div class="note">I <strong>quattro spazi</strong> segnalano quali istruzioni appartengono al ciclo. La versione errata produce <code>IndentationError</code>.</div></section>
+<section ><h2>Il ruolo dei due punti <code>:</code></h2><pre><code class="language-python" data-trim>parole = [&quot;Victor&quot;, &quot;studia&quot;, &quot;natura&quot;]
+# I due punti aprono il blocco del for
 
-for personaggio in personaggi:
-    print(personaggio)
-  </code></pre>
-</section>
-<section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 5</h2>
-<p>Dividere una frase in parole e stamparle una alla volta.</p>
-</section>
-<section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 5</h2>
-<pre><code class="language-python" data-trim>
-frase = &quot;Victor studied science&quot;
+for parola in parole:
+    print(parola) # Istruzione ripetuta a ogni iterazione
+
+print(&quot;Fine&quot;) # Fuori dal ciclo: eseguita una sola volta</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Victor
+studia
+natura
+Fine</div><div class="note">Il rientro del codice determina <strong>cosa viene ripetuto</strong> e cosa viene eseguito soltanto alla fine.</div></section>
+<section ><h2><code>for</code> e <code>split()</code> insieme</h2><pre><code class="language-python" data-trim>frase = &quot;Victor Frankenstein studia la natura&quot;
+# Da una stringa ottengo una lista di parole
 parole = frase.split()
 
 for parola in parole:
-    print(parola)
-  </code></pre>
-</section>
-<section>
-<h2>Mini progetto</h2><p>Costruire una lista di personaggi e contarli.</p><pre><code class="language-python" data-trim>
-personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;, &quot;Creature&quot;]
+    # Ogni iterazione prende la parola successiva
+    print(parola)</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Victor
+Frankenstein
+studia
+la
+natura</div><div class="note">Una tecnica di base dell’analisi testuale: <strong>leggere una parola alla volta</strong>.</div></section>
+<section ><h2>Possiamo iterare direttamente sul risultato di <code>split()</code></h2><pre><code class="language-python" data-trim>frase = &quot;Victor studia la natura&quot;
+# Creo la lista con split() e la percorro subito
 
-print(&quot;Personaggi:&quot;)
-for nome in personaggi:
-    print(&quot;-&quot;, nome)
+for parola in frase.split():
+    print(parola) # Una parola per riga</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Victor
+studia
+la
+natura</div><div class="note">La versione con <code>parole = frase.split()</code> è più leggibile quando il programma diventa lungo.</div></section>
+<section ><h2>Se ciclo su una stringa, cosa succede?</h2><pre><code class="language-python" data-trim>testo = &quot;Roma&quot;
+# Una stringa è una sequenza di caratteri
 
-print(&quot;Totale:&quot;, len(personaggi))
-  </code></pre>
-</section>
-<section>
-<h2>Domanda DH</h2><p>Una lista di personaggi è già una forma di modellazione del testo?</p>
-</section>
-<section>
-<h2>Pipeline della lezione</h2><pre><code data-trim>
-Testo → Parole / entità → Lista → Iterazione
-  </code></pre>
-</section>
-<section>
-<h2>🎯 Recap</h2>
-<ul style="font-size:0.9em"><li>Le liste contengono più elementi</li>
-<li>Gli indici partono da 0</li>
-<li><code>append()</code> aggiunge elementi</li>
-<li><code>for</code> legge la lista</li>
-<li>Le liste sono utili per dati umanistici</li></ul>
-</section>
-<section>
-<h2>❓ Domande</h2>
-</section>
-</div>
-</div>
+for carattere in testo:
+    print(carattere) # Una lettera per riga</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+R
+o
+m
+a</div><div class="note">Un ciclo su una <strong>stringa</strong> percorre i caratteri; su una <strong>lista di parole</strong> percorre le parole.</div></section>
+<section ><h2>Differenza: prima e dopo <code>split()</code></h2><div class="cols"><div class="frame"><h3>Senza <code>split()</code></h3><pre><code class="language-python" data-trim>testo = &quot;a b&quot;
+for x in testo:
+    print(x) # Anche lo spazio</code></pre></div><div class="frame"><h3>Con <code>split()</code></h3><pre><code class="language-python" data-trim>testo = &quot;a b&quot;
+for x in testo.split():
+    print(x) # Solo 2 parole</code></pre></div></div><div class="note">La domanda da porsi è sempre: <strong>quale tipo di oggetto sto iterando?</strong></div></section>
+<section ><h2>Dal ciclo alla numerazione: <code>range()</code></h2><pre><code class="language-python" data-trim>for numero in range(4):
+    # range(4) produce 0, 1, 2, 3
+    print(numero)</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+0
+1
+2
+3</div><div class="note"><code>range(4)</code> non include il numero 4. Lo useremo ancora quando lavoreremo con cicli e condizioni.</div></section>
+<section class="exercise" ><h2>Esercizio D · Un nome per riga</h2><div class="tag tag-esercizio">Prova tu · esegui il codice</div><p>Crea una lista di luoghi del romanzo e stampali uno alla volta con un ciclo.</p><pre><code class="language-python" data-trim>luoghi = [&quot;Geneva&quot;, &quot;Ingolstadt&quot;, &quot;Arctic&quot;]
+# Completa un ciclo for
+# Suggerimento: for luogo in luoghi:
+</code></pre><aside class="notes">Dare 3 minuti e chiedere cosa succede se manca il due punti o il rientro.</aside></section>
+<section class="solution" ><h2>Esercizio D · Soluzione commentata</h2><div class="tag tag-soluzione">Soluzione commentata</div><pre><code class="language-python" data-trim>luoghi = [&quot;Geneva&quot;, &quot;Ingolstadt&quot;, &quot;Arctic&quot;]
+# Creo una lista ordinata di luoghi
 
+for luogo in luoghi:
+    # luogo contiene il valore corrente della lista
+    print(luogo) # Stampo un luogo alla volta</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Geneva
+Ingolstadt
+Arctic</div></section>
+<section class="exercise" ><h2>Esercizio E · Dalla frase alle parole</h2><div class="tag tag-esercizio">Prova tu · esegui il codice</div><p>Trasforma il testo in minuscolo, separalo in parole, stampa una parola per riga e infine il loro numero.</p><pre><code class="language-python" data-trim>frase = &quot;Victor Studia La Natura&quot;
+# 1. Trasforma il testo in minuscolo
+# 2. Crea una lista con split()
+# 3. Usa for per stampare ogni parola
+# 4. Usa len() per contare le parole</code></pre></section>
+<section class="solution" ><h2>Esercizio E · Soluzione commentata</h2><div class="tag tag-soluzione">Soluzione commentata</div><pre><code class="language-python" data-trim>frase = &quot;Victor Studia La Natura&quot;
+# Creo il testo di partenza
+
+parole = frase.lower().split()
+# 1. lower() converte in minuscolo
+# 2. split() divide il risultato in parole
+
+for parola in parole:
+    print(parola) # Stampo ogni elemento della lista
+
+print(&quot;Numero di parole:&quot;, len(parole))
+# len() conta gli elementi della lista</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+victor
+studia
+la
+natura
+Numero di parole: 4</div></section>
+<section ><h2>Mini-progetto · Una prima esplorazione testuale</h2><p><strong>Domanda:</strong> come trasformiamo una breve frase letteraria in dati esplorabili?</p>
+<div class="cols-3"><div class="frame"><h3>1 · Testo</h3><p>Una frase</p></div><div class="frame"><h3>2 · Dati</h3><p>Una lista di parole</p></div><div class="frame"><h3>3 · Analisi</h3><p>Conteggio e stampa</p></div></div><div class="note">Non è ancora analisi semantica o filologica completa: è la base per costruire programmi più ricchi.</div></section>
+<section ><h2>Mini-progetto · 1. Prepariamo il testo</h2><pre><code class="language-python" data-trim>testo = &quot;Victor osserva la creatura e la creatura osserva Victor&quot;
+# Definisco il testo che voglio esplorare
+
+print(testo)             # Controllo il contenuto
+print(len(testo))        # Misuro i caratteri</code></pre><div class="note">Domanda orale: <code>len(testo)</code> fornisce parole o caratteri?</div></section>
+<section ><h2>Mini-progetto · 2. Prepariamo i dati</h2><pre><code class="language-python" data-trim>testo = &quot;Victor osserva la creatura e la creatura osserva Victor&quot;
+# Porto il testo in minuscolo per uniformare le parole
+normalizzato = testo.lower()
+
+# Separo la frase in parole con split()
+parole = normalizzato.split()
+
+print(parole)
+print(&quot;Totale parole:&quot;, len(parole))</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+[&#x27;victor&#x27;, &#x27;osserva&#x27;, &#x27;la&#x27;, &#x27;creatura&#x27;, &#x27;e&#x27;, &#x27;la&#x27;, &#x27;creatura&#x27;, &#x27;osserva&#x27;, &#x27;victor&#x27;]
+Totale parole: 9</div></section>
+<section ><h2>Mini-progetto · 3. Attraversiamo la lista</h2><pre><code class="language-python" data-trim>testo = &quot;Victor osserva la creatura&quot;
+# La preparazione avviene prima del ciclo
+parole = testo.lower().split()
+
+for parola in parole:
+    # Questa istruzione è ripetuta per ogni parola
+    print(&quot;Parola:&quot;, parola)
+
+# Questa istruzione è esterna al ciclo
+print(&quot;Totale:&quot;, len(parole))</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Parola: victor
+Parola: osserva
+Parola: la
+Parola: creatura
+Totale: 4</div></section>
+<section ><h2>Mini-progetto · Tutto insieme, commentato</h2><pre data-size="small"><code class="language-python" data-trim>testo = &quot;Victor osserva la creatura e la creatura osserva Victor&quot;
+# 1. Creo il testo di partenza
+
+parole = testo.lower().split()
+# 2. Normalizzo in minuscolo e separo in parole
+
+print(&quot;Testo:&quot;, testo)
+# 3. Visualizzo il testo originale
+
+print(&quot;Caratteri:&quot;, len(testo))
+# 4. Conto i caratteri della stringa originale
+
+print(&quot;Parole:&quot;, len(parole))
+# 5. Conto gli elementi della lista
+
+for parola in parole:
+    print(&quot;-&quot;, parola)
+    # 6. Mostro le parole una per volta</code></pre><div class="note">Questo programma contiene tutti i concetti della lezione. Farlo spiegare riga per riga agli studenti.</div></section>
+<section class="exercise" ><h2>Esercizio F · Prova con un testo tuo</h2><div class="tag tag-esercizio">Prova tu · esegui il codice</div><p>Sostituisci il testo con una frase di un’opera o una frase inventata. Aggiungi commenti che spieghino <strong>tutte</strong> le istruzioni.</p><pre><code class="language-python" data-trim>testo = &quot;Nel mezzo del cammin di nostra vita&quot;
+# 1. Trasforma in minuscolo e dividi in parole
+
+# 2. Stampa il numero dei caratteri
+
+# 3. Stampa il numero delle parole
+
+# 4. Stampa le parole una alla volta</code></pre><aside class="notes">5 minuti individuali + 3 minuti confronto fra soluzioni.</aside></section>
+<section class="solution" ><h2>Esercizio F · Una possibile soluzione</h2><div class="tag tag-soluzione">Soluzione commentata</div><pre><code class="language-python" data-trim>testo = &quot;Nel mezzo del cammin di nostra vita&quot;
+# Creo la stringa iniziale
+
+parole = testo.lower().split()
+# La trasformo in minuscolo e la divido in parole
+
+print(&quot;Caratteri:&quot;, len(testo))
+# Conto i caratteri, compresi gli spazi
+
+print(&quot;Parole:&quot;, len(parole))
+# Conto gli elementi della lista
+
+for parola in parole:
+    print(parola) # Stampo ogni parola</code></pre><div class="output"><strong style="color:#a8ff78">OUTPUT ATTESO</strong>
+Caratteri: 35
+Parole: 7
+nel
+mezzo
+del
+cammin
+di
+nostra
+vita</div></section>
+<section ><h2>Una domanda per le Digital Humanities</h2><p><strong>Contare le parole equivale a capire un testo?</strong></p>
+<div class="cols"><div class="frame"><h3>Quello che sappiamo fare</h3><p>Preparare dati, contare elementi, osservare unità lessicali.</p></div>
+<div class="frame"><h3>Quello che resta da fare</h3><p>Gestire punteggiatura, varianti, contesto e interpretazione.</p></div></div><div class="note">Una semplice segmentazione serve per cominciare: la scelta di cosa sia una “parola” è anche una decisione metodologica.</div></section>
+<section ><h2>Cinque concetti da portare a casa</h2><ol><li><code>print()</code>: mostra un risultato.</li>
+<li><code>len()</code>: conta elementi o caratteri secondo l’oggetto.</li>
+<li><code>.lower()</code> e <code>.split()</code>: metodi delle stringhe.</li>
+<li><code>[ ]</code>: liste ordinate, con indici a partire da <code>0</code>.</li>
+<li><code>for</code> e <strong>indentazione</strong>: ripetono un’azione per ogni elemento.</li></ol></section>
+<section ><h2>Domani: dal conteggio alle frequenze</h2><p>Oggi:</p><div class="definition">Testo → <code>lower()</code> → <code>split()</code> → lista → <code>for</code></div>
+<p>Domani aggiungeremo:</p><div class="definition">Condizioni <code>if</code> → conteggi → <strong>dizionari</strong> → frequenze lessicali</div>
+<p class="subtitle">Domanda finale: come facciamo a sapere quante volte ricorre una parola, non soltanto quante parole ci sono?</p></section>
+
+<section><h2>Fonti e letture per approfondire</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Python" target="_blank" rel="noopener noreferrer"><strong>MDN · Python (glossario)</strong></a>: definizione generale, impieghi e caratteristiche del linguaggio.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Glossary/High-level_programming_language" target="_blank" rel="noopener noreferrer"><strong>MDN · Linguaggio di alto livello</strong></a>: cosa significa «alto livello».</li>
+<li><a href="https://docs.python.org/3/tutorial/introduction.html" target="_blank" rel="noopener noreferrer"><strong>Python Docs · Introduzione</strong></a>: esempi di codice, variabili, commenti e dati.</li>
+<li><a href="https://docs.python.org/3/library/functions.html" target="_blank" rel="noopener noreferrer"><strong>Python Docs · Funzioni integrate</strong></a>: <code>print()</code>, <code>len()</code>, <code>type()</code>.</li>
+<li><a href="https://docs.python.org/3/library/stdtypes.html" target="_blank" rel="noopener noreferrer"><strong>Python Docs · Tipi integrati</strong></a>: stringhe e loro metodi, liste e metodi di lista.</li>
+</ul>
+<div class="note">Usate la documentazione come un <strong>dizionario del codice</strong>: cercate il nome di una funzione o di un metodo e verificate argomenti, risultato ed esempi.</div>
+<aside class="notes">Questa è una slide di consultazione: non è necessario leggerla integralmente durante le due ore.</aside>
+</section>
+
+</div></div>
 <div id="pyodide-status">● Caricamento Python...</div>
 
 <!-- ── Modale output ── -->
@@ -385,6 +813,7 @@ Testo → Parole / entità → Lista → Iterazione
 <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/notes/notes.js"></script>
 <script>
   // ── Pyodide ──
   let pyodide = null;
@@ -480,10 +909,14 @@ _err = _stderr.getvalue()
   // ── Reveal ──
   Reveal.initialize({
     hash: true,
+    width: 1280,
+    height: 720,
+    margin: 0.08,
+    center: true,
     slideNumber: 'c/t',
     transition: 'slide',
     transitionSpeed: 'fast',
-    plugins: [RevealHighlight],
+    plugins: [RevealHighlight, RevealNotes],
   });
 
   Reveal.on('resize', syncModalFontSize);
