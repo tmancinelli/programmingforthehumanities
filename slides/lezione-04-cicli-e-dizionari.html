@@ -1,367 +1,369 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lezione 4 - Cicli e dizionari</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/monokai.css">
-  <style>
-    .reveal h1 { font-size: 2.2em; }
-    .reveal h2 { font-size: 1.8em; }
-    .reveal h3 { font-size: 1.3em; color: #42affa; }
-    .reveal pre { width: 100%; box-shadow: none; }
-    .reveal pre code { font-size: 0.82em; line-height: 1.5; max-height: 420px; }
-    .reveal ul, .reveal ol { display: block; }
-    .reveal li { margin-bottom: 8px; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lezione 04 — Cicli, condizioni e dizionari | Laboratorio di 2 ore</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/theme/night.css">
+<style>
+:root { --ink:#e9eff7; --muted:#9cacc3; --cyan:#73d9e6; --gold:#ffbe59; --navy:#10151e; --green:#173426; }
+body { background:var(--navy); }
+.reveal { color:var(--ink); font-family: 'Segoe UI', Arial, sans-serif; font-size:30px; }
+.reveal h1,.reveal h2,.reveal h3 { font-family:'Segoe UI',Arial,sans-serif; font-weight:700; text-transform:none; letter-spacing:-.03em; }
+.reveal h1 { font-size:2.1em; }
+.reveal h2 { font-size:1.48em; color:#fff; margin:0 0 .38em; }
+.reveal h3 { font-size:.94em; color:var(--cyan); margin:0 0 .25em; }
+.reveal p { line-height:1.34; margin:.34em 0; }
+.reveal strong { color:#fff; }
+.reveal code { color:#ffe0a1; }
+.reveal pre { width:100%; box-shadow:none; margin:.3em 0 .4em; }
+.reveal pre code { font-size:.68em; line-height:1.48; border:1px solid #293347; border-radius:8px; padding:.65em .75em; max-height:350px; background:#171f2d; color:#ebf2f7; text-align:left; tab-size:4; }
+.reveal section { text-align:left; }
+.reveal section .center { text-align:center; }
+.reveal .slides section { box-sizing:border-box; }
+.reveal .slides .cover, .reveal .slides .section-divider, .reveal .slides .break-slide { text-align:center; }
+.reveal .slide-meta { display:flex; align-items:center; justify-content:space-between; font-size:.47em; font-weight:700; letter-spacing:.14em; color:#9aa8bb; margin-bottom:1em; text-transform:uppercase; }
+.reveal .cover { padding:1.3em 1.8em; }
+.reveal .cover h1 { font-size:2.4em; line-height:1.08; margin:.7em 0 .4em; }
+.reveal .cover .large { max-width:850px; margin:0 auto .6em; }
+.reveal .eyebrow { color:var(--cyan); text-transform:uppercase; font-size:.52em; font-weight:800; letter-spacing:.16em; }
+.reveal .soft { color:var(--muted); }
+.reveal .tiny { font-size:.54em; }
+.reveal .large { font-size:1.03em; }
+.reveal .small { font-size:.65em; }
+.reveal .muted { color:var(--muted); }
+.cover-line { width:160px; height:3px; background:var(--gold); margin:1.15em auto; }
+.reveal .section-divider .section-count { border:2px solid var(--cyan); color:var(--cyan); display:inline-grid; place-items:center; width:2.2em; height:2.2em; font-size:.76em; border-radius:50%; margin-bottom:.4em; }
+.reveal .section-divider h1 { margin:.2em 0; }
+.reveal .section-divider .large { color:#b5c3d2; }
+.reveal .two-col { display:grid; grid-template-columns:1fr 1fr; gap:26px; align-items:start; }
+.reveal .two-col pre code { font-size:.63em; }
+.reveal .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:.6em 0; }
+.reveal .info-box { padding:.7em .8em; border:1px solid #415064; border-radius:9px; margin:.45em 0; font-size:.78em; line-height:1.35; background:rgba(146,160,185,.07); }
+.reveal .info-box strong { color:var(--cyan); }
+.reveal .info-box.teal { border-color:#397a82; background:rgba(42,139,149,.1); }
+.reveal .info-box.warning { border-color:#b18440; background:rgba(255,188,82,.09); }
+.reveal .info-box.warning strong { color:var(--gold); }
+.reveal .task { font-size:.92em; line-height:1.3; background:rgba(255,255,255,.035); border-left:4px solid var(--gold); padding:.3em .75em; border-radius:0 8px 8px 0; margin:.35em 0; }
+.reveal .tag { display:inline-block; background:#465167; color:#fff; padding:.22em .8em; font-size:.42em; border-radius:40px; text-transform:uppercase; font-weight:800; letter-spacing:.13em; margin-bottom:.55em; }
+.reveal .tag-exercise { background:var(--gold); color:#1d222b; }
+.reveal .tag-solution { background:#7acbe5; color:#111b27; }
+.reveal .tag-guided { background:#b0a4ff; color:#161428; }
+.reveal .explain { font-size:.8em; color:#b8c8d7; }
+.reveal .timeline { display:grid; grid-template-columns:1fr 1fr; gap:.32em .65em; margin-top:.5em; font-size:.68em; }
+.reveal .timeline > div { display:flex; align-items:center; gap:.65em; background:#192435; padding:.45em .62em; border-radius:7px; }
+.reveal .timeline b { color:var(--gold); min-width:3.4em; }
+.reveal .pipeline { display:flex; align-items:center; justify-content:center; gap:.35em; margin:1em 0; font-size:.63em; }
+.reveal .pipeline div { background:#1b3440; border:1px solid #38757d; border-radius:8px; padding:.5em .65em; }
+.reveal .pipeline span { color:var(--cyan); }
+.reveal .quiz { display:grid; gap:.5em; margin-top:.5em; }
+.reveal .quiz div { background:#1b283b; border-radius:9px; padding:.52em .65em; font-size:.82em; }
+.reveal .quiz strong { color:var(--gold); }
+.reveal .break-slide h1 { font-size:2.4em; }
+.reveal .break-slide p { color:#c8d3de; }
+/* Python interactive areas */
+.code-runner { position:relative; margin:.35em 0; }
+.code-textarea { width:100%; box-sizing:border-box; background:#18202f; color:#eaf2f5; font: .67em/1.5 'Consolas','Liberation Mono',monospace; border:1px solid #415069; border-radius:8px 8px 0 0; padding:11px 13px; outline:none; resize:vertical; min-height:75px; max-height:330px; overflow:auto; tab-size:4; display:block; }
+.code-textarea:focus { border-color:var(--cyan); box-shadow:inset 0 0 0 1px var(--cyan); }
+.two-col .code-textarea { font-size:.62em; }
+.code-controls { display:flex; justify-content:space-between; align-items:center; background:#18202f; border:1px solid #415069; border-top:0; border-radius:0 0 8px 8px; padding:5px 9px; }
+.code-controls .hint { font-size:.46em; color:#99b0c6; }
+.run-btn,.reset-btn { border:0; border-radius:5px; padding:5px 11px; cursor:pointer; font-size:.52em; font-weight:750; }
+.run-btn { background:var(--gold); color:#17202c; }
+.reset-btn { color:#c9d9e8; background:#314358; margin-left:7px; }
+.run-btn:disabled { opacity:.5; cursor:wait; }
+#python-status { position:fixed; bottom:9px; left:12px; z-index:50; color:#e6ba72; font:12px Consolas,monospace; pointer-events:none; background:#10151eb5; padding:4px 8px; border-radius:5px; }
+#output-modal { position:fixed; z-index:99999; inset:0; display:none; background:rgba(0,0,0,.72); align-items:center; justify-content:center; }
+#output-modal.open { display:flex; }
+#output-box { background:#111b2b; color:#fff; border:1px solid #4c6176; border-radius:11px; width:min(650px,90vw); max-height:75vh; overflow:hidden; box-shadow:0 14px 55px #000a; }
+#output-head { display:flex; align-items:center; justify-content:space-between; font:600 14px 'Segoe UI',sans-serif; letter-spacing:.08em; padding:12px 18px; border-bottom:1px solid #344258; color:#a8d8e3; }
+#close-modal { background:transparent; color:#d6e6f2; border:0; font-size:24px; cursor:pointer; }
+#output-content { margin:0; padding:18px; max-height:55vh; overflow:auto; white-space:pre-wrap; word-break:break-word; font:16px/1.55 Consolas,monospace; color:#b6f3bf; }
+#output-content.error { color:#ff9595; }
+.reveal .slide-number { color:#a1b2c8; font-size:12px; }
+/* Fallback: le slide restano navigabili se Reveal.js dal CDN non viene caricato. */
+body.offline-mode .reveal { position:fixed; inset:0; overflow:auto; display:flex; align-items:center; justify-content:center; }
+body.offline-mode .reveal .slides { position:relative; width:min(1240px,94vw); max-height:calc(100vh - 56px); }
+body.offline-mode .reveal .slides > section { display:none; padding:10px 24px 16px; max-height:calc(100vh - 65px); overflow-y:auto; }
+body.offline-mode .reveal .slides > section.fallback-active { display:block; }
+body.offline-mode .reveal { font-size:clamp(19px,2.15vw,30px); }
+#fallback-nav { display:none; position:fixed; bottom:8px; right:12px; z-index:75; font:14px system-ui,sans-serif; color:#c8d8e8; }
+body.offline-mode #fallback-nav { display:flex; align-items:center; gap:10px; }
+#fallback-nav button { border:1px solid #455a6b; border-radius:5px; background:#25364a; padding:6px 10px; color:#fff; cursor:pointer; }
+@media (max-width:800px) { .reveal .two-col { gap:14px; } .reveal .cards { gap:8px; } }
 
-    .tag {
-      display: inline-block;
-      padding: 3px 14px;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 0.65em;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 18px;
-    }
-    .tag-esercizio { background: #f5a623; color: #000; }
-    .tag-soluzione  { background: #42affa; color: #000; }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      align-items: start;
-    }
-
-    .box { border-radius: 6px; padding: 14px 16px; }
-    .box-err  { background: #2c0a0a; border-left: 3px solid #e74c3c; }
-    .box-ok   { background: #0a2c0a; border-left: 3px solid #2ecc71; }
-    .box-info { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); }
-    .box-err pre, .box-ok pre { margin: 0; }
-    .label-err { color: #e74c3c; font-size: 0.75em; font-weight: bold; margin: 0 0 6px 0; }
-    .label-ok  { color: #2ecc71; font-size: 0.75em; font-weight: bold; margin: 0 0 6px 0; }
-
-    /* ── Pyodide interactive code runner ── */
-    .code-runner { position: relative; margin: 0; }
-
-    .code-textarea {
-      width: 100%;
-      background: #272822;
-      color: #f8f8f2;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 0.82em;
-      line-height: 1.5;
-      border: 1px solid #444;
-      border-radius: 4px 4px 0 0;
-      padding: 12px;
-      box-sizing: border-box;
-      resize: none;
-      outline: none;
-      tab-size: 4;
-      display: block;
-    }
-    .code-textarea { max-height: 33vh; overflow-y: auto; }
-    .code-textarea:focus { border-color: #42affa; }
-    .code-textarea.small { font-size: 0.6em; }
-
-    .code-controls {
-      display: flex;
-      justify-content: flex-end;
-      background: #1e1e1e;
-      border: 1px solid #444;
-      border-top: none;
-      border-radius: 0 0 4px 4px;
-      padding: 4px 8px;
-    }
-
-    .run-btn {
-      background: #f5a623;
-      color: #000;
-      border: none;
-      border-radius: 4px;
-      padding: 3px 14px;
-      cursor: pointer;
-      font-size: 0.72em;
-      font-weight: bold;
-      letter-spacing: 0.5px;
-    }
-    .run-btn:hover { background: #ffb84d; }
-    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    /* ── Modale output ── */
-    #output-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.65);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--r-main-font);
-    }
-    #output-modal.open { display: flex; }
-
-    #output-modal-box {
-      background: var(--r-background-color);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 6px;
-      min-width: 420px;
-      max-width: 640px;
-      width: 50vw;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-    }
-
-    #output-modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    /* font-size on #output-modal is set dynamically by JS (revealBase * revealScale) */
-    #output-modal-header span {
-      font-family: var(--r-main-font);
-      font-size: 0.6em;
-      color: var(--r-main-color);
-      opacity: 0.5;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    #output-modal-close {
-      background: none;
-      border: none;
-      color: var(--r-main-color);
-      opacity: 0.4;
-      cursor: pointer;
-      font-size: 0.7em;
-      font-family: var(--r-main-font);
-      line-height: 1;
-      padding: 0 2px;
-    }
-    #output-modal-close:hover { opacity: 1; }
-
-    #output-modal-content {
-      padding: 0.4em 0.6em;
-      font-family: monospace;
-      font-size: 0.7em;
-      color: #a8ff78;
-      white-space: pre-wrap;
-      margin: 0;
-      max-height: 40vh;
-      overflow-y: auto;
-    }
-    #output-modal-content.is-error { color: #ff8080; }
-
-    #pyodide-status {
-      position: fixed;
-      bottom: 10px;
-      left: 12px;
-      font-size: 0.6em;
-      color: #f5a623;
-      z-index: 1000;
-      font-family: monospace;
-      pointer-events: none;
-    }
-  </style>
+/* MDN / Python documentation extension */
+.reveal .source-note {margin-top:.85em; font-size:.45em; color:#abbdd1; border-top:1px solid #344456; padding-top:.48em; line-height:1.45;}
+.reveal .source-note a,.reveal .ref-link {color:#91e4ee; text-decoration:underline; text-underline-offset:3px;}
+.reveal .definition {padding:.58em .82em; background:#182b3a; border-left:5px solid #73d9e6; border-radius:0 10px 10px 0; font-size:.98em; line-height:1.42; margin:.65em 0;}
+.reveal .definition .key-term {color:#ffc96c; font-weight:800;}
+.reveal .comparison-table {width:100%; border-collapse:collapse; margin:.55em 0; font-size:.67em;}
+.reveal .comparison-table th {background:#1d3446; color:#9ce8ef; text-align:left; font-weight:800; padding:.48em .7em;}
+.reveal .comparison-table td {border-bottom:1px solid #35465a; padding:.45em .7em; vertical-align:top;}
+.reveal .comparison-table td:first-child {font-weight:700; color:#e9c58a; width:22%;}
+.reveal .comparison-table tr:last-child td {border-bottom:0;}
+.reveal .icon-line {font-size:1.12em; color:#e6edf5; padding:.55em .7em; background:#192638; border-radius:9px;}
+.reveal .concept {color:#8de2eb; font-weight:800;}
+</style>
 </head>
 <body>
-<div class="reveal">
-<div class="slides"><section>
-<h1>Lezione 4<br>Cicli, condizioni e dizionari</h1>
-  <p style="color:#888; margin-top:8px">Python per le Digital Humanities</p>
-  <br>
-  <p style="font-size:0.75em; color:#aaa">Tiziana Mancinelli</p>
-  <p style="font-size:0.6em; color:#666">Università degli Studi di Roma Tor Vergata</p>
-</section>
-<section>
-<h2>🎯 Obiettivi</h2>
-<ul style="font-size:0.9em"><li>Usare <code>for</code> e <code>if</code></li>
-<li>Cercare parole in un testo</li>
-<li>Contare occorrenze</li>
-<li>Capire i dizionari</li>
-<li>Costruire una frequenza lessicale</li></ul>
-</section>
-<section>
-<h2>Che cos’è un algoritmo?</h2><p>Una serie di passi per risolvere un problema.</p><pre><code data-trim>
-Problema → Passi → Risultato
-  </code></pre>
-</section>
-<section>
-<h2>Il ciclo for</h2><pre><code class="language-python" data-trim>
-parole = [&quot;Victor&quot;, &quot;science&quot;, &quot;creature&quot;]
+<div class="reveal"><div class="slides">
+<section class="cover"><span class="eyebrow">UNIVERSITÀ DI ROMA TOR VERGATA · PYTHON PER LE DIGITAL HUMANITIES (17-11-2026)</span><h1>Cicli, condizioni<br>e dizionari</h1><p class="large">Dalla lettura di un testo al conteggio automatico delle parole</p><p class="soft">Molti esercizi, correzioni e un mini-progetto guidato · durata 2 ore</p><div class="cover-line"></div><p class="soft tiny">Lezione 04 · 17 novembre 2026 · Materiali interattivi</p></section>
+<section class=""><div class="slide-meta"><span>INTRODUZIONE</span><span>2 min</span></div><h2>Che cosa sapremo fare alla fine?</h2><div class="cards"><div class="info-box teal"><strong>Ripetere</strong><br>Usare <code>for</code> e <code>range()</code></div><div class="info-box teal"><strong>Selezionare</strong><br>Usare <code>if</code>, <code>else</code> e <code>in</code></div><div class="info-box teal"><strong>Contare</strong><br>Usare dizionari e frequenze</div></div><p class="large center">Il problema non è memorizzare il codice: è imparare a <strong>scomporre un compito</strong>.</p></section>
+<section class=""><div class="slide-meta"><span>ORGANIZZAZIONE</span><span>1 min</span></div><h2>Scaletta: 120 minuti</h2><div class="timeline">
+<div><b>00–10</b><span>Ripasso di stringhe, liste e metodi</span></div>
+<div><b>10–30</b><span>Ciclo <code>for</code> e <code>range()</code></span></div>
+<div><b>30–48</b><span>Condizioni <code>if</code>, <code>else</code> e <code>in</code></span></div>
+<div><b>48–63</b><span>Cicli + condizioni + contatori</span></div>
+<div><b>63–68</b><span>Pausa breve</span></div>
+<div><b>68–85</b><span>Dizionari e confronto con le liste</span></div>
+<div><b>85–95</b><span>Frequenze lessicali</span></div>
+<div><b>95–117</b><span>Progetto finale guidato</span></div>
+<div><b>117–120</b><span>Verifica finale</span></div>
+</div></section>
+<section class=""><div class="slide-meta"><span>INTRODUZIONE</span><span>2 min</span></div><h2>Come lavoriamo oggi?</h2><div class="two-col"><div><h3>In aula</h3><p>Leggiamo il problema → proviamo individualmente → discutiamo → apriamo la soluzione.</p><div class="info-box note"><strong>Tempo per ogni esercizio:</strong> 2–4 minuti; le soluzioni stanno sempre nella slide seguente.</div></div><div><h3>Dove eseguiamo Python?</h3><p>Nelle slide premi <strong>▶ Esegui</strong>. In alternativa incolla il codice in <strong>Google Colab</strong> o <strong>VS Code</strong>.</p><div class="info-box warning">Per il pulsante ▶ serve Internet, almeno al primo caricamento del motore Python.</div></div></div></section>
+<section class="section-divider"><div class="section-count">01</div><p class="eyebrow">0–10 minuti</p><h1>Ripasso essenziale</h1><p class="large">Stringhe, liste, metodi e funzioni</p></section>
+<section class=""><div class="slide-meta"><span>RIPASSO</span><span>2 min</span></div><h2>Che cosa restituiscono queste istruzioni?</h2><div class="two-col"><div><pre><code class="language-python">frase = &quot;Victor Frankenstein studia la natura&quot;
+print(frase.lower())
+print(len(frase))
+print(frase.split())
+print(len(frase.split()))</code></pre></div><div><div class="info-box note"><strong>Domande:</strong><br><br>• <code>lower()</code> cambia la variabile originale?<br>• Che differenza c’è tra <code>len(frase)</code> e <code>len(frase.split())</code>?<br>• Che tipo di dato produce <code>split()</code>?</div></div></div></section>
+<section class=""><div class="slide-meta"><span>RIPASSO</span><span>2 min</span></div><h2>Funzione o metodo?</h2><div class="two-col"><div><h3>Funzione integrata</h3><pre><code class="language-python">frase = &quot;Victor studia&quot;
+print(len(frase))
+print(type(frase))</code></pre><div class="info-box note"><code>len(oggetto)</code>: la funzione riceve un oggetto.</div></div><div><h3>Metodo di stringa</h3><pre><code class="language-python">frase = &quot;Victor studia&quot;
+print(frase.lower())
+print(frase.split())</code></pre><div class="info-box note"><code>oggetto.metodo()</code>: il metodo si richiama sull’oggetto.</div></div></div></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>2 min</span></div><h2>Prevedi l’output</h2><span class="tag tag-exercise">ESERCIZIO 1 · BASE</span><div class="task"><p>Senza eseguire subito il codice, scrivi su un foglio il risultato dei tre <code>print()</code>. Poi verifica.</p></div><div class="info-box note"><strong>Prima di scrivere:</strong> Conta i caratteri, non le parole.</div><pre><code class="language-python">titolo = &quot;Frankenstein&quot;
+print(titolo.lower())
+print(len(titolo))
+print(titolo.split())</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Che cosa restituisce Python?</h2><span class="tag tag-solution">SOLUZIONE 1</span><p class="explain"><code>split()</code> restituisce una lista, anche quando contiene un solo elemento.</p><pre><code class="language-python">titolo = &quot;Frankenstein&quot;
+print(titolo.lower())        # frankenstein
+print(len(titolo))           # 12
+print(titolo.split())        # [&quot;Frankenstein&quot;]</code></pre></section>
+<section class="section-divider"><div class="section-count">02</div><p class="eyebrow">10–30 minuti</p><h1>Ripetere operazioni</h1><p class="large">Il ciclo for, range() e l’indentazione</p></section>
+<section><div class="slide-meta"><span>DEFINIZIONE MDN · CICLI</span><span>1 min</span></div><h2>Definizione · Che cos’è un ciclo?</h2><div class="definition">Un <span class="key-term">ciclo</span> (in inglese <em>loop</em>) è una struttura che permette di <strong>ripetere una serie di istruzioni</strong>, invece di riscriverle ogni volta.</div><div class="two-col"><div><h3>In generale</h3><p>La ripetizione prosegue finché si verificano le condizioni previste dal programma.</p></div><div><h3>Nel nostro Python</h3><p><code>for</code> visita, uno alla volta, gli elementi di una sequenza.</p></div></div><p class="source-note">Fonte: <a href="https://developer.mozilla.org/en-US/docs/Glossary/Loop" target="_blank" rel="noopener">MDN — Glossario: Loop</a>. Definizione riformulata in italiano; esempi adattati a Python.</p></section>
+<section><div class="slide-meta"><span>CONCETTO · CICLI</span><span>1 min</span></div><h2>Che cos’è un’iterazione?</h2><div class="definition">Una <span class="key-term">iterazione</span> è <strong>una singola esecuzione</strong> delle istruzioni del ciclo.</div><div class="two-col"><div><pre><code class="language-python">nomi = ["Victor", "Walton", "Elizabeth"]
+
+for nome in nomi:
+    print(nome)</code></pre></div><div><p><strong>1ª iterazione:</strong> <code>nome = "Victor"</code></p><p><strong>2ª iterazione:</strong> <code>nome = "Walton"</code></p><p><strong>3ª iterazione:</strong> <code>nome = "Elizabeth"</code></p><p class="explain">Quando finiscono gli elementi, il ciclo termina.</p></div></div><p class="source-note">Fonte: <a href="https://docs.python.org/3/tutorial/controlflow.html" target="_blank" rel="noopener">Python Tutorial — for Statements</a>. Definizione riformulata in italiano; esempi adattati a Python.</p></section>
+<section class=""><div class="slide-meta"><span>CICLI</span><span>3 min</span></div><h2>Un ciclo for percorre una lista</h2><div class="two-col"><div><pre><code class="language-python">personaggi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+
+for nome in personaggi:
+    print(nome)
+
+print(&quot;Fine del ciclo&quot;)</code></pre></div><div><h3>Leggiamolo insieme</h3><p><strong>1.</strong> Python prende un elemento dalla lista.</p><p><strong>2.</strong> Lo assegna alla variabile <code>nome</code>.</p><p><strong>3.</strong> Esegue le istruzioni indentate.</p><p><strong>4.</strong> Ripete fino alla fine.</p></div></div></section>
+<section class=""><div class="slide-meta"><span>CICLI</span><span>2 min</span></div><h2>L’indentazione cambia il significato</h2><div class="two-col"><div><h3>Dentro il ciclo</h3><pre><code class="language-python">for parola in [&quot;vita&quot;, &quot;testo&quot;]:
+    print(parola)
+    print(&quot;letto&quot;)</code></pre></div><div><h3>Fuori dal ciclo</h3><pre><code class="language-python">for parola in [&quot;vita&quot;, &quot;testo&quot;]:
+    print(parola)
+print(&quot;letto&quot;)</code></pre></div></div></section>
+<section class=""><div class="slide-meta"><span>CICLI</span><span>2 min</span></div><h2>range(): numeri da zero a N−1</h2><div class="two-col"><div><pre><code class="language-python">for numero in range(5):
+    print(numero)
+
+# Risultato: 0, 1, 2, 3, 4</code></pre></div><div><div class="info-box note"><code>range(5)</code> parte da 0, arriva a 4. Il limite 5 è <strong>escluso</strong>.<br><br><code>range(1, 6)</code> genera 1, 2, 3, 4, 5.</div></div></div></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>2 min</span></div><h2>Numeri in sequenza</h2><span class="tag tag-exercise">ESERCIZIO 2 · BASE</span><div class="task"><p>Stampa i numeri <strong>da 1 a 5</strong>, uno per riga, usando <code>range()</code>.</p></div><div class="info-box note"><strong>Prima di scrivere:</strong> Prova con range(1, 6).</div><pre><code class="language-python"># TODO: usa for e range()</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Da 1 a 5</h2><span class="tag tag-solution">SOLUZIONE 2</span><pre><code class="language-python">for numero in range(1, 6):
+    print(numero)</code></pre></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>3 min</span></div><h2>Nomi in maiuscolo</h2><span class="tag tag-exercise">ESERCIZIO 3 · BASE</span><div class="task"><p>Data la lista, stampa ogni nome in maiuscolo con un <code>for</code>.</p></div><div class="info-box note"><strong>Prima di scrivere:</strong> La variabile del ciclo rappresenta un nome per volta.</div><pre><code class="language-python">nomi = [&quot;Victor&quot;, &quot;Walton&quot;, &quot;Elizabeth&quot;]
+
+# TODO: usa un ciclo e .upper()</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Trasformare durante il ciclo</h2><span class="tag tag-solution">SOLUZIONE 3</span><p class="explain">Il metodo <code>.upper()</code> si applica a ogni stringa della lista.</p><pre><code class="language-python">nomi = [&quot;Victor&quot;, &quot;Walton&quot;, &quot;Elizabeth&quot;]
+
+for nome in nomi:
+    print(nome.upper())</code></pre></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>3 min</span></div><h2>Etichetta le parole</h2><span class="tag tag-exercise">ESERCIZIO 4 · BASE</span><div class="task"><p>Stampa <code>Parola: victor</code>, <code>Parola: creatura</code>, ecc., senza ripetere tre volte <code>print()</code>.</p></div><pre><code class="language-python">parole = [&quot;victor&quot;, &quot;creatura&quot;, &quot;scienza&quot;]
+
+# TODO: un solo print() dentro il for</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Una stampa, tre iterazioni</h2><span class="tag tag-solution">SOLUZIONE 4</span><pre><code class="language-python">parole = [&quot;victor&quot;, &quot;creatura&quot;, &quot;scienza&quot;]
 
 for parola in parole:
-    print(parola)
-  </code></pre>
-</section>
-<section>
-<h2>range()</h2><p>Genera una sequenza di numeri.</p><pre><code class="language-python" data-trim>
-for i in range(5):
-    print(i)
-  </code></pre>
-</section>
-<section>
-<h2>Condizione if</h2><p>Permette di eseguire codice solo se una condizione è vera.</p><pre><code class="language-python" data-trim>
-parola = &quot;Victor&quot;
+    print(&quot;Parola:&quot;, parola)</code></pre></section>
+<section class=""><div class="slide-meta"><span>CICLI</span><span>2 min</span></div><h2>Micro-verifica: dove va print()?</h2><div class="two-col"><div><div class="task"><p>Voglio stampare ogni nome e poi, <strong>una volta sola</strong>, il messaggio “Analisi terminata”.</p></div></div><div><pre><code class="language-python">nomi = [&quot;Victor&quot;, &quot;Elizabeth&quot;]
+for nome in nomi:
+    print(nome)
+
+print(&quot;Analisi terminata&quot;)</code></pre></div></div></section>
+<section class="section-divider"><div class="section-count">03</div><p class="eyebrow">30–48 minuti</p><h1>Prendere decisioni</h1><p class="large">if, else e l’operatore in</p></section>
+<section><div class="slide-meta"><span>DEFINIZIONE MDN · CONDIZIONI</span><span>1 min</span></div><h2>Definizione · Che cos’è una condizione?</h2><div class="definition">Una <span class="key-term">condizione</span> è una verifica che determina <strong>se eseguire un blocco di istruzioni oppure seguire un’altra strada</strong>.</div><div class="two-col"><div><pre><code class="language-python">parola = "Victor"
+
+if parola == "Victor":
+    print("Personaggio trovato")</code></pre></div><div><h3>Come ragiona Python?</h3><p>La verifica <code>parola == "Victor"</code> restituisce <code>True</code> o <code>False</code>.</p><p>Se è <code>True</code>, esegue la stampa.</p></div></div><p class="source-note">Fonte: <a href="https://developer.mozilla.org/en-US/docs/Glossary/Conditional" target="_blank" rel="noopener">MDN — Glossario: Conditional</a>. Definizione riformulata in italiano; esempi adattati a Python.</p></section>
+<section><div class="slide-meta"><span>DEFINIZIONE MDN · CONDIZIONI</span><span>1 min</span></div><h2>Flusso di controllo: non tutte le righe vengono eseguite</h2><div class="definition">Il <span class="key-term">flusso di controllo</span> è l’ordine in cui un programma esegue le istruzioni. <code>if</code> e <code>for</code> possono modificare questo ordine.</div><div class="two-col"><div><pre><code class="language-python">età = 19
+
+if età &gt;= 18:
+    print("Maggiorenne")
+else:
+    print("Minorenne")
+
+print("Controllo concluso")</code></pre></div><div><p><strong>Scelta:</strong> uno solo dei due blocchi <code>if</code> / <code>else</code> viene eseguito.</p><p><strong>Poi:</strong> il programma prosegue con la riga finale.</p></div></div><p class="source-note">Fonte: <a href="https://developer.mozilla.org/en-US/docs/Glossary/Control_flow" target="_blank" rel="noopener">MDN — Glossario: Control flow</a>. Definizione riformulata in italiano; esempi adattati a Python.</p></section>
+<section class=""><div class="slide-meta"><span>CONDIZIONI</span><span>2 min</span></div><h2>Confrontare: = non è ==</h2><div class="two-col"><div><pre><code class="language-python">parola = &quot;Victor&quot;       # assegna un valore
+print(parola == &quot;Victor&quot;)  # True
+print(parola == &quot;Walton&quot;)  # False</code></pre></div><div><div class="info-box note"><code>=</code> assegna un valore.<br><br><code>==</code> confronta due valori.<br><br>La condizione produce <code>True</code> o <code>False</code>.</div></div></div></section>
+<section class=""><div class="slide-meta"><span>CONDIZIONI</span><span>2 min</span></div><h2>if ... else: due strade</h2><div class="two-col"><div><pre><code class="language-python">parola = &quot;Walton&quot;
 
 if parola == &quot;Victor&quot;:
-    print(&quot;Personaggio trovato&quot;)
-  </code></pre>
-</section>
-<section>
-<h2>Operatore in</h2><p>Controlla se qualcosa è contenuto in qualcosa.</p><pre><code class="language-python" data-trim>
-testo = &quot;Victor created the creature&quot;
+    print(&quot;Trovato Victor&quot;)
+else:
+    print(&quot;Non è Victor&quot;)</code></pre></div><div><p><strong>Se</strong> la condizione è vera, Python esegue il primo blocco.</p><p><strong>Altrimenti</strong> esegue il blocco <code>else</code>.</p><div class="info-box note">Attenzione ai due punti <code>:</code> e alle <strong>4 spaziature</strong> di rientro.</div></div></div></section>
+<section class=""><div class="slide-meta"><span>CONDIZIONI</span><span>2 min</span></div><h2>in: ricerca nel testo o nella lista?</h2><div class="two-col"><div><h3>In una stringa</h3><pre><code class="language-python">testo = &quot;Victor incontra Walton&quot;
+print(&quot;Victor&quot; in testo)   # True
+print(&quot;Vic&quot; in testo)      # True</code></pre></div><div><h3>In una lista</h3><pre><code class="language-python">nomi = [&quot;Victor&quot;, &quot;Walton&quot;]
+print(&quot;Victor&quot; in nomi)   # True
+print(&quot;Vic&quot; in nomi)      # False</code></pre></div></div></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>2 min</span></div><h2>Se la parola è presente...</h2><span class="tag tag-exercise">ESERCIZIO 5 · BASE</span><div class="task"><p>Scrivi una condizione che stampi <strong>“Presente”</strong> se la stringa <code>"creatura"</code> compare nel testo; altrimenti <strong>“Assente”</strong>.</p></div><pre><code class="language-python">testo = &quot;Victor osserva la creatura&quot;
 
-if &quot;Victor&quot; in testo:
-    print(&quot;Trovato&quot;)
-  </code></pre>
-</section>
-<section>
-<h2>Ricerca in un testo</h2><pre><code class="language-python" data-trim>
-testo = &quot;Victor met Walton&quot;
+# TODO: if ... else</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>La condizione</h2><span class="tag tag-solution">SOLUZIONE 5</span><pre><code class="language-python">testo = &quot;Victor osserva la creatura&quot;
+
+if &quot;creatura&quot; in testo:
+    print(&quot;Presente&quot;)
+else:
+    print(&quot;Assente&quot;)</code></pre></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>2 min</span></div><h2>Evitiamo il falso positivo</h2><span class="tag tag-exercise">ESERCIZIO 6 · BASE</span><div class="task"><p>La stringa <code>"Ann"</code> è presente dentro “Anna”, ma non è un <strong>nome completo</strong> della lista. Come controlli <strong>un elemento esatto</strong>?</p></div><div class="info-box note"><strong>Prima di scrivere:</strong> Non cercare dentro una stringa, ma dentro la lista.</div><pre><code class="language-python">nomi = [&quot;Anna&quot;, &quot;Marco&quot;, &quot;Luca&quot;]
+
+# TODO: stampa True se &quot;Ann&quot; è un nome completo</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Appartenenza esatta alla lista</h2><span class="tag tag-solution">SOLUZIONE 6</span><pre><code class="language-python">nomi = [&quot;Anna&quot;, &quot;Marco&quot;, &quot;Luca&quot;]
+
+print(&quot;Ann&quot; in nomi)   # False
+print(&quot;Anna&quot; in nomi)  # True</code></pre></section>
+<section class=""><div class="slide-meta"><span>CONDIZIONI</span><span>2 min</span></div><h2>Tre alternative: if, elif, else</h2><div class="two-col"><div><pre><code class="language-python">voto = 7
+
+if voto &gt;= 8:
+    print(&quot;Ottimo&quot;)
+elif voto &gt;= 6:
+    print(&quot;Sufficiente&quot;)
+else:
+    print(&quot;Da rivedere&quot;)</code></pre></div><div><h3>Ordine delle verifiche</h3><p>La prima condizione vera determina il ramo eseguito.</p><div class="info-box note">Gli operatori <code>&gt;=</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&lt;</code> confrontano numeri.</div></div></div></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>3 min</span></div><h2>Lunghezza di una parola</h2><span class="tag tag-exercise">ESERCIZIO 7 · BASE</span><div class="task"><p>Stampa <strong>“lunga”</strong> se la parola ha almeno 8 caratteri; altrimenti stampa <strong>“breve”</strong>.</p></div><pre><code class="language-python">parola = &quot;Frankenstein&quot;
+
+# TODO: if / else con len()</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Controllare la lunghezza</h2><span class="tag tag-solution">SOLUZIONE 7</span><pre><code class="language-python">parola = &quot;Frankenstein&quot;
+
+if len(parola) &gt;= 8:
+    print(&quot;lunga&quot;)
+else:
+    print(&quot;breve&quot;)</code></pre></section>
+<section class="section-divider"><div class="section-count">04</div><p class="eyebrow">48–63 minuti</p><h1>Combinare for + if</h1><p class="large">Ricerca e conteggio delle occorrenze</p></section>
+<section class=""><div class="slide-meta"><span>FOR + IF</span><span>2 min</span></div><h2>Dentro un ciclo possiamo verificare una condizione</h2><div class="two-col"><div><pre><code class="language-python">nomi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+
+for nome in nomi:
+    if nome == &quot;Victor&quot;:
+        print(&quot;Protagonista:&quot;, nome)</code></pre></div><div><h3>Due livelli di indentazione</h3><p>4 spazi: dentro il <code>for</code>.</p><p>8 spazi: dentro l’<code>if</code>.</p><div class="info-box note">Ogni rientro indica che un blocco è <strong>contenuto</strong> in un altro.</div></div></div></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>3 min</span></div><h2>Cerca i personaggi</h2><span class="tag tag-exercise">ESERCIZIO 8 · BASE</span><div class="task"><p>Scorri la lista e stampa soltanto i nomi che sono presenti nella frase.</p></div><pre><code class="language-python">testo = &quot;Victor incontra Walton&quot;
+nomi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
+
+# TODO: for + if + in</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Cercare più nomi</h2><span class="tag tag-solution">SOLUZIONE 8</span><pre><code class="language-python">testo = &quot;Victor incontra Walton&quot;
 nomi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
 
 for nome in nomi:
     if nome in testo:
-        print(&quot;Trovato:&quot;, nome)
-  </code></pre>
-</section>
-<section>
-<h2>Contare con una variabile</h2><pre><code class="language-python" data-trim>
-parole = [&quot;Victor&quot;, &quot;Victor&quot;, &quot;Creature&quot;]
-contatore = 0
+        print(&quot;Trovato:&quot;, nome)</code></pre></section>
+<section class=""><div class="slide-meta"><span>FOR + IF</span><span>2 min</span></div><h2>Un contatore parte da zero</h2><div class="two-col"><div><pre><code class="language-python">parole = [&quot;Victor&quot;, &quot;Walton&quot;, &quot;Victor&quot;]
+conteggio = 0
 
 for parola in parole:
     if parola == &quot;Victor&quot;:
-        contatore = contatore + 1
+        conteggio = conteggio + 1
 
-print(contatore)
-  </code></pre>
-</section>
-<section>
-<h2>Dizionari</h2><p>Un dizionario associa una chiave a un valore.</p><pre><code class="language-python" data-trim>
-frequenze = {&quot;Victor&quot;: 2, &quot;Creature&quot;: 1}
-print(frequenze)
-  </code></pre>
-</section>
-<section>
-<h2>Chiave e valore</h2><pre><code data-trim>
-&quot;Victor&quot; → 2
-&quot;Creature&quot; → 1
-  </code></pre>
-</section>
-<section>
-<h2>Accedere a un valore</h2><pre><code class="language-python" data-trim>
-frequenze = {&quot;Victor&quot;: 2, &quot;Creature&quot;: 1}
-print(frequenze[&quot;Victor&quot;])
-  </code></pre>
-</section>
-<section>
-<h2>Aggiornare un valore</h2><pre><code class="language-python" data-trim>
-frequenze = {&quot;Victor&quot;: 2}
-frequenze[&quot;Victor&quot;] = frequenze[&quot;Victor&quot;] + 1
-print(frequenze)
-  </code></pre>
-</section>
-<section>
-<h2>Costruire frequenze</h2><pre><code class="language-python" data-trim>
-parole = [&quot;victor&quot;, &quot;creature&quot;, &quot;victor&quot;]
-frequenze = {}
+print(&quot;Occorrenze:&quot;, conteggio)</code></pre></div><div><div class="info-box note"><strong>Passi:</strong><br>• all’inizio <code>conteggio = 0</code><br>• al primo Victor diventa 1<br>• al secondo Victor diventa 2<br><br><code>conteggio += 1</code> è una forma abbreviata.</div></div></div></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>3 min</span></div><h2>Quante volte compare Victor?</h2><span class="tag tag-exercise">ESERCIZIO 9 · BASE</span><div class="task"><p>Conta le occorrenze <strong>esatte</strong> di <code>"Victor"</code> e stampa il totale <strong>alla fine</strong> del ciclo.</p></div><pre><code class="language-python">parole = [&quot;Victor&quot;, &quot;Walton&quot;, &quot;Victor&quot;, &quot;Creature&quot;, &quot;Victor&quot;]
+conteggio = 0
 
-for parola in parole:
-    if parola in frequenze:
-        frequenze[parola] += 1
-    else:
-        frequenze[parola] = 1
-
-print(frequenze)
-  </code></pre>
-</section>
-<section>
-<h2>Perché un dizionario?</h2><p>Perché permette di collegare ogni parola al suo numero di occorrenze.</p>
-</section>
-<section>
-<h2>Digital Humanities</h2><ul><li>Frequenza delle parole</li><li>Frequenza dei personaggi</li><li>Frequenza dei luoghi</li><li>Prima analisi quantitativa del testo</li></ul>
-</section>
-<section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 1</h2>
-<p>Cercare se la parola <code>Victor</code> è presente in un testo.</p>
-</section>
-<section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 1</h2>
-<pre><code class="language-python" data-trim>
-testo = &quot;Victor studied science&quot;
-
-if &quot;Victor&quot; in testo:
-    print(&quot;Victor è presente&quot;)
-  </code></pre>
-</section>
-<section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 2</h2>
-<p>Stampare solo i nomi presenti nel testo.</p>
-</section>
-<section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 2</h2>
-<pre><code class="language-python" data-trim>
-testo = &quot;Victor met Walton&quot;
-nomi = [&quot;Victor&quot;, &quot;Elizabeth&quot;, &quot;Walton&quot;]
-
-for nome in nomi:
-    if nome in testo:
-        print(nome)
-  </code></pre>
-</section>
-<section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 3</h2>
-<p>Contare quante volte compare <code>Victor</code>.</p>
-</section>
-<section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 3</h2>
-<pre><code class="language-python" data-trim>
-parole = [&quot;Victor&quot;, &quot;Walton&quot;, &quot;Victor&quot;, &quot;Creature&quot;]
+# TODO: for + if; aggiorna conteggio</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Un contatore nel ciclo</h2><span class="tag tag-solution">SOLUZIONE 9</span><pre><code class="language-python">parole = [&quot;Victor&quot;, &quot;Walton&quot;, &quot;Victor&quot;, &quot;Creature&quot;, &quot;Victor&quot;]
 conteggio = 0
 
 for parola in parole:
     if parola == &quot;Victor&quot;:
         conteggio += 1
 
-print(conteggio)
-  </code></pre>
-</section>
-<section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 4</h2>
-<p>Creare un dizionario con frequenze manuali.</p>
-</section>
-<section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 4</h2>
-<pre><code class="language-python" data-trim>
-frequenze = {&quot;Victor&quot;: 3, &quot;Walton&quot;: 1, &quot;Creature&quot;: 2}
-print(frequenze)
-  </code></pre>
-</section>
-<section data-background-color="#0d1f0d">
-<div class="tag tag-esercizio">Esercizio</div>
-<h2>📝 Esercizio 5</h2>
-<p>Costruire automaticamente un vocabolario di frequenze.</p>
-</section>
-<section data-background-color="#0d1020">
-<div class="tag tag-soluzione">Soluzione</div>
-<h2>📝 Soluzione 5</h2>
-<pre><code class="language-python" data-trim>
-testo = &quot;Victor met Victor and the Creature&quot;
+print(&quot;Victor compare&quot;, conteggio, &quot;volte&quot;)</code></pre></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>3 min</span></div><h2>Conta le parole lunghe</h2><span class="tag tag-exercise">ESERCIZIO 10 · BASE</span><div class="task"><p>Quante parole hanno <strong>più di 6 caratteri</strong>? Conta con un ciclo, senza usare una soluzione preconfezionata.</p></div><div class="info-box note"><strong>Prima di scrivere:</strong> Il confronto è <code>len(parola) &gt; 6</code>.</div><pre><code class="language-python">parole = [&quot;vita&quot;, &quot;creatura&quot;, &quot;scienza&quot;, &quot;testo&quot;, &quot;Victor&quot;]
+conteggio = 0
+
+# TODO: usa for, if e len()</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Conta per condizione</h2><span class="tag tag-solution">SOLUZIONE 10</span><pre><code class="language-python">parole = [&quot;vita&quot;, &quot;creatura&quot;, &quot;scienza&quot;, &quot;testo&quot;, &quot;Victor&quot;]
+conteggio = 0
+
+for parola in parole:
+    if len(parola) &gt; 6:
+        conteggio += 1
+
+print(conteggio)  # 2: creatura, scienza</code></pre></section>
+<section class=""><div class="slide-meta"><span>FOR + IF</span><span>2 min</span></div><h2>Perché il print finale non è indentato?</h2><div class="two-col"><div><div class="task"><p>Se <code>print(conteggio)</code> fosse <strong>dentro</strong> il ciclo, vedremmo il totale aggiornarsi dopo ogni elemento. Fuori dal ciclo, vediamo solo il <strong>risultato finale</strong>.</p></div></div><div><pre><code class="language-python">conteggio = 0
+for numero in [2, 5, 8]:
+    if numero &gt; 4:
+        conteggio += 1
+
+print(&quot;Totale:&quot;, conteggio)</code></pre></div></div></section>
+<section class="break-slide"><p class="eyebrow">63–68 MINUTI</p><h1>Pausa · 5 minuti</h1><p>Al rientro: dai contatori ai dizionari.</p></section>
+<section class="section-divider"><div class="section-count">05</div><p class="eyebrow">68–85 minuti</p><h1>Dizionari</h1><p class="large">Associare ogni chiave a un valore</p></section>
+<section><div class="slide-meta"><span>DEFINIZIONE MDN · STRUTTURE DATI</span><span>1 min</span></div><h2>Definizione · Che cos’è una struttura dati?</h2><div class="definition">Una <span class="key-term">struttura dati</span> è un modo di organizzare informazioni affinché possano essere <strong>memorizzate, recuperate e utilizzate</strong> in modo efficace.</div><div class="two-col"><div class="info-box teal"><h3>Lista <code>list</code></h3><p>Raggruppa <strong>elementi in sequenza</strong>: ciascuno ha una posizione numerica.</p><p><code>["Victor", "Walton"]</code></p></div><div class="info-box teal"><h3>Dizionario <code>dict</code></h3><p>Raggruppa <strong>associazioni chiave → valore</strong>.</p><p><code>{"Victor": 3, "Walton": 1}</code></p></div></div><p class="source-note">Fonte: <a href="https://developer.mozilla.org/en-US/docs/Glossary/Data_structure" target="_blank" rel="noopener">MDN — Glossario: Data structure</a>. Definizione riformulata in italiano; esempi adattati a Python.</p><p class="source-note" style="margin-top:.15em;border:0">Specificità di <code>list</code> e <code>dict</code>: <a href="https://docs.python.org/3/tutorial/datastructures.html" target="_blank" rel="noopener">documentazione ufficiale Python</a>.</p></section>
+<section><div class="slide-meta"><span>CONFRONTO · LISTE / DIZIONARI</span><span>2 min</span></div><h2>Differenza fondamentale: lista e dizionario</h2><div class="two-col"><div><h3>Lista = successione di elementi</h3><pre><code class="language-python">nomi = ["Victor", "Walton", "Victor"]
+print(nomi[0])   # Victor
+print(nomi[2])   # Victor</code></pre><div class="info-box teal">Si accede con un <strong>indice numerico</strong>. Il primo elemento ha indice <code>0</code>. I valori possono ripetersi.</div></div><div><h3>Dizionario = associazioni</h3><pre><code class="language-python">frequenze = {"Victor": 2, "Walton": 1}
+print(frequenze["Victor"])  # 2</code></pre><div class="info-box teal">Si accede tramite una <strong>chiave</strong>. Ogni chiave identifica un solo valore nel dizionario.</div></div></div><p class="source-note">Fonte: <a href="https://docs.python.org/3/tutorial/datastructures.html" target="_blank" rel="noopener">Python Tutorial — Data Structures</a>. Definizione riformulata in italiano; esempi adattati a Python.</p></section>
+<section><div class="slide-meta"><span>RIEPILOGO VISIVO</span><span>1 min</span></div><h2>Confronto: quando scegliere lista o dizionario?</h2><table class="comparison-table"><thead><tr><th>Caratteristica</th><th>Lista <code>list</code></th><th>Dizionario <code>dict</code></th></tr></thead><tbody><tr><td>Scrittura</td><td><code>["Victor", "Walton"]</code></td><td><code>{"Victor": 2, "Walton": 1}</code></td></tr><tr><td>Accesso</td><td><strong>Indice</strong>: <code>nomi[0]</code></td><td><strong>Chiave</strong>: <code>freq["Victor"]</code></td></tr><tr><td>Organizzazione</td><td>Sequenza di elementi</td><td>Coppie chiave–valore</td></tr><tr><td>Ripetizioni</td><td>Lo stesso valore può comparire più volte</td><td>Ogni chiave è unica</td></tr><tr><td>Quando è utile?</td><td>Elenco di parole, nomi, frasi</td><td>Conteggi, attributi, informazioni associate</td></tr></tbody></table><div class="info-box note"><strong>Attenzione:</strong> anche i dizionari Python moderni conservano l’ordine di inserimento. La differenza non è “ordinato / disordinato”, ma <strong>indice / chiave</strong>.</div><p class="source-note">Fonte: <a href="https://docs.python.org/3/tutorial/datastructures.html" target="_blank" rel="noopener">Python Tutorial — Lists and Dictionaries</a>. Definizione riformulata in italiano; esempi adattati a Python.</p></section>
+<section><div class="slide-meta"><span>LISTE / DIZIONARI · ESEMPIO</span><span>1 min</span></div><h2>Cosa controlla l’operatore in?</h2><div class="two-col"><div><h3>Nella lista: cerca un elemento</h3><pre><code class="language-python">nomi = ["Victor", "Walton"]
+print("Victor" in nomi)  # True
+print(2 in nomi)         # False</code></pre></div><div><h3>Nel dizionario: cerca una chiave</h3><pre><code class="language-python">frequenze = {"Victor": 2, "Walton": 1}
+print("Victor" in frequenze)  # True
+print(2 in frequenze)         # False</code></pre></div></div><div class="info-box warning"><strong>Non confondere:</strong> <code>2</code> è un valore del dizionario, <strong>non una chiave</strong>. Per questo <code>2 in frequenze</code> è falso.</div><p class="source-note">Fonte: <a href="https://docs.python.org/3/tutorial/datastructures.html" target="_blank" rel="noopener">Python Tutorial — Dictionaries</a>. Definizione riformulata in italiano; esempi adattati a Python.</p></section>
+<section data-background-color="#112117"><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>2 min</span></div><h2>Scegli la struttura dati giusta</h2><span class="tag tag-exercise">ESERCIZIO FLASH · A COPPIE</span><div class="task"><p>Per ciascun caso, scegli <strong>lista</strong> o <strong>dizionario</strong> e spiega perché.</p></div><div class="quiz"><div><strong>A.</strong> Conservare i titoli di cinque romanzi in una sequenza.</div><div><strong>B.</strong> Associare a ogni personaggio il numero di menzioni.</div><div><strong>C.</strong> Conservare tutte le parole di una frase, comprese le ripetizioni.</div></div><p class="small muted">Poi scrivi un esempio Python per il caso B.</p></section>
+<section data-background-color="#111d32"><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 min</span></div><h2>Soluzione · Perché questa struttura?</h2><span class="tag tag-solution">CORREZIONE ESERCIZIO FLASH</span><div class="quiz"><div><strong>A. Lista:</strong> i romanzi sono elementi di una sequenza.</div><div><strong>B. Dizionario:</strong> a ogni nome si associa un conteggio.</div><div><strong>C. Lista:</strong> le occorrenze (anche ripetute) restano distinte.</div></div><pre><code class="language-python">frequenze = {"Victor": 3, "Walton": 1}
+print(frequenze["Victor"])  # 3</code></pre><p class="explain">Il dizionario conserva <strong>una sola chiave Victor</strong>, con il numero totale delle sue occorrenze come valore.</p></section>
+<section><div class="slide-meta"><span>DIZIONARI · CHIAVI E VALORI</span><span>1 min</span></div><h2>Perché diciamo che le chiavi sono uniche?</h2><div class="two-col"><div><h3>Nella lista: ripetizioni possibili</h3><pre><code class="language-python">nomi = ["Victor", "Victor"]
+print(nomi)</code></pre></div><div><h3>Nel dizionario: stessa chiave, ultimo valore</h3><pre><code class="language-python">frequenze = {"Victor": 1}
+frequenze["Victor"] = 2
+print(frequenze)</code></pre></div></div><div class="info-box note">Se assegniamo un nuovo valore a una <strong>chiave già esistente</strong>, Python aggiorna quel valore; non crea una seconda copia della chiave.</div><p class="source-note">Fonte: <a href="https://docs.python.org/3/tutorial/datastructures.html" target="_blank" rel="noopener">Python Tutorial — Dictionaries</a>. Definizione riformulata in italiano; esempi adattati a Python.</p></section>
+<section class=""><div class="slide-meta"><span>DIZIONARI</span><span>3 min</span></div><h2>Operazioni sui dizionari</h2><pre><code class="language-python">frequenze = {&quot;Victor&quot;: 2, &quot;Walton&quot;: 1}
+
+print(frequenze[&quot;Victor&quot;])   # legge il valore: 2
+frequenze[&quot;Victor&quot;] += 1     # aggiorna: 3
+frequenze[&quot;Elizabeth&quot;] = 1  # aggiunge una nuova chiave
+print(frequenze)</code></pre><div class="info-box note">Una chiave non presente genera <code>KeyError</code> se la leggiamo con <code>d[chiave]</code>. Per questo, prima di aggiornare, verifichiamo se esiste.</div></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>3 min</span></div><h2>Costruisci un dizionario</h2><span class="tag tag-exercise">ESERCIZIO 11 · BASE</span><div class="task"><p>Crea il dizionario <code>frequenze</code> con le coppie <code>"Victor": 4</code>, <code>"Walton": 2</code>, <code>"Elizabeth": 1</code>. Stampa il valore associato a <code>"Walton"</code>.</p></div><pre><code class="language-python"># TODO: crea frequenze e stampa un valore</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Chiavi e valori</h2><span class="tag tag-solution">SOLUZIONE 11</span><pre><code class="language-python">frequenze = {&quot;Victor&quot;: 4, &quot;Walton&quot;: 2, &quot;Elizabeth&quot;: 1}
+print(frequenze[&quot;Walton&quot;])  # 2</code></pre></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>3 min</span></div><h2>Aggiorna e aggiungi</h2><span class="tag tag-exercise">ESERCIZIO 12 · BASE</span><div class="task"><p>Parti dal dizionario: aumenta di 1 il conteggio di Victor e aggiungi la chiave <code>"Creature"</code> con valore 2.</p></div><pre><code class="language-python">frequenze = {&quot;Victor&quot;: 2, &quot;Walton&quot;: 1}
+
+# TODO: una modifica e un&#x27;aggiunta
+print(frequenze)</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Modificare un dizionario</h2><span class="tag tag-solution">SOLUZIONE 12</span><pre><code class="language-python">frequenze = {&quot;Victor&quot;: 2, &quot;Walton&quot;: 1}
+
+frequenze[&quot;Victor&quot;] += 1
+frequenze[&quot;Creature&quot;] = 2
+print(frequenze)</code></pre></section>
+<section class=""><div class="slide-meta"><span>DIZIONARI</span><span>3 min</span></div><h2>Il ruolo di if / else nel dizionario</h2><div class="two-col"><div><pre><code class="language-python">frequenze = {}
+parola = &quot;victor&quot;
+
+if parola in frequenze:
+    frequenze[parola] += 1
+else:
+    frequenze[parola] = 1
+
+print(frequenze)</code></pre></div><div><div class="info-box note"><strong>Domanda centrale:</strong> la parola è già una chiave?<br><br><strong>Sì</strong> → incrementa il contatore.<br><strong>No</strong> → crea il primo conteggio (1).</div></div></div></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>3 min</span></div><h2>Proteggiti dal KeyError</h2><span class="tag tag-exercise">ESERCIZIO 13 · BASE</span><div class="task"><p>Completa il codice affinché il nome <code>"Elizabeth"</code> venga aggiunto con conteggio 1 se non è presente, oppure incrementato se esiste.</p></div><pre><code class="language-python">frequenze = {&quot;Victor&quot;: 2}
+nome = &quot;Elizabeth&quot;
+
+# TODO: if nome in frequenze: ... else: ...
+print(frequenze)</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Aggiungere o incrementare</h2><span class="tag tag-solution">SOLUZIONE 13</span><pre><code class="language-python">frequenze = {&quot;Victor&quot;: 2}
+nome = &quot;Elizabeth&quot;
+
+if nome in frequenze:
+    frequenze[nome] += 1
+else:
+    frequenze[nome] = 1
+
+print(frequenze)</code></pre></section>
+<section class="section-divider"><div class="section-count">06</div><p class="eyebrow">85–95 minuti</p><h1>Dal testo ai dati</h1><p class="large">Costruire un dizionario di frequenze</p></section>
+<section class=""><div class="slide-meta"><span>FREQUENZE</span><span>2 min</span></div><h2>La pipeline di analisi</h2><div class="pipeline"><div>TESTO</div><span>→</span><div><code>lower()</code></div><span>→</span><div><code>split()</code></div><span>→</span><div><code>for</code> + <code>if</code></div><span>→</span><div>DIZIONARIO</div></div><div class="info-box note">Questi passaggi costruiscono una <strong>frequenza lessicale</strong>: quante volte compare ogni parola nel testo.</div></section>
+<section class=""><div class="slide-meta"><span>FREQUENZE</span><span>2 min</span></div><h2>Un esempio completo ma breve</h2><pre><code class="language-python">testo = &quot;Victor incontra Victor e Walton&quot;
 parole = testo.lower().split()
 frequenze = {}
 
@@ -371,13 +373,13 @@ for parola in parole:
     else:
         frequenze[parola] = 1
 
-print(frequenze)
-  </code></pre>
-</section>
-<section>
-<h2>Mini progetto</h2><p>Frequenza delle parole in una citazione.</p><pre><code class="language-python" data-trim>
-testo = &quot;Nel mezzo del cammin di nostra vita mezzo mezzo&quot;
-parole = testo.lower().split()
+print(frequenze)</code></pre><div class="info-box teal">Aspettativa: <code>{"victor": 2, "incontra": 1, "e": 1, "walton": 1}</code>.</div></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>LAVORO INDIVIDUALE</span><span>3 min</span></div><h2>Completa la frequenza</h2><span class="tag tag-exercise">ESERCIZIO 14 · BASE</span><div class="task"><p>Scrivi il codice che conta ogni parola nella lista. Alla fine, verifica che <code>"creatura"</code> valga 3.</p></div><pre><code class="language-python">parole = [&quot;creatura&quot;, &quot;victor&quot;, &quot;creatura&quot;, &quot;walton&quot;, &quot;creatura&quot;]
+frequenze = {}
+
+# TODO: for, if, else
+print(frequenze)</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CORREZIONE IN AULA</span><span>1 minuto</span></div><h2>Dizionario di frequenze</h2><span class="tag tag-solution">SOLUZIONE 14</span><pre><code class="language-python">parole = [&quot;creatura&quot;, &quot;victor&quot;, &quot;creatura&quot;, &quot;walton&quot;, &quot;creatura&quot;]
 frequenze = {}
 
 for parola in parole:
@@ -386,191 +388,280 @@ for parola in parole:
     else:
         frequenze[parola] = 1
 
-print(frequenze)
-  </code></pre>
-</section>
-<section>
-<h2>Interpretazione</h2><p>Le frequenze mostrano ciò che ricorre, ma non sostituiscono l’interpretazione critica.</p>
-</section>
-<section>
-<h2>Pipeline della lezione</h2><pre><code data-trim>
-Testo → Parole → Ciclo → Dizionario → Frequenze
-  </code></pre>
-</section>
-<section>
-<h2>🎯 Recap</h2>
-<ul style="font-size:0.9em"><li><code>for</code> automatizza ripetizioni</li>
-<li><code>if</code> controlla condizioni</li>
-<li>I dizionari associano chiavi e valori</li>
-<li>Le frequenze sono dati quantitativi</li>
-<li>Il codice trasforma testo in dati</li></ul>
-</section>
-<section>
-<h2>❓ Domande</h2>
-</section>
-</div>
-</div>
+print(frequenze)</code></pre></section>
+<section class=""><div class="slide-meta"><span>FREQUENZE</span><span>2 min</span></div><h2>Attenzione alla punteggiatura!</h2><div class="two-col"><div><pre><code class="language-python">testo = &quot;Victor, Victor. victor&quot;
+print(testo.lower().split())
+# [&quot;victor,&quot;, &quot;victor.&quot;, &quot;victor&quot;]</code></pre></div><div><div class="info-box note">Le tre forme sono <strong>diverse</strong> come stringhe. Per normalizzarle in questo piccolo esempio, possiamo rimuovere virgole e punti con <code>.replace()</code>.</div></div></div></section>
+<section class=""><div class="slide-meta"><span>FREQUENZE</span><span>1 min</span></div><h2>Pulizia minima: replace()</h2><pre><code class="language-python">testo = &quot;Victor, Victor. victor&quot;
+testo = testo.lower()
+testo = testo.replace(&quot;,&quot;, &quot;&quot;)
+testo = testo.replace(&quot;.&quot;, &quot;&quot;)
+parole = testo.split()
+print(parole)  # [&quot;victor&quot;, &quot;victor&quot;, &quot;victor&quot;]</code></pre><div class="info-box note">È una pulizia <strong>didattica</strong>: su testi reali servono trattamenti più completi per segni, apostrofi e tokenizzazione.</div></section>
+<section class="section-divider"><div class="section-count">07</div><p class="eyebrow">95–117 minuti</p><h1>Mini-progetto guidato</h1><p class="large">Analizziamo le menzioni dei personaggi</p></section>
+<section data-background-color="#101827" class=""><div class="slide-meta"><span>PROGETTO</span><span>2 min</span></div><h2>La sfida: dal corpus a un risultato</h2><span class="tag tag-guided">LAVORO GUIDATO · 22 MINUTI</span><p class="large">Abbiamo <strong>sei frasi didattiche ispirate ai personaggi di Frankenstein</strong> (non citazioni dal romanzo). Vogliamo contare quante volte sono menzionati quattro personaggi.</p><div class="cards"><div class="info-box teal"><strong>INPUT</strong><br>Una lista di frasi</div><div class="info-box teal"><strong>PROCESSO</strong><br>Cicli + condizioni + dizionario</div><div class="info-box teal"><strong>OUTPUT</strong><br>Frequenze + nome più citato</div></div><div class="info-box warning">Obiettivo atteso: <code>victor: 5</code>, <code>walton: 3</code>, <code>elizabeth: 2</code>, <code>creatura: 2</code>.</div></section>
+<section data-background-color="#101827" class=""><div class="slide-meta"><span>COSTRUIAMO INSIEME</span><span>2 min</span></div><h2>Prepariamo i dati</h2><span class="tag tag-guided">PROGETTO GUIDATO · PASSO 1</span><div class="task"><p>Esegui il codice. Quante frasi ci sono? Quanti personaggi vogliamo cercare? Prova a stampare questi numeri con <code>len()</code>.</p></div><pre><code class="language-python">frasi = [
+    &quot;Victor osserva la creatura.&quot;,
+    &quot;Elizabeth scrive a Victor.&quot;,
+    &quot;Walton incontra Victor.&quot;,
+    &quot;La creatura cerca Victor.&quot;,
+    &quot;Elizabeth incontra Walton.&quot;,
+    &quot;Victor e Walton discutono.&quot;
+]
+personaggi = [&quot;victor&quot;, &quot;elizabeth&quot;, &quot;walton&quot;, &quot;creatura&quot;]
 
-<div id="pyodide-status">● Caricamento Python...</div>
+# TODO: print(len(frasi)) e print(len(personaggi))</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CONFRONTO / ESECUZIONE</span><span>1 minuto</span></div><h2>Contare i dati</h2><span class="tag tag-solution">VERIFICA PASSO 1</span><pre><code class="language-python">frasi = [
+    &quot;Victor osserva la creatura.&quot;,
+    &quot;Elizabeth scrive a Victor.&quot;,
+    &quot;Walton incontra Victor.&quot;,
+    &quot;La creatura cerca Victor.&quot;,
+    &quot;Elizabeth incontra Walton.&quot;,
+    &quot;Victor e Walton discutono.&quot;
+]
+personaggi = [&quot;victor&quot;, &quot;elizabeth&quot;, &quot;walton&quot;, &quot;creatura&quot;]
 
-<!-- ── Modale output ── -->
-<div id="output-modal">
-  <div id="output-modal-box">
-    <div id="output-modal-header">
-      <span>Output</span>
-      <button id="output-modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <pre id="output-modal-content"></pre>
-  </div>
+print(&quot;Frasi:&quot;, len(frasi))
+print(&quot;Personaggi:&quot;, len(personaggi))</code></pre></section>
+<section data-background-color="#101827" class=""><div class="slide-meta"><span>COSTRUIAMO INSIEME</span><span>3 min</span></div><h2>Normalizziamo una frase</h2><span class="tag tag-guided">PROGETTO GUIDATO · PASSO 2</span><div class="task"><p>Partiamo dalla prima frase: rendiamola minuscola, rimuoviamo il punto e dividiamola in parole. Stampa la lista ottenuta.</p></div><div class="info-box note"><strong>Indizio:</strong> Puoi usare più righe: ciascun passaggio trasforma il risultato precedente.</div><pre><code class="language-python">frase = &quot;Victor osserva la creatura.&quot;
+
+# TODO: lower(), replace(), split()</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CONFRONTO / ESECUZIONE</span><span>1 minuto</span></div><h2>Una lista di parole pulite</h2><span class="tag tag-solution">VERIFICA PASSO 2</span><p class="explain">Risultato: <code>["victor", "osserva", "la", "creatura"]</code>.</p><pre><code class="language-python">frase = &quot;Victor osserva la creatura.&quot;
+frase = frase.lower()
+frase = frase.replace(&quot;.&quot;, &quot;&quot;)
+parole = frase.split()
+print(parole)</code></pre></section>
+<section data-background-color="#101827" class=""><div class="slide-meta"><span>COSTRUIAMO INSIEME</span><span>2 min</span></div><h2>Applichiamo la pulizia a tutte le frasi</h2><span class="tag tag-guided">PROGETTO GUIDATO · PASSO 3</span><div class="task"><p>Serve un <code>for</code> esterno sulle frasi. Per ciascuna frase, produci e stampa le parole normalizzate.</p></div><div class="info-box note"><strong>Indizio:</strong> Il contenuto del ciclo va indentato di 4 spazi.</div><pre><code class="language-python">frasi = [&quot;Victor osserva la creatura.&quot;, &quot;Walton incontra Victor.&quot;]
+
+# TODO: for frase in frasi:
+#       parole = ...
+#       print(parole)</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CONFRONTO / ESECUZIONE</span><span>1 minuto</span></div><h2>Un ciclo sulle frasi</h2><span class="tag tag-solution">VERIFICA PASSO 3</span><pre><code class="language-python">frasi = [&quot;Victor osserva la creatura.&quot;, &quot;Walton incontra Victor.&quot;]
+
+for frase in frasi:
+    parole = frase.lower().replace(&quot;.&quot;, &quot;&quot;).split()
+    print(parole)</code></pre></section>
+<section data-background-color="#101827" class=""><div class="slide-meta"><span>COSTRUIAMO INSIEME</span><span>3 min</span></div><h2>Selezioniamo soltanto i personaggi</h2><span class="tag tag-guided">PROGETTO GUIDATO · PASSO 4</span><div class="task"><p>Aggiungi un <strong>secondo ciclo</strong> per leggere le singole parole. Stampa la parola solo se è in <code>personaggi</code>.</p></div><div class="info-box note"><strong>Indizio:</strong> Dentro il ciclo sulle frasi, inserisci <code>for parola in parole:</code>.</div><pre><code class="language-python">frasi = [&quot;Victor osserva la creatura.&quot;, &quot;Walton incontra Victor.&quot;]
+personaggi = [&quot;victor&quot;, &quot;elizabeth&quot;, &quot;walton&quot;, &quot;creatura&quot;]
+
+# TODO: for esterno → for interno → if</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CONFRONTO / ESECUZIONE</span><span>1 minuto</span></div><h2>Due cicli e una condizione</h2><span class="tag tag-solution">VERIFICA PASSO 4</span><pre><code class="language-python">frasi = [&quot;Victor osserva la creatura.&quot;, &quot;Walton incontra Victor.&quot;]
+personaggi = [&quot;victor&quot;, &quot;elizabeth&quot;, &quot;walton&quot;, &quot;creatura&quot;]
+
+for frase in frasi:
+    parole = frase.lower().replace(&quot;.&quot;, &quot;&quot;).split()
+    for parola in parole:
+        if parola in personaggi:
+            print(parola)</code></pre></section>
+<section data-background-color="#101827" class=""><div class="slide-meta"><span>COSTRUIAMO INSIEME</span><span>4 min</span></div><h2>Dalla stampa al conteggio</h2><span class="tag tag-guided">PROGETTO GUIDATO · PASSO 5</span><div class="task"><p>Ora invece di stampare ogni nome, usa un dizionario <code>frequenze</code> e aggiorna il conteggio, creando la chiave alla prima occorrenza.</p></div><div class="info-box note"><strong>Indizio:</strong> Serviranno <strong>due for e due if</strong>. Controlla con calma l’indentazione.</div><pre><code class="language-python">frasi = [
+    &quot;Victor osserva la creatura.&quot;,
+    &quot;Elizabeth scrive a Victor.&quot;,
+    &quot;Walton incontra Victor.&quot;,
+    &quot;La creatura cerca Victor.&quot;,
+    &quot;Elizabeth incontra Walton.&quot;,
+    &quot;Victor e Walton discutono.&quot;
+]
+personaggi = [&quot;victor&quot;, &quot;elizabeth&quot;, &quot;walton&quot;, &quot;creatura&quot;]
+frequenze = {}
+
+# TODO: ciclo sulle frasi
+#       ciclo sulle parole
+#       if parola in personaggi:
+#           if parola in frequenze: ...
+#           else: ...
+
+print(frequenze)</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CONFRONTO / ESECUZIONE</span><span>1 minuto</span></div><h2>Le menzioni nel nostro corpus</h2><span class="tag tag-solution">VERIFICA PASSO 5</span><p class="explain">Risultati attesi: <code>victor=5</code>, <code>elizabeth=2</code>, <code>walton=3</code>, <code>creatura=2</code>.</p><pre><code class="language-python">frasi = [
+    &quot;Victor osserva la creatura.&quot;,
+    &quot;Elizabeth scrive a Victor.&quot;,
+    &quot;Walton incontra Victor.&quot;,
+    &quot;La creatura cerca Victor.&quot;,
+    &quot;Elizabeth incontra Walton.&quot;,
+    &quot;Victor e Walton discutono.&quot;
+]
+personaggi = [&quot;victor&quot;, &quot;elizabeth&quot;, &quot;walton&quot;, &quot;creatura&quot;]
+frequenze = {}
+
+for frase in frasi:
+    parole = frase.lower().replace(&quot;.&quot;, &quot;&quot;).split()
+    for parola in parole:
+        if parola in personaggi:
+            if parola in frequenze:
+                frequenze[parola] += 1
+            else:
+                frequenze[parola] = 1
+
+print(frequenze)</code></pre></section>
+<section data-background-color="#101827" class=""><div class="slide-meta"><span>COSTRUIAMO INSIEME</span><span>3 min</span></div><h2>Troviamo il personaggio più citato</h2><span class="tag tag-guided">PROGETTO GUIDATO · PASSO 6</span><div class="task"><p>Senza introdurre una funzione nuova: percorri le chiavi del dizionario e tieni in memoria <strong>il massimo</strong> e il <strong>nome corrispondente</strong>.</p></div><pre><code class="language-python">frequenze = {&quot;victor&quot;: 5, &quot;elizabeth&quot;: 2, &quot;walton&quot;: 3, &quot;creatura&quot;: 2}
+piu_citato = &quot;&quot;
+massimo = 0
+
+# TODO: for nome in frequenze:
+#           se frequenze[nome] &gt; massimo ...
+
+print(&quot;Più citato:&quot;, piu_citato, massimo)</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>CONFRONTO / ESECUZIONE</span><span>1 minuto</span></div><h2>Calcolare il massimo con un ciclo</h2><span class="tag tag-solution">VERIFICA PASSO 6</span><pre><code class="language-python">frequenze = {&quot;victor&quot;: 5, &quot;elizabeth&quot;: 2, &quot;walton&quot;: 3, &quot;creatura&quot;: 2}
+piu_citato = &quot;&quot;
+massimo = 0
+
+for nome in frequenze:
+    if frequenze[nome] &gt; massimo:
+        massimo = frequenze[nome]
+        piu_citato = nome
+
+print(&quot;Più citato:&quot;, piu_citato, massimo)</code></pre></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>PROGETTO</span><span>2 min</span></div><h2>Progetto completo: tutti i passaggi</h2><span class="tag tag-solution">SOLUZIONE INTEGRATA</span><pre><code class="language-python" data-height="345">frasi = [
+    &quot;Victor osserva la creatura.&quot;,
+    &quot;Elizabeth scrive a Victor.&quot;,
+    &quot;Walton incontra Victor.&quot;,
+    &quot;La creatura cerca Victor.&quot;,
+    &quot;Elizabeth incontra Walton.&quot;,
+    &quot;Victor e Walton discutono.&quot;
+]
+personaggi = [&quot;victor&quot;, &quot;elizabeth&quot;, &quot;walton&quot;, &quot;creatura&quot;]
+
+frequenze = {}
+for frase in frasi:
+    parole = frase.lower().replace(&quot;.&quot;, &quot;&quot;).split()
+    for parola in parole:
+        if parola in personaggi:
+            if parola in frequenze:
+                frequenze[parola] += 1
+            else:
+                frequenze[parola] = 1
+
+piu_citato = &quot;&quot;
+massimo = 0
+for nome in frequenze:
+    if frequenze[nome] &gt; massimo:
+        massimo = frequenze[nome]
+        piu_citato = nome
+
+print(&quot;Frequenze:&quot;, frequenze)
+print(&quot;Personaggio più citato:&quot;, piu_citato, massimo)</code></pre><div class="info-box teal">Prima di copiare: identifica <strong>dati</strong>, <strong>normalizzazione</strong>, <strong>filtro</strong>, <strong>conteggio</strong>, <strong>risultato</strong>.</div></section>
+<section class=""><div class="slide-meta"><span>INTERPRETAZIONE</span><span>1 min</span></div><h2>Che cosa abbiamo misurato davvero?</h2><div class="two-col"><div><h3>La misura</h3><p>Abbiamo contato quante volte compaiono le <strong>parole</strong> che indicano personaggi in sei frasi costruite per la lezione.</p></div><div><h3>Il limite interpretativo</h3><p>Una frequenza non dimostra chi sia il protagonista, quanto sia importante un personaggio o come venga rappresentato.</p></div></div><div class="info-box teal"><strong>Digital Humanities:</strong> l’analisi quantitativa orienta domande di ricerca; non sostituisce la lettura e il contesto.</div></section>
+<section data-background-color="#112117" class=""><div class="slide-meta"><span>APPROFONDIMENTO</span><span>facoltativo</span></div><h2>Se avanza tempo: sfida aggiuntiva</h2><span class="tag tag-exercise">FACOLTATIVA</span><p>Modifica il progetto: <strong>quante frasi contengono ciascun personaggio?</strong> È una domanda diversa dal numero totale di menzioni.</p><pre><code class="language-python">frasi = [&quot;Victor vede Victor.&quot;, &quot;Walton vede Victor.&quot;]
+personaggi = [&quot;victor&quot;, &quot;walton&quot;]
+
+# Indizio: per ogni frase, controlla
+# se ogni nome è nella lista delle parole.
+# Evita di contare due volte Victor nella prima frase.</code></pre><div class="info-box warning">Risultato atteso: <code>victor: 2 frasi</code>, <code>walton: 1 frase</code>.</div></section>
+<section data-background-color="#111d32" class=""><div class="slide-meta"><span>APPROFONDIMENTO</span><span>facoltativo</span></div><h2>Una possibile soluzione alla sfida</h2><span class="tag tag-solution">APPROFONDIMENTO · SOLUZIONE</span><pre><code class="language-python">frasi = [&quot;Victor vede Victor.&quot;, &quot;Walton vede Victor.&quot;]
+personaggi = [&quot;victor&quot;, &quot;walton&quot;]
+presenze = {}
+
+for nome in personaggi:
+    presenze[nome] = 0
+    for frase in frasi:
+        parole = frase.lower().replace(&quot;.&quot;, &quot;&quot;).split()
+        if nome in parole:
+            presenze[nome] += 1
+
+print(presenze)</code></pre></section>
+<section class="section-divider"><div class="section-count">08</div><p class="eyebrow">117–120 minuti</p><h1>Verifica finale</h1><p class="large">Una cosa che sappiamo già fare da soli</p></section>
+<section class=""><div class="slide-meta"><span>VERIFICA</span><span>2 min</span></div><h2>Exit ticket · 3 domande</h2><span class="tag tag-exercise">RISPOSTA A VOCE O SUL QUADERNO</span><div class="quiz"><div><strong>1.</strong> Qual è la differenza tra <code>=</code> e <code>==</code>?</div><div><strong>2.</strong> Perché <code>print(totale)</code> va <em>fuori</em> dal ciclo se voglio un solo risultato?</div><div><strong>3.</strong> Che cosa succede se provo ad aggiornare <code>frequenze["nuova"] += 1</code> ma la chiave non esiste?</div></div></section>
+<section class=""><div class="slide-meta"><span>CHIUSURA</span><span>1 min</span></div><h2>Da ricordare</h2><div class="cards"><div class="info-box teal"><code>for</code><br>Ripete sui dati</div><div class="info-box teal"><code>if</code><br>Seleziona i casi</div><div class="info-box teal"><code>dict</code><br>Memorizza conteggi</div></div><p class="large center">Una procedura complessa diventa gestibile quando la dividiamo in <strong>passaggi piccoli, verificabili</strong>.</p></section>
+<section><div class="slide-meta"><span>RIFERIMENTI</span><span>consultazione</span></div><h2>Fonti e approfondimenti</h2><p class="small">Le definizioni generali sono <strong>riformulazioni in italiano</strong> basate sul glossario MDN; sintassi ed esempi di <strong>Python</strong> seguono la documentazione ufficiale.</p><div class="two-col"><div><h3>MDN Web Docs</h3><p class="small"><a class="ref-link" href="https://developer.mozilla.org/en-US/docs/Glossary/Loop" target="_blank">Glossario: Loop</a></p><p class="small"><a class="ref-link" href="https://developer.mozilla.org/en-US/docs/Glossary/Conditional" target="_blank">Glossario: Conditional</a></p><p class="small"><a class="ref-link" href="https://developer.mozilla.org/en-US/docs/Glossary/Control_flow" target="_blank">Glossario: Control flow</a></p><p class="small"><a class="ref-link" href="https://developer.mozilla.org/en-US/docs/Glossary/Data_structure" target="_blank">Glossario: Data structure</a></p><p class="small"><a class="ref-link" href="https://developer.mozilla.org/en-US/docs/Glossary/Array" target="_blank">Glossario: Array</a></p></div><div><h3>Documentazione Python</h3><p class="small"><a class="ref-link" href="https://docs.python.org/3/tutorial/controlflow.html" target="_blank">More Control Flow Tools: if / for</a></p><p class="small"><a class="ref-link" href="https://docs.python.org/3/tutorial/datastructures.html" target="_blank">Data Structures: Lists / Dictionaries</a></p><div class="info-box note small">MDN usa spesso esempi in <strong>JavaScript</strong>; nelle nostre slide il codice è sempre in <strong>Python</strong>.</div></div></div></section>
+</div></div>
+<div id="python-status">● Caricamento motore Python…</div>
+<div id="fallback-nav"><button id="slide-prev" aria-label="Slide precedente">←</button><span id="slide-count"></span><button id="slide-next" aria-label="Slide successiva">→</button></div>
+<div id="output-modal" role="dialog" aria-modal="true" aria-label="Output Python">
+  <div id="output-box"><div id="output-head"><span>OUTPUT PYTHON</span><button id="close-modal" aria-label="Chiudi">×</button></div><pre id="output-content"></pre></div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/dist/reveal.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.0/plugin/highlight/highlight.js"></script>
 <script>
-  // ── Pyodide ──
-  let pyodide = null;
-
-  (async function initPyodide() {
-    const status = document.getElementById('pyodide-status');
-    try {
-      pyodide = await loadPyodide({
-        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/'
-      });
-      status.textContent = '● Python pronto';
-      status.style.color = '#2ecc71';
-    } catch (e) {
-      status.textContent = '● Python non disponibile';
-      status.style.color = '#e74c3c';
-    }
-  })();
-
-  function syncModalFontSize() {
-    const revealEl = document.querySelector('.reveal');
-    const base = parseFloat(getComputedStyle(revealEl).fontSize);
-    const scale = Reveal.getScale ? Reveal.getScale() : 1;
-    document.getElementById('output-modal').style.fontSize = (base * scale) + 'px';
-  }
-
-  function openModal(text, isError) {
-    const content = document.getElementById('output-modal-content');
-    content.textContent = text;
-    content.className = isError ? 'is-error' : '';
-    syncModalFontSize();
-    document.getElementById('output-modal').classList.add('open');
-  }
-
-  function closeModal() {
-    document.getElementById('output-modal').classList.remove('open');
-  }
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
-  });
-
-  async function runCode(btn) {
-    const runner = btn.closest('.code-runner');
-    const textarea = runner.querySelector('.code-textarea');
-
-    if (!pyodide) {
-      openModal('Attendi il caricamento di Python...', true);
-      return;
-    }
-
-    const prev = btn.textContent;
-    btn.textContent = '⏳';
-    btn.disabled = true;
-
-    try {
-      const preloadEl = runner.closest('section').querySelector('.code-preload');
-      const preload = preloadEl ? preloadEl.textContent.trim() + '\n\n' : '';
-      pyodide.globals.set('_user_code', preload + textarea.value);
-      pyodide.runPython(`
+let pyodide = null;
+const statusNode = document.querySelector('#python-status');
+(async () => {
+ try {
+   pyodide = await loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/'});
+   statusNode.textContent='● Python pronto'; statusNode.style.color='#9bdeb0';
+ } catch(e) {
+   statusNode.textContent='● Python non disponibile: usa Colab o VS Code'; statusNode.style.color='#ff9999';
+ }
+})();
+const outputModal = document.querySelector('#output-modal');
+const outputContent = document.querySelector('#output-content');
+function showOutput(txt, error=false) { outputContent.textContent=txt; outputContent.className=error?'error':''; outputModal.classList.add('open'); }
+function closeOutput() { outputModal.classList.remove('open'); }
+document.querySelector('#close-modal').addEventListener('click',closeOutput);
+outputModal.addEventListener('click',e=>{ if(e.target===outputModal) closeOutput(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeOutput(); });
+async function runCode(button) {
+  const area=button.closest('.code-runner').querySelector('textarea');
+  if (!pyodide) { showOutput('Python non ancora disponibile. Attendi il caricamento oppure usa Google Colab o VS Code.',true); return; }
+  button.disabled=true; button.textContent='…';
+  try {
+    pyodide.globals.set('_lesson_source',area.value);
+    await pyodide.runPythonAsync(`
 import sys, traceback
 from io import StringIO
-_stdout = StringIO()
-_stderr = StringIO()
-sys.stdout = _stdout
-sys.stderr = _stderr
+stdout_buffer, stderr_buffer = StringIO(), StringIO()
+saved_stdout, saved_stderr = sys.stdout, sys.stderr
+sys.stdout, sys.stderr = stdout_buffer, stderr_buffer
 try:
-    exec(_user_code, {})
+    exec(_lesson_source, {})
 except Exception:
     traceback.print_exc()
 finally:
-    sys.stdout = sys.__stdout__
-    sys.stderr = sys.__stderr__
-_out = _stdout.getvalue()
-_err = _stderr.getvalue()
+    sys.stdout, sys.stderr = saved_stdout, saved_stderr
+out_text = stdout_buffer.getvalue()
+err_text = stderr_buffer.getvalue()
 `);
-      const out = pyodide.globals.get('_out');
-      const err = pyodide.globals.get('_err');
-
-      if (err) {
-        openModal(err, true);
-      } else {
-        openModal(out || '(nessun output)', false);
+    const err=pyodide.globals.get('err_text');
+    const out=pyodide.globals.get('out_text');
+    showOutput(err || out || '(nessun output)',Boolean(err));
+  } catch(e) {
+    showOutput(String(e),true);
+  } finally { button.disabled=false; button.textContent='▶ Esegui'; }
+}
+function setupRunners() {
+  document.querySelectorAll('pre > code.language-python:not(.static-code)').forEach(codeEl=>{
+    const pre=codeEl.parentElement;
+    const original=codeEl.textContent.trim();
+    const runner=document.createElement('div'); runner.className='code-runner';
+    const area=document.createElement('textarea'); area.className='code-textarea';
+    area.value=original; area.spellcheck=false; area.rows=Math.min(Math.max(original.split('\n').length+1,4),13);
+    if(codeEl.dataset.height) area.style.maxHeight=codeEl.dataset.height+'px';
+    area.addEventListener('keydown',e=>{
+      if(e.key==='Tab') {
+        e.preventDefault();
+        const start=area.selectionStart, end=area.selectionEnd;
+        area.setRangeText('    ',start,end,'end');
       }
-    } catch (e) {
-      try { pyodide.runPython('sys.stdout = sys.__stdout__\nsys.stderr = sys.__stderr__'); } catch (_) {}
-      openModal(e.message, true);
-    }
-
-    btn.textContent = prev;
-    btn.disabled = false;
-  }
-
-  // ── Reveal ──
-  Reveal.initialize({
-    hash: true,
-    slideNumber: 'c/t',
-    transition: 'slide',
-    transitionSpeed: 'fast',
-    plugins: [RevealHighlight],
-  });
-
-  Reveal.on('resize', syncModalFontSize);
-
-  // ── Trasforma i blocchi codice in editor interattivi ──
-  Reveal.on('ready', () => {
-    document.querySelectorAll('pre').forEach(pre => {
-      const code = pre.querySelector('code.language-python');
-      if (!code) return;
-
-      const rawCode = code.textContent.trim();
-      const lines = rawCode.split('\n').length;
-
-      const runner = document.createElement('div');
-      runner.className = 'code-runner';
-      pre.parentNode.insertBefore(runner, pre);
-      pre.remove();
-
-      const textarea = document.createElement('textarea');
-      textarea.className = 'code-textarea' + (pre.dataset.size === 'small' ? ' small' : '');
-      textarea.value = rawCode;
-      textarea.spellcheck = false;
-      textarea.rows = Math.min(lines + 1, 14);
-      textarea.addEventListener('keydown', e => {
-        if (e.key === 'Tab') {
-          e.preventDefault();
-          const s = textarea.selectionStart;
-          textarea.value = textarea.value.substring(0, s) + '    ' + textarea.value.substring(textarea.selectionEnd);
-          textarea.selectionStart = textarea.selectionEnd = s + 4;
-        }
-      });
-
-      const controls = document.createElement('div');
-      controls.className = 'code-controls';
-
-      const runBtn = document.createElement('button');
-      runBtn.className = 'run-btn';
-      runBtn.textContent = '▶ Esegui';
-      runBtn.onclick = () => runCode(runBtn);
-      controls.appendChild(runBtn);
-
-      runner.appendChild(textarea);
-      runner.appendChild(controls);
     });
+    const controls=document.createElement('div'); controls.className='code-controls';
+    const hint=document.createElement('span'); hint.className='hint'; hint.textContent='Codice modificabile';
+    const buttons=document.createElement('div');
+    const reset=document.createElement('button'); reset.className='reset-btn'; reset.textContent='↺ Ripristina'; reset.onclick=()=>{area.value=original;};
+    const run=document.createElement('button'); run.className='run-btn'; run.textContent='▶ Esegui'; run.onclick=()=>runCode(run);
+    buttons.append(reset,run); controls.append(hint,buttons); runner.append(area,controls);
+    pre.replaceWith(runner);
   });
+}
+setupRunners();
+if (window.Reveal && typeof Reveal.initialize==='function') {
+  Reveal.initialize({hash:true,slideNumber:'c/t',transition:'slide',transitionSpeed:'fast',width:1280,height:720,margin:.065});
+} else {
+  document.body.classList.add('offline-mode');
+  const pages = Array.from(document.querySelectorAll('.slides > section'));
+  let index=Number((location.hash.match(/^#\/(\d+)/)||[])[1]||0);
+  function navigate(target) {
+    index=Math.max(0,Math.min(pages.length-1,target));
+    pages.forEach((page,i)=>page.classList.toggle('fallback-active',i===index));
+    document.querySelector('#slide-count').textContent=(index+1)+' / '+pages.length;
+    history.replaceState(null,'','#/'+index);
+  }
+  document.querySelector('#slide-prev').onclick=()=>navigate(index-1);
+  document.querySelector('#slide-next').onclick=()=>navigate(index+1);
+  document.addEventListener('keydown',e=>{
+    if (e.target.closest('textarea, input, button')) return;
+    if (e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ') {e.preventDefault();navigate(index+1);}
+    if (e.key==='ArrowLeft'||e.key==='PageUp') {e.preventDefault();navigate(index-1);}
+  });
+  window.addEventListener('hashchange',()=>navigate(Number((location.hash.match(/^#\/(\d+)/)||[])[1]||0)));
+  navigate(index);
+}
 </script>
-</body>
-</html>
+</body></html>
